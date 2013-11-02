@@ -2,6 +2,7 @@ package net.pravian.bukkitlib.utils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -22,7 +23,7 @@ public class CommandUtils {
         return null;
     }
 
-    public HashMap<String, Command> getKnownCommands(CommandMap commandMap) {
+    public static HashMap<String, Command> getKnownCommands(CommandMap commandMap) {
         Object knownCommands = getField(commandMap, "knownCommands");
         if (knownCommands != null) {
             if (knownCommands instanceof HashMap) {
@@ -32,7 +33,7 @@ public class CommandUtils {
         return null;
     }
 
-    public CommandMap getCommandMap() {
+    public static CommandMap getCommandMap() {
         Object commandMap = getField(Bukkit.getServer().getPluginManager(), "commandMap");
         if (commandMap == null) {
             return null;
@@ -44,7 +45,7 @@ public class CommandUtils {
         return null;
     }
 
-    public void unregisterCommand(String commandName) {
+    public static void unregisterCommand(String commandName) {
         CommandMap commandMap = getCommandMap();
         if (commandMap == null) {
             return;
@@ -56,7 +57,7 @@ public class CommandUtils {
         }
     }
 
-    public void unregisterCommand(Command command, CommandMap commandMap) {
+    public static void unregisterCommand(Command command, CommandMap commandMap) {
         command.unregister(commandMap);
         HashMap<String, Command> knownCommands = getKnownCommands(commandMap);
         
@@ -69,5 +70,13 @@ public class CommandUtils {
         for (String alias : command.getAliases()) {
             knownCommands.remove(alias);
         }
+    }
+
+    public static String parseCommandName(String commandMessage) {
+        return commandMessage.split(" ")[0].substring(1).trim();
+    }
+    
+    public static String[] parseCommandArgs(String commandMessage) {
+        return (String[]) ArrayUtils.remove(commandMessage.split(" "), 0);
     }
 }

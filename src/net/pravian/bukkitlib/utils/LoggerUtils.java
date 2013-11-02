@@ -14,15 +14,15 @@ public class LoggerUtils {
         plugin.getLogger().info(message);
     }
 
-    public void warning(String message) {
+    public static void warning(String message) {
         Bukkit.getLogger().warning(message);
     }
 
-    public void warning(Plugin plugin, String message) {
+    public static void warning(Plugin plugin, String message) {
         plugin.getLogger().warning(message);
     }
 
-    public void severe(Object message) {
+    public static void severe(Object message) {
         final String line;
 
         if (message instanceof Throwable) {
@@ -34,7 +34,7 @@ public class LoggerUtils {
         Bukkit.getLogger().info(line);
     }
 
-    public void severe(Plugin plugin, Object message) {
+    public static void severe(Plugin plugin, Object message) {
         final String line;
 
         if (message instanceof Throwable) {

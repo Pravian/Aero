@@ -3,10 +3,10 @@ package net.pravian.bukkitlib.utils;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
-import net.minecraft.server.v1_6_R2.BanEntry;
-import net.minecraft.server.v1_6_R2.BanList;
-import net.minecraft.server.v1_6_R2.MinecraftServer;
-import net.minecraft.server.v1_6_R2.PropertyManager;
+import net.minecraft.server.v1_6_R3.BanEntry;
+import net.minecraft.server.v1_6_R3.BanList;
+import net.minecraft.server.v1_6_R3.MinecraftServer;
+import net.minecraft.server.v1_6_R3.PropertyManager;
 
 public class ServerUtils {
 
@@ -156,7 +156,7 @@ public class ServerUtils {
         return MinecraftServer.getServer().getVersion();
     }
     
-    @Deprecated
+    @Deprecated()
     public static MinecraftServer getMineCraftServer() {
         return MinecraftServer.getServer();
     }

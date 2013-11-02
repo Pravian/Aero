@@ -45,7 +45,7 @@ public class FileUtils {
 
         return object;
     }
-
+    
     public static File getPluginFile(Plugin plugin, String name) {
         return new File(plugin.getDataFolder(), name);
     }

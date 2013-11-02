@@ -1,7 +1,8 @@
 package net.pravian.bukkitlib.utils;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 public class IpUtils {
 
@@ -40,18 +41,28 @@ public class IpUtils {
 
         return match;
     }
+    
+    public static String getIp(Player player) {
+        return player.getAddress().getAddress().getHostAddress().trim();
+    }
+
+    public static String getIp(PlayerLoginEvent event) {
+        return event.getAddress().getHostAddress().trim();
+    }
+    
+    public static int getPort(Player player) {
+        return player.getAddress().getPort();
+    }
 
     public static String toEscapedString(String ip) {
-        return ip.replaceAll("\\.", "_");
+        return ip.trim().replaceAll("\\.", "_");
     }
 
     public static String fromEscapedString(String escapedIp) {
-        return escapedIp.replaceAll("_", "\\.");
+        return escapedIp.trim().replaceAll("_", "\\.");
     }
 
     public static boolean isValidIp(String ip) {
-        Pattern pattern = Pattern.compile(IP_PATTERN);
-        Matcher matcher = pattern.matcher(ip);
-        return matcher.matches();
+        return Pattern.compile(IP_PATTERN).matcher(ip.trim()).matches();
     }
 }

@@ -1,8 +1,8 @@
 package net.pravian.bukkitlib.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import net.pravian.util.SingletonBlock;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -16,6 +16,10 @@ public class PlayerUtils {
         for (Player player : Bukkit.getOnlinePlayers()) {
             block.run(player);
         }
+    }
+    
+    public String getPlayerName(String partialname) {
+        return getOfflinePlayer(partialname).getName();
     }
 
     public static Player getPlayer(String name) {
@@ -74,11 +78,15 @@ public class PlayerUtils {
         return null;
     }
 
-    public static String concatPlayerNames(Set<OfflinePlayer> players) {
+    public static String concatPlayerNames(Collection<OfflinePlayer> players) {
         List<String> names = new ArrayList<String>();
         for (OfflinePlayer player : players) {
             names.add(player.getName());
         }
-        return StringUtils.join(names, ", ");
+        return concatPlayernames(names);
+    }
+    
+    public static String concatPlayernames(Collection<String> names) {
+       return StringUtils.join(names, ", "); 
     }
 }

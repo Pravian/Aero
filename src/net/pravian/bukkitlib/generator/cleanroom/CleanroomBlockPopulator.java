@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.pravian.bukkitlib.generator;
+package net.pravian.bukkitlib.generator.cleanroom;
 
 import java.util.Random;
 import org.bukkit.Chunk;

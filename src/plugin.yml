@@ -1,0 +1,5 @@
+name: BukkitLib
+version: 1.2-Beta
+authors: [DarthSalamon]
+load: STARTUP
+main: net.pravian.bukkitlib.BukkitLib

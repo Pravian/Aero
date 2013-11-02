@@ -8,8 +8,7 @@ import net.pravian.bukkitlib.serializable.SerializableEntityLocation;
 import net.pravian.bukkitlib.serializable.SerializableInventory;
 import net.pravian.bukkitlib.serializable.SerializableObject;
 import net.pravian.bukkitlib.utils.FileUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.bukkit.block.Block;
+import net.pravian.bukkitlib.utils.LoggerUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -20,8 +19,12 @@ public class YamlConfig extends YamlConfiguration {
     private final boolean COPY_DEFAULTS;
 
     public YamlConfig(Plugin plugin, String fileName, boolean copyDefaults) {
+        this(plugin, FileUtils.getPluginFile(plugin, fileName), copyDefaults);
+    }
+    
+    public YamlConfig(Plugin plugin, File file, boolean copyDefaults) {
         this.PLUGIN = plugin;
-        this.CONFIG_FILE = FileUtils.getPluginFile(plugin, fileName);
+        this.CONFIG_FILE = file;
         this.COPY_DEFAULTS = copyDefaults;
     }
 
@@ -97,8 +100,8 @@ public class YamlConfig extends YamlConfiguration {
         try {
             super.save(CONFIG_FILE);
         } catch (Exception ex) {
-            PLUGIN.getLogger().severe("Could not save configuration file: " + CONFIG_FILE.getName());
-            PLUGIN.getLogger().severe(ExceptionUtils.getStackTrace(ex));
+            LoggerUtils.severe(PLUGIN, "Could not save configuration file: " + CONFIG_FILE.getName());
+            LoggerUtils.severe(PLUGIN, ex);
         }
     }
 
@@ -109,11 +112,11 @@ public class YamlConfig extends YamlConfiguration {
                     CONFIG_FILE.getParentFile().mkdirs();
                     try {
                         FileUtils.copy(PLUGIN.getResource(CONFIG_FILE.getName()), CONFIG_FILE);
-                    } catch (IOException e) {
-                        PLUGIN.getLogger().severe("Could not write default configuration file: " + CONFIG_FILE.getName());
-                        PLUGIN.getLogger().severe(ExceptionUtils.getStackTrace(e));
+                    } catch (IOException ex) {
+                        LoggerUtils.severe(PLUGIN, "Could not write default configuration file: " + CONFIG_FILE.getName());
+                        LoggerUtils.severe(PLUGIN, ex);
                     }
-                    PLUGIN.getLogger().info("Installed default configuration " + CONFIG_FILE.getName());
+                    LoggerUtils.info(PLUGIN, "Installed default configuration " + CONFIG_FILE.getName());
                 }
 
                 super.addDefaults(getDefaultConfig());
@@ -121,8 +124,8 @@ public class YamlConfig extends YamlConfiguration {
 
             super.load(CONFIG_FILE);
         } catch (Exception ex) {
-            PLUGIN.getLogger().severe("Could not load configuration file: " + CONFIG_FILE.getName());
-            PLUGIN.getLogger().severe(ExceptionUtils.getStackTrace(ex));
+            LoggerUtils.severe(PLUGIN, "Could not load configuration file: " + CONFIG_FILE.getName());
+            LoggerUtils.severe(PLUGIN, ex);
         }
     }
 
@@ -135,8 +138,8 @@ public class YamlConfig extends YamlConfiguration {
         try {
             DEFAULT_CONFIG.load(PLUGIN.getResource(CONFIG_FILE.getName()));
         } catch (Throwable ex) {
-            PLUGIN.getLogger().severe("Could not load default configuration: " + CONFIG_FILE.getName());
-            PLUGIN.getLogger().severe(ExceptionUtils.getStackTrace(ex));
+            LoggerUtils.severe(PLUGIN, "Could not load default configuration: " + CONFIG_FILE.getName());
+            LoggerUtils.severe(PLUGIN, ex);
             return null;
         }
         return DEFAULT_CONFIG;
