@@ -3,6 +3,9 @@ package net.pravian.bukkitlib.generator.skygrid;
 import java.util.Random;
 import java.util.TreeMap;
 
+/**
+ * Represents BlockProbabilty.
+ */
 public class BlockProbobility {
 
     TreeMap<Integer, Byte> p = new TreeMap();

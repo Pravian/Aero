@@ -15,6 +15,9 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Represents SkyGridBlockPopulator.
+ */
 public class SkyGridBlockPopulator extends BlockPopulator {
 
     private RandomBlockSeries rnd = null;

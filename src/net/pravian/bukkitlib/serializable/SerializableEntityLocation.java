@@ -3,6 +3,11 @@ package net.pravian.bukkitlib.serializable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+/**
+ * Represents a serializable entity location.
+ *
+ * @see SerializableObject
+ */
 public class SerializableEntityLocation extends SerializableObject<Location> {
 
     private final double x;
@@ -12,6 +17,11 @@ public class SerializableEntityLocation extends SerializableObject<Location> {
     private final float pitch;
     private final String worldName;
 
+    /**
+     * Creates a new SerializableEntityLocation instance.
+     *
+     * @param location The Location to be serialized.
+     */
     public SerializableEntityLocation(Location location) {
         this.x = location.getX();
         this.y = location.getY();
@@ -21,6 +31,11 @@ public class SerializableEntityLocation extends SerializableObject<Location> {
         this.worldName = location.getWorld().getName();
     }
 
+    /**
+     * Creates a new SerializableBlock instance.
+     *
+     * @param location The String to serialize from.
+     */
     public SerializableEntityLocation(String location) {
         if (location == null || location.equals("") || location.split(":").length != 6) {
             this.worldName = null;

@@ -1,13 +1,30 @@
 package net.pravian.bukkitlib;
 
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Represents BukkitLib; a commons library for Bukkit.
+ *
+ * @author DarthSalamon
+ * @version 1.6-Beta
+ */
 public final class BukkitLib extends JavaPlugin {
 
-    public static String name;
-    public static String version;
-    public static String author;
+    /**
+     * The name of this library.
+     */
+    public static final String name = "BukkitLib";
+    /**
+     * The version of this library.
+     */
+    public static final String version = "1.6-Beta";
+    /**
+     * The author of this library.
+     */
+    public static final String author = "DarthSalamon";
+    /**
+     * The features of this library.
+     */
     public static final String[] FEATURES = new String[]{
         "Compact serialization for Bukkit objects (Inventory, Block, Location(Block & Entity)",
         "Easy configfile management with",
@@ -15,14 +32,42 @@ public final class BukkitLib extends JavaPlugin {
         "Includes Code-Block for pasing around methods",
         "Includes Cleanroom world generator"
     };
+    /**
+     * The credits to the making of this library.
+     */
     public static final String[] CREDITS = new String[]{
-        "Steven Lawson (Github) for his great helper methods in TotalFreedomMod",
+        "HeXeRei452/WickedGamingUK (Bukkit) for his interest and support",
+        "StevenLawson (Github) for his great helper methods in TotalFreedomMod",
         "Phil2812 (Bukkit Forums) for his inventory serializer",
         "mkyong (mykong.com) for his great examples on how to write objects to files",
-        "nvx for their Cleanroom generator",
+        "nvx (Bukkit Forums) for their Cleanroom generator",
         "sk89q (sk89q.com) for his getField() method"
     };
+    /**
+     * The change log to this library.
+     */
     public static final String[] CHANGELOG = new String[]{
+        "-- 1.6-Beta",
+        "  - Implemented Bukkit build generator, moved away from plugin-based BukkitLib",
+        "  - Fixed all JavaDoc",
+        "  - Added debug-style logging in PluginLogger",
+        "  - Minor changes",
+        "",
+        "-- 1.5-Beta",
+        "  - Added PluginLogger, replaces LoggerUtils (now deprecated)",
+        "  - Renamed net.pravian.bukkitlib.utils to net.bukkitlib.pravian.util",
+        "  - Small changes",
+        "",
+        "-- 1.4-Beta:",
+        "  - Added JavaDoc",
+        "  - Minor changes",
+        "",
+        "-- 1.3-Beta:",
+        "  - Added BukkitPermissionHandler",
+        "  - Added ability to assign permission handlers with BukkitCommandHandler.setPermissionHandler()",
+        "  - Changed all net.pravian.bukkitlib.command classes and methods to instantiated versions",
+        "  - Moved net.pravian.util.* to net.pravian.java.*",
+        "",
         "-- 1.2-Beta:",
         "  - Added VoidChunkGenerator",
         "  - Added SkyGridGenerator",
@@ -46,13 +91,4 @@ public final class BukkitLib extends JavaPlugin {
         "  - Using net.pravian.util.Block, SingletonBlock, ClosedBlock",
         ""
     };
-    public static JavaPlugin plugin;
-
-    @Override
-    public void onLoad() {
-        PluginDescriptionFile pdf = this.getDescription();
-        name = pdf.getName();
-        version = pdf.getVersion();
-        author = pdf.getAuthors().get(0);
-    }
 }

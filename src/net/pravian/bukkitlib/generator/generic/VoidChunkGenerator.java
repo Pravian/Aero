@@ -5,7 +5,9 @@ import java.util.Random;
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;
 
-
+/**
+ * Represents VoidChunkGenerator
+ */
 public class VoidChunkGenerator extends ChunkGenerator {
 
     @Override

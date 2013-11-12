@@ -9,6 +9,9 @@ import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 
+/**
+ * Represents SkyGridChunkGenerator.
+ */
 public class SkyGridChunkGenerator extends ChunkGenerator {
 
     private final int size;

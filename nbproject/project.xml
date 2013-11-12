@@ -11,5 +11,12 @@
                 <root id="test.src.dir"/>
             </test-roots>
         </data>
+        <references xmlns="http://www.netbeans.org/ns/ant-project-references/1"/>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>Bukkit</word>
+            <word>playername</word>
+            <word>plugin</word>
+            <word>plugins</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>

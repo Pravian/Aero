@@ -1,4 +1,4 @@
-package net.pravian.bukkitlib.utils;
+package net.pravian.bukkitlib.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,8 +14,19 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import org.bukkit.plugin.Plugin;
 
+/**
+ * Represents all File-related utilities.
+ */
 public class FileUtils {
 
+    /**
+     * Downloads a file from the specified URIL and saves it at the specified location.
+     * 
+     * @param url The URL from where to download the file from.
+     * @param output The file where the file will be stored.
+     * @throws MalformedURLException
+     * @throws IOException 
+     */
     public static void downloadFile(String url, File output) throws MalformedURLException, IOException {
         final URL website = new URL(url);
         final ReadableByteChannel rbc = Channels.newChannel(website.openStream());
@@ -24,6 +35,13 @@ public class FileUtils {
         fos.close();
     }
 
+    /**
+     * Saves a raw Object to a file.
+     * 
+     * @param object The object to save.
+     * @param file The file where the object will be stored.
+     * @throws IOException 
+     */
     public static void saveObject(Object object, File file) throws IOException {
         if (!file.exists()) {
             file.getParentFile().mkdirs();
@@ -34,6 +52,12 @@ public class FileUtils {
         oos.close();
     }
 
+    /**
+     * Attempts to load a raw Object from a file.
+     * 
+     * @param file The file where the object is stored.
+     * @throws IOException 
+     */
     public static Object loadObject(File file) throws IOException, ClassNotFoundException {
         if (!file.exists()) {
             throw new IllegalStateException();
@@ -46,22 +70,53 @@ public class FileUtils {
         return object;
     }
     
+    /**
+     * Returns a file at located at the Plugins Data folder. 
+     * 
+     * @param plugin The plugin to use
+     * @param name The name of the file.
+     * @return The requested file.
+     */
     public static File getPluginFile(Plugin plugin, String name) {
         return new File(plugin.getDataFolder(), name);
     }
 
+    /**
+     * Returns the root location of the CraftBukkit server.
+     * 
+     * @return The current working directory.
+     */
     public static File getRoot() {
         return new File(".");
     }
 
+    /**
+     * Returns the folder where all plugins are stored.
+     * 
+     * @return The plugins folder.
+     */
     public static File getPluginsFolder() {
         return new File(getRoot(), "plugins");
     }
 
-    public static File getRootFolder(String name) {
+    /**
+     * Returns a file at the root of the CraftBukkit server.
+     * 
+     * @param name The name of the file.
+     * @return The requested file.
+     */
+    public static File getRootFile(String name) {
         return new File(getRoot(), name);
     }
 
+    /**
+     * Delete a specified folder and all contents quietly.
+     * 
+     * <p><b>Warning</b>: This method will delete files, only folders!</p>
+     * 
+     * @param file The folder to delete.
+     * @return true if the delete was successful.
+     */
     public static boolean deleteFolder(File file) {
         if (file.exists() && file.isDirectory()) {
             return org.apache.commons.io.FileUtils.deleteQuietly(file);
@@ -69,6 +124,13 @@ public class FileUtils {
         return false;
     }
 
+    /**
+     * Write the specified InputStream to a file.
+     * 
+     * @param in The InputStream from which to read.
+     * @param file The File to write to.
+     * @throws IOException 
+     */
     public static void copy(InputStream in, File file) throws IOException {
         if (!file.exists()) {
             file.getParentFile().mkdirs();

@@ -22,6 +22,10 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 
+/**
+ * Represents CleanroomBlockPopulator.
+ * @author nvx
+ */
 public class CleanroomBlockPopulator extends BlockPopulator {
 
     byte[] layerDataValues;

@@ -1,0 +1,10 @@
+Copyright (C) Pravian Systems - All Rights Reserved
+Unauthorized copying, reverse-engineering, reversing or spreading, via any medium is strictly prohibited
+proprietary or confidential.
+Written by Jerom van der Sar <jerom.sar@hotmail.com>, November 2013
+
+Note to Bugtesters:
+  You're encouraged to:
+  - Review the JavaDoc, check for spelling errors, incorrect formatting, unlogical examples, etc.
+  - Test and check for bugs
+  - Make suggestions! :)

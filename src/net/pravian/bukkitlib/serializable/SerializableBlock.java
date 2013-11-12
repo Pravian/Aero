@@ -1,10 +1,18 @@
 package net.pravian.bukkitlib.serializable;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+/**
+ * Represents a serializable Block
+ * 
+ * <p><b>Warning</b> {@link #deserialize()} also sets the block-id and data. Be careful with this method.</p>
+ * 
+ * @see SerializableObject
+ */
 public class SerializableBlock extends SerializableObject<Block> {
 
     private final String worldName;
@@ -14,6 +22,11 @@ public class SerializableBlock extends SerializableObject<Block> {
     private final int id;
     private final byte data;
 
+    /**
+     * Creates a new SerializableBlock instance.
+     * 
+     * @param block The Block to be serialized.
+     */
     public SerializableBlock(Block block) {
         this.worldName = block.getLocation().getWorld().getName();
         this.x = block.getLocation().getBlockX();
@@ -23,6 +36,11 @@ public class SerializableBlock extends SerializableObject<Block> {
         this.data = block.getData();
     }
 
+    /**
+     * Creates a new SerializableBlock instance.
+     * 
+     * @param block The String to serialize from.
+     */
     public SerializableBlock(String block) {
         if (block == null || block.equals("") || block.split(":").length != 4) {
             this.worldName = null;
@@ -43,16 +61,45 @@ public class SerializableBlock extends SerializableObject<Block> {
         this.data = Byte.valueOf(blockParts[5]);
     }
 
+    /**
+     * Returns the Material-ID the block is made of.
+     * 
+     * @return The material-ID;
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Returns the Material the block is made of.
+     * 
+     * @return The material.
+     */
     public Material getType() {
         return Material.getMaterial(id);
     }
 
+    /**
+     * The block-specific data of the block.
+     * 
+     * @return The data. 
+     */
     public byte getData() {
         return data;
+    }
+    
+    /**
+     * The Location the block is located at.
+     * 
+     * @return The Location
+     */
+    public Location getLocation() {
+        World world = Bukkit.getWorld(worldName);
+        if (world == null) {
+            return null;
+        }
+
+        return world.getBlockAt(x, y, z).getLocation();
     }
 
     @Override
@@ -62,11 +109,11 @@ public class SerializableBlock extends SerializableObject<Block> {
 
     @Override
     public Block deserialize() {
-        World world = Bukkit.getWorld(worldName);
-        if (world == null) {
+        final Location location = getLocation();
+        if (location == null) {
             return null;
         }
-
-        return world.getBlockAt(x, y, z);
+        
+        return location.getBlock();
     }
 }

@@ -2,6 +2,9 @@ package net.pravian.bukkitlib.generator.skygrid;
 
 import java.util.Random;
 
+/**
+ * Represents RandomSeries.
+ */
 public final class RandomSeries {
 
     private int[] reset;

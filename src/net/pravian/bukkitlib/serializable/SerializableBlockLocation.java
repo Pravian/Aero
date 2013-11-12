@@ -5,6 +5,11 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+/**
+ * Represents a serializable block location
+ * 
+ * @see SerializableObject
+ */
 public class SerializableBlockLocation extends SerializableObject<Location> {
 
     private final int x;
@@ -12,6 +17,11 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
     private final int z;
     private final String worldName;
 
+    /**
+     * Creates a new SerializableBlockLocation instance.
+     * 
+     * @param location The Location to be serialized.
+     */
     public SerializableBlockLocation(Location location) {
         this.x = location.getBlockX();
         this.y = location.getBlockY();
@@ -19,6 +29,11 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
         this.worldName = location.getWorld().getName();
     }
 
+    /**
+     * Creates a new SerializableBlock instance.
+     * 
+     * @param location The String to serialize from.
+     */
     public SerializableBlockLocation(String location) {
         if (location == null || location.equals("") || location.split(":").length != 4) {
             this.worldName = null;
@@ -34,6 +49,11 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
         this.z = Integer.valueOf(locationParts[3]);
     }
 
+    /**
+     * Returns the block at the location.
+     * 
+     * @return The block.
+     */
     public Block getBlock() {
         World world = Bukkit.getWorld(worldName);
         if (world == null) {

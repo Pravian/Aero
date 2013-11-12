@@ -7,31 +7,78 @@ import net.pravian.bukkitlib.serializable.SerializableBlockLocation;
 import net.pravian.bukkitlib.serializable.SerializableEntityLocation;
 import net.pravian.bukkitlib.serializable.SerializableInventory;
 import net.pravian.bukkitlib.serializable.SerializableObject;
-import net.pravian.bukkitlib.utils.FileUtils;
-import net.pravian.bukkitlib.utils.LoggerUtils;
+import net.pravian.bukkitlib.util.FileUtils;
+import net.pravian.bukkitlib.util.LoggerUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+/**
+ * Represents a definable YAML configuration.
+ *
+ * @see YamlConfiguration
+ */
 public class YamlConfig extends YamlConfiguration {
 
     private final Plugin PLUGIN;
     private final File CONFIG_FILE;
     private final boolean COPY_DEFAULTS;
 
+    /**
+     * Creates a new YamlConfig instance.
+     *
+     * <p>Example:
+     * <pre>
+     * YamlConfig config = new YamlConfig(this, "config.yml", true);
+     * config.load();
+     * </pre></p>
+     *
+     * @param plugin The plugin to which the config belongs.
+     * @param fileName The filename of the config file.
+     * @param copyDefaults If the defaults should be copied and/loaded from a config in the plugin jar-file.
+     */
     public YamlConfig(Plugin plugin, String fileName, boolean copyDefaults) {
         this(plugin, FileUtils.getPluginFile(plugin, fileName), copyDefaults);
     }
-    
+
+    /**
+     * Creates a new YamlConfig instance.
+     *
+     * <p>Example:
+     * <pre>
+     * YamlConfig config = new YamlConfig(this, new File(plugin.getDataFolder() + "/players", "DarthSalamon.yml"), false);
+     * config.load();
+     * </pre></p>
+     *
+     * @param plugin The plugin to which the config belongs.
+     * @param file The file of the config file.
+     * @param copyDefaults If the defaults should be copied and/loaded from a config in the plugin jar-file.
+     */
     public YamlConfig(Plugin plugin, File file, boolean copyDefaults) {
         this.PLUGIN = plugin;
         this.CONFIG_FILE = file;
         this.COPY_DEFAULTS = copyDefaults;
     }
 
+    /**
+     * Stores an instance of SerializableObject.
+     *
+     * <p><b>Warning</b>: SerializableObjects should never be stored using {@link #set(String, Object)}
+     *
+     * @param path
+     * @param object
+     * @see SerializableObject
+     */
     public void setSerializable(String path, SerializableObject object) {
         super.set(path, object.serialize());
     }
 
+    /**
+     * Retrieves a stored SerializableBlock
+     *
+     * @param path The path where the SerializedObject is stored.
+     * @return The retrieved item. / null
+     * @see SerializableBlock
+     */
     public SerializableBlock getSerializableBlock(String path) {
         final String serialized = super.getString(path);
 
@@ -48,6 +95,13 @@ public class YamlConfig extends YamlConfiguration {
         return object;
     }
 
+    /**
+     * Retrieves a stored SerializableBlockLocation
+     *
+     * @param path The path where the SerializedObject is stored.
+     * @return The retrieved item. / null
+     * @see SerializableBlockLocation
+     */
     public SerializableBlockLocation getSerializableBlockLocation(String path) {
         final String serialized = super.getString(path);
 
@@ -64,6 +118,13 @@ public class YamlConfig extends YamlConfiguration {
         return object;
     }
 
+    /**
+     * Retrieves a stored SerializableEntityLocation
+     *
+     * @param path The path where the SerializedObject is stored.
+     * @return The retrieved item. / null
+     * @see SerializableEntityLocation
+     */
     public SerializableEntityLocation getSerializableEntityLocation(String path) {
         final String serialized = super.getString(path);
 
@@ -80,6 +141,13 @@ public class YamlConfig extends YamlConfiguration {
         return object;
     }
 
+    /**
+     * Retrieves a stored SerializableInventory
+     *
+     * @param path The path where the SerializedObject is stored.
+     * @return The retrieved item. / null
+     * @see SerializableInventory
+     */
     public SerializableInventory getSerializableInventory(String path) {
         final String serialized = super.getString(path);
 
@@ -96,6 +164,11 @@ public class YamlConfig extends YamlConfiguration {
         return object;
     }
 
+    /**
+     * Saves the configuration to the predefined file.
+     * 
+     * @see #YamlConfig(Plugin, String, boolean) 
+     */
     public void save() {
         try {
             super.save(CONFIG_FILE);
@@ -105,6 +178,13 @@ public class YamlConfig extends YamlConfiguration {
         }
     }
 
+    /**
+     * Loads the configuration from the predefined file.
+     * 
+     * <p>Optionally, if loadDefaults has been set to true, the file will be copied over from the default inside the jar-file of the owning plugin.</p>
+     * 
+     * @see #YamlConfig(Plugin, String, boolean)
+     */
     public void load() {
         try {
             if (COPY_DEFAULTS) {
@@ -129,10 +209,20 @@ public class YamlConfig extends YamlConfiguration {
         }
     }
 
+    /**
+     * Returns the raw YamlConfiguration this config is based on.
+     * 
+     * @return The YamlConfiguration.
+     * @see YamlConfiguration
+     */
     public YamlConfiguration getConfig() {
         return this;
     }
 
+    /**
+     * Returns the default configuration as been stored in the jar-file of the owning plugin.
+     * @return The default configuration.
+     */
     public YamlConfiguration getDefaultConfig() {
         final YamlConfiguration DEFAULT_CONFIG = new YamlConfiguration();
         try {

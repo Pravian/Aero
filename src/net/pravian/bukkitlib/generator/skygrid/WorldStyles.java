@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.entity.EntityType;
 
+/**
+ * Represents WorldStyles.
+ */
 public class WorldStyles {
 
     private static final Map<World.Environment, WorldStyles> map = new HashMap();

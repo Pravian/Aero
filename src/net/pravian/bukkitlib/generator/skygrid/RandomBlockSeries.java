@@ -5,6 +5,9 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+/**
+ * Represents RandomBlockSeries.
+ */
 public class RandomBlockSeries {
 
     private GridBlockAbstract[] reset;

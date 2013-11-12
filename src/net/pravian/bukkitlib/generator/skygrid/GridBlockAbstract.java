@@ -3,6 +3,9 @@ package net.pravian.bukkitlib.generator.skygrid;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 
+/**
+ * Represents GridBlockAbstract.
+ */
 public class GridBlockAbstract {
 
     public final int x;

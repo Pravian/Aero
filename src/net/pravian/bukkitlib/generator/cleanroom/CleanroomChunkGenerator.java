@@ -30,6 +30,10 @@ import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 
+/**
+ * Represents CleanroomChunkGenerator.
+ * @author nvx
+ */
 public class CleanroomChunkGenerator extends ChunkGenerator {
 
     private static final Logger log = Bukkit.getLogger();

@@ -9,11 +9,21 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Represents a serializable inventory.
+ * 
+ * @see SerializableObject
+ */
 public class SerializableInventory extends SerializableObject<Inventory> {
 
     private final Inventory inventory;
     private final String serialized;
 
+    /**
+     * Creates a new SerializableInventory instance.
+     *
+     * @param inventory The Inventory to be serialized.
+     */
     public SerializableInventory(Inventory inventory) {
         String newSerialized = inventory.getSize() + ";";
 
@@ -54,8 +64,13 @@ public class SerializableInventory extends SerializableObject<Inventory> {
         this.serialized = newSerialized;
     }
 
-    public SerializableInventory(String serialized) {
-        String[] serializedBlocks = serialized.split(";");
+    /**
+     * Creates a new SerializableEntityLocation instance.
+     *
+     * @param inventory The String to be serialized.
+     */
+    public SerializableInventory(String inventory) {
+        String[] serializedBlocks = inventory.split(";");
         String invInfo = serializedBlocks[0];
         Inventory newInventory = Bukkit.getServer().createInventory(null, Integer.valueOf(invInfo));
 
@@ -94,7 +109,7 @@ public class SerializableInventory extends SerializableObject<Inventory> {
         }
 
         this.inventory = newInventory;
-        this.serialized = serialized;
+        this.serialized = inventory;
     }
 
     @Override
