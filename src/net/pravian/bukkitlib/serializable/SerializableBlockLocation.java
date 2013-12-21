@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 
 /**
  * Represents a serializable block location
- * 
+ *
  * @see SerializableObject
  */
 public class SerializableBlockLocation extends SerializableObject<Location> {
@@ -19,7 +19,7 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
 
     /**
      * Creates a new SerializableBlockLocation instance.
-     * 
+     *
      * @param location The Location to be serialized.
      */
     public SerializableBlockLocation(Location location) {
@@ -31,7 +31,7 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
 
     /**
      * Creates a new SerializableBlock instance.
-     * 
+     *
      * @param location The String to serialize from.
      */
     public SerializableBlockLocation(String location) {
@@ -51,7 +51,7 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
 
     /**
      * Returns the block at the location.
-     * 
+     *
      * @return The block.
      */
     public Block getBlock() {

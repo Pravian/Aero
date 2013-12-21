@@ -16,7 +16,7 @@ public class PluginUtils {
 
     /**
      * Executes the specified Block for every plugin.
-     * 
+     *
      * @param block The codeblock to use.
      * @see SingletonBlock
      */
@@ -28,10 +28,10 @@ public class PluginUtils {
 
     /**
      * Disables all plugins.
-     * 
+     *
      * <p><b>Warning</b>: This includes the plugin which called this method.</p>
-     * 
-     * @see #disableAllPlugins(List) 
+     *
+     * @see #disableAllPlugins(List)
      */
     public static void disableAllPlugins() {
         disableAllPlugins(Arrays.asList(new Plugin[]{}));
@@ -39,9 +39,9 @@ public class PluginUtils {
 
     /**
      * Disables all plugins except the specified plugin.
-     * 
+     *
      * @param ignore Plugin to ignore.
-     * @see #disableAllPlugins(List) 
+     * @see #disableAllPlugins(List)
      */
     public static void disableAllPlugins(Plugin ignore) {
         disableAllPlugins(Arrays.asList(new Plugin[]{ignore}));
@@ -49,7 +49,7 @@ public class PluginUtils {
 
     /**
      * Disables all plugins except the list of plugins.
-     * 
+     *
      * @param ignoreList The list of ignored plugins.
      */
     public static void disableAllPlugins(List<Plugin> ignoreList) {
@@ -59,7 +59,7 @@ public class PluginUtils {
             }
         }
     }
-    
+
     /**
      * Enables all plugins.
      */
@@ -71,30 +71,30 @@ public class PluginUtils {
 
     /**
      * Loads a plugin from the plugins folder.
-     * 
+     *
      * @param fileName The filename of the plugin to load.
-     * @see #loadPlugin(File) 
+     * @see #loadPlugin(File)
      * @throws InvalidPluginException
-     * @throws InvalidDescriptionException 
+     * @throws InvalidDescriptionException
      */
     public static void loadPlugin(String fileName) throws InvalidPluginException, InvalidDescriptionException {
         loadPlugin(new File(FileUtils.getPluginsFolder(), fileName));
     }
-    
+
     /**
      * Loads a plugin from the plugins folder.
-     * 
+     *
      * @param plugin The file of the plugin to load.
      * @throws InvalidPluginException
-     * @throws InvalidDescriptionException 
+     * @throws InvalidDescriptionException
      */
     public static void loadPlugin(File plugin) throws InvalidPluginException, InvalidDescriptionException {
         Bukkit.getPluginManager().loadPlugin(plugin);
     }
-    
+
     /**
      * Reloads a plugin.
-     * 
+     *
      * @param plugin The plugin to reload.
      */
     public static void reloadPlugin(Plugin plugin) {

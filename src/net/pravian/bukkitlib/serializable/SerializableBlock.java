@@ -8,9 +8,9 @@ import org.bukkit.block.Block;
 
 /**
  * Represents a serializable Block
- * 
+ *
  * <p><b>Warning</b> {@link #deserialize()} also sets the block-id and data. Be careful with this method.</p>
- * 
+ *
  * @see SerializableObject
  */
 public class SerializableBlock extends SerializableObject<Block> {
@@ -24,7 +24,7 @@ public class SerializableBlock extends SerializableObject<Block> {
 
     /**
      * Creates a new SerializableBlock instance.
-     * 
+     *
      * @param block The Block to be serialized.
      */
     public SerializableBlock(Block block) {
@@ -38,7 +38,7 @@ public class SerializableBlock extends SerializableObject<Block> {
 
     /**
      * Creates a new SerializableBlock instance.
-     * 
+     *
      * @param block The String to serialize from.
      */
     public SerializableBlock(String block) {
@@ -63,7 +63,7 @@ public class SerializableBlock extends SerializableObject<Block> {
 
     /**
      * Returns the Material-ID the block is made of.
-     * 
+     *
      * @return The material-ID;
      */
     public int getId() {
@@ -72,7 +72,7 @@ public class SerializableBlock extends SerializableObject<Block> {
 
     /**
      * Returns the Material the block is made of.
-     * 
+     *
      * @return The material.
      */
     public Material getType() {
@@ -81,16 +81,16 @@ public class SerializableBlock extends SerializableObject<Block> {
 
     /**
      * The block-specific data of the block.
-     * 
-     * @return The data. 
+     *
+     * @return The data.
      */
     public byte getData() {
         return data;
     }
-    
+
     /**
      * The Location the block is located at.
-     * 
+     *
      * @return The Location
      */
     public Location getLocation() {
@@ -113,7 +113,7 @@ public class SerializableBlock extends SerializableObject<Block> {
         if (location == null) {
             return null;
         }
-        
+
         return location.getBlock();
     }
 }

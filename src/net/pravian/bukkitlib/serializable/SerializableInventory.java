@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * Represents a serializable inventory.
- * 
+ *
  * @see SerializableObject
  */
 public class SerializableInventory extends SerializableObject<Inventory> {

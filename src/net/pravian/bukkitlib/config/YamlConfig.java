@@ -166,8 +166,8 @@ public class YamlConfig extends YamlConfiguration {
 
     /**
      * Saves the configuration to the predefined file.
-     * 
-     * @see #YamlConfig(Plugin, String, boolean) 
+     *
+     * @see #YamlConfig(Plugin, String, boolean)
      */
     public void save() {
         try {
@@ -180,9 +180,9 @@ public class YamlConfig extends YamlConfiguration {
 
     /**
      * Loads the configuration from the predefined file.
-     * 
+     *
      * <p>Optionally, if loadDefaults has been set to true, the file will be copied over from the default inside the jar-file of the owning plugin.</p>
-     * 
+     *
      * @see #YamlConfig(Plugin, String, boolean)
      */
     public void load() {
@@ -211,7 +211,7 @@ public class YamlConfig extends YamlConfiguration {
 
     /**
      * Returns the raw YamlConfiguration this config is based on.
-     * 
+     *
      * @return The YamlConfiguration.
      * @see YamlConfiguration
      */
@@ -221,6 +221,7 @@ public class YamlConfig extends YamlConfiguration {
 
     /**
      * Returns the default configuration as been stored in the jar-file of the owning plugin.
+     *
      * @return The default configuration.
      */
     public YamlConfiguration getDefaultConfig() {

@@ -7,10 +7,10 @@ import org.bukkit.command.CommandSender;
  * Represents the interface which permission handles must inherit.
  */
 public interface BukkitPermissionHandler {
-    
+
     /**
      * Validates if a CommandSender has permission to use a command.
-     * 
+     *
      * @param sender The sender executing the command.
      * @param command The command being executed.
      * @param args The arguments the command has.

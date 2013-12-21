@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Represents BukkitLib; a commons library for Bukkit.
  *
  * @author DarthSalamon
- * @version 1.7-Beta
+ * @version 1.0
  */
 public final class BukkitLib extends JavaPlugin {
 
@@ -17,7 +17,7 @@ public final class BukkitLib extends JavaPlugin {
     /**
      * The version of this library.
      */
-    public static final String VERSION = "1.7-Beta";
+    public static final String VERSION = "1.0";
     /**
      * The author of this library.
      */
@@ -47,6 +47,10 @@ public final class BukkitLib extends JavaPlugin {
      * The change log to this library.
      */
     public static final String[] CHANGELOG = new String[]{
+        "-- 1.0",
+        "  - Batch format & cleanup",
+        "  - Removed generator: SkyGrid",
+        "",
         "-- 1.7-Beta",
         "  - Updated to CraftBukkit 1.7-R0.1",
         "  - Added PluginLogger instance to BukkitCommand",

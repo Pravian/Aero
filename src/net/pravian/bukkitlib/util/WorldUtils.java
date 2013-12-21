@@ -11,7 +11,7 @@ public class WorldUtils {
 
     /**
      * Executes the specified Block for every loaded world.
-     * 
+     *
      * @param block The codeblock to use.
      * @see SingletonBlock
      */
@@ -23,7 +23,7 @@ public class WorldUtils {
 
     /**
      * Sets the world time in ticks.
-     * 
+     *
      * @param world The world to set the time on.
      * @param ticks The amount of ticks to set the time to.
      */

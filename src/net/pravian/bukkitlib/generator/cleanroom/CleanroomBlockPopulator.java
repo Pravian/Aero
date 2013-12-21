@@ -24,6 +24,7 @@ import org.bukkit.generator.BlockPopulator;
 
 /**
  * Represents CleanroomBlockPopulator.
+ *
  * @author nvx
  */
 public class CleanroomBlockPopulator extends BlockPopulator {

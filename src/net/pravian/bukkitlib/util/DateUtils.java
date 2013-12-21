@@ -21,21 +21,22 @@ public class DateUtils {
 
     /**
      * Parses a date offset from a string.
-     * 
-     * <p>Examples:<pre>
+     *
+     * <p>Examples:
+     * <pre>
      * parseDateOffset("2y5mo1w3d5h4m3s"); // 2 Years, 5 Months, 1 Week, etc.
      * parseDateOffset("never"); // null
      * parseDateOffset("2d4h"); // 2 Days, 4 Hours.
-     * 
+     *
      * @param time
      * @return The Date at at the parsed offset / null.
      */
     public static Date parseDateOffset(String time) {
-        
+
         if (time.trim().equalsIgnoreCase("never")) {
             return null;
         }
-        
+
         Pattern timePattern = Pattern.compile(
                 "(?:([0-9]+)\\s*y[a-z]*[,\\s]*)?"
                 + "(?:([0-9]+)\\s*mo[a-z]*[,\\s]*)?"
@@ -121,10 +122,10 @@ public class DateUtils {
 
     /**
      * Parses a Date to a string using {@link #DATE_STORAGE_FORMAT}.
-     * 
+     *
      * <p>The default storage format is config-friendly, so it may be used in YamlConfig.</p>
      * <p>Parsing <i>null</i> returns "never".</p>
-     * 
+     *
      * @param date The Date to parse.
      * @return The parsed String.
      * @see #parseString(String)
@@ -138,10 +139,10 @@ public class DateUtils {
 
     /**
      * Parses a Date to a string using {@link #DATE_STORAGE_FORMAT}.
-     * 
+     *
      * <p>The default storage format is config-friendly, so it may be used in YamlConfig.</p>
      * <p>Parsing <i>never</i> returns null.</p>
-     * 
+     *
      * @param date The String to parse to a date.
      * @return The parsed Date.
      * @see #parseDate(Date)

@@ -32,6 +32,7 @@ import org.bukkit.generator.ChunkGenerator;
 
 /**
  * Represents CleanroomChunkGenerator.
+ *
  * @author nvx
  */
 public class CleanroomChunkGenerator extends ChunkGenerator {

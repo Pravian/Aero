@@ -6,10 +6,10 @@ import org.bukkit.Location;
  * Represents all Location-related utilities.
  */
 public class LocationUtils {
-    
+
     /**
      * Returns a "pretty" formatted location.
-     * 
+     *
      * @param location The location to format.
      * @return The formatted location.
      */

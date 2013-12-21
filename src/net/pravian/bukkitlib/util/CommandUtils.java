@@ -28,12 +28,12 @@ public class CommandUtils {
         } while (checkClass.getSuperclass() != Object.class && ((checkClass = checkClass.getSuperclass()) != null));
         return null;
     }
-    
+
     /**
      * Returns a Map of all commands currently loaded into the server.
-     * 
+     *
      * @return A HashMap with all loaded commands.
-     * @see #getKnownCommands(CommandMap) 
+     * @see #getKnownCommands(CommandMap)
      */
     public static HashMap<String, Command> getKnownCommands() {
         return getKnownCommands(getCommandMap());
@@ -41,7 +41,7 @@ public class CommandUtils {
 
     /**
      * Returns a Map of all commands currently loaded into the server.
-     * 
+     *
      * @param commandMap The CommandMap from where to retrieve the commands from.
      * @return A HashMap with all loaded commands.
      */
@@ -57,7 +57,7 @@ public class CommandUtils {
 
     /**
      * Returns the current CommandMap loaded into the server.
-     * 
+     *
      * @return the CommandMap.
      */
     public static CommandMap getCommandMap() {
@@ -74,11 +74,11 @@ public class CommandUtils {
 
     /**
      * Unregisters a command from the server.
-     * 
+     *
      * <p>After a command has been unregistered, it will no longer be able to be executed.</p>
-     * 
+     *
      * @param commandName The name of the command to unregister.
-     * @see #unregisterCommand(Command, CommandMap) 
+     * @see #unregisterCommand(Command, CommandMap)
      */
     public static void unregisterCommand(String commandName) {
         CommandMap commandMap = getCommandMap();
@@ -91,14 +91,14 @@ public class CommandUtils {
             unregisterCommand(command, commandMap);
         }
     }
-    
+
     /**
      * Unregisters a command from the server.
-     * 
+     *
      * <p>After a command has been unregistered, it will no longer be able to be executed.</p>
-     * 
+     *
      * @param command The command to unregister.
-     * @see #unregisterCommand(Command, CommandMap) 
+     * @see #unregisterCommand(Command, CommandMap)
      */
     public static void unregisterCommand(Command command) {
         CommandMap commandMap = getCommandMap();
@@ -113,22 +113,22 @@ public class CommandUtils {
 
     /**
      * Unregisters a command from the server.
-     * 
+     *
      * <p>After a command has been unregistered, it will no longer be able to be executed.</p>
-     * 
+     *
      * @param command The command to unregister.
      * @param commandMap The commandMap to unregister the command from.
      */
     public static void unregisterCommand(Command command, CommandMap commandMap) {
         command.unregister(commandMap);
         HashMap<String, Command> knownCommands = getKnownCommands(commandMap);
-        
+
         if (knownCommands == null) {
             return;
         }
-        
+
         knownCommands.remove(command.getName());
-        
+
         for (String alias : command.getAliases()) {
             knownCommands.remove(alias);
         }
@@ -136,10 +136,10 @@ public class CommandUtils {
 
     /**
      * Returns the Command-name of a command-message.
-     * 
-     * <p>Command-messages are formated as such: <i>/commandName arg1 arg2</i>.
-     * These are found in events such as {@link org.bukkit.event.player.PlayerCommandPreprocessEvent}.
+     *
+     * <p>Command-messages are formated as such: <i>/commandName arg1 arg2</i>. These are found in events such as {@link org.bukkit.event.player.PlayerCommandPreprocessEvent}.
      * </p>
+     *
      * @param commandMessage The Command-message to parse.
      * @return The command name.
      * @see org.bukkit.event.player.PlayerCommandPreprocessEvent
@@ -147,13 +147,13 @@ public class CommandUtils {
     public static String parseCommandName(String commandMessage) {
         return commandMessage.split(" ")[0].substring(1).trim();
     }
-    
+
     /**
      * Returns the Command-arguments of a command-message.
-     * 
-     * <p>Command-messages are formated as such: <i>/commandName arg1 arg2</i>.
-     * These are found in events such as {@link org.bukkit.event.player.PlayerCommandPreprocessEvent}.
+     *
+     * <p>Command-messages are formated as such: <i>/commandName arg1 arg2</i>. These are found in events such as {@link org.bukkit.event.player.PlayerCommandPreprocessEvent}.
      * </p>
+     *
      * @param commandMessage The Command-message to parse.
      * @return The command arguments.
      * @see org.bukkit.event.player.PlayerCommandPreprocessEvent

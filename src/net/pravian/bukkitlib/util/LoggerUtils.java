@@ -6,6 +6,7 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * Represents all Logger-related utilities.
+ *
  * @deprecated see {@link net.pravian.bukkitlib.implementation.PluginLogger}
  */
 @Deprecated
@@ -13,7 +14,7 @@ public class LoggerUtils {
 
     /**
      * Prints an info-message to the raw Bukkit logger.
-     * 
+     *
      * @param message The message to print.
      */
     @Deprecated
@@ -23,7 +24,7 @@ public class LoggerUtils {
 
     /**
      * Prints an info-message to the plugin logger.
-     * 
+     *
      * @param plugin The Plugin to use.
      * @param message The message to print.
      */
@@ -34,7 +35,7 @@ public class LoggerUtils {
 
     /**
      * Prints a warning-message to the raw Bukkit logger.
-     * 
+     *
      * @param message The message to print.
      */
     @Deprecated
@@ -44,7 +45,7 @@ public class LoggerUtils {
 
     /**
      * Prints a warning-message to the plugin logger.
-     * 
+     *
      * @param plugin The Plugin to use.
      * @param message The message to print.
      */
@@ -55,9 +56,9 @@ public class LoggerUtils {
 
     /**
      * Prints a severe-message to the raw Bukkit logger.
-     * 
+     *
      * <p><b>Note</b>: This methods also accepts all instances of {@link java.lang.Throwable} and will print the attached stacktrace.
-     * 
+     *
      * @param message The message to print.
      */
     @Deprecated
@@ -75,8 +76,9 @@ public class LoggerUtils {
 
     /**
      * Prints a severe-message to the plugin logger.
-     * 
+     *
      * <p><b>Note</b>: This methods also accepts all instances of {@link java.lang.Throwable} and will print the attached stacktrace.
+     *
      * @param plugin The Plugin to use.
      * @param message The message to print.
      */

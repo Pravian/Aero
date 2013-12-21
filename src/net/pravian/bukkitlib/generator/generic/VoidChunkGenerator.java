@@ -1,6 +1,5 @@
 package net.pravian.bukkitlib.generator.generic;
 
-
 import java.util.Random;
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;

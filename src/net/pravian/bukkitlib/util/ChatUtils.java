@@ -11,14 +11,11 @@ import org.bukkit.ChatColor;
 public class ChatUtils {
 
     private static final Random RANDOM = new Random();
-    
     /**
      * A static list of all ChatColors.
-     * 
-     * <p><b>Warning</b>: This does not include special ChatColors
-     * ChatColor.RESET, ChatColor.BOLD, ChatColor.UNDERLINE, 
-     * ChatColor.STRIKETHROUGH, ChatColor.ITALIC and ChatColor.WHITE</p>
-     * 
+     *
+     * <p><b>Warning</b>: This does not include special ChatColors ChatColor.RESET, ChatColor.BOLD, ChatColor.UNDERLINE, ChatColor.STRIKETHROUGH, ChatColor.ITALIC and ChatColor.WHITE</p>
+     *
      * @see ChatColor
      */
     public static final List<ChatColor> CHAT_COLOR_POOL = Arrays.asList(
@@ -39,7 +36,7 @@ public class ChatUtils {
 
     /**
      * Translates a String with color codes (&2, &4, etc) to a colored string.
-     * 
+     *
      * @param string The String which should be translated.
      * @return The Colored string.
      */
@@ -49,7 +46,7 @@ public class ChatUtils {
 
     /**
      * Returns a random chat color from the ChatColor pool.
-     * 
+     *
      * @return The randomly selected ChatColor.
      * @see #CHAT_COLOR_POOL
      */
