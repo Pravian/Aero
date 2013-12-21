@@ -13,7 +13,8 @@ public interface BukkitPermissionHandler {
      * 
      * @param sender The sender executing the command.
      * @param command The command being executed.
+     * @param args The arguments the command has.
      * @return true/false depending on if the sender has permission to use the command.
      */
-    public boolean hasPermission(CommandSender sender, Command command);
+    public boolean hasPermission(CommandSender sender, Command command, String[] args);
 }

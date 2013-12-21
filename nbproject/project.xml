@@ -14,6 +14,8 @@
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1"/>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>Bukkit</word>
+            <word>lang</word>
+            <word>org</word>
             <word>playername</word>
             <word>plugin</word>
             <word>plugins</word>

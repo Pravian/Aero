@@ -119,7 +119,7 @@ public class FileUtils {
      */
     public static boolean deleteFolder(File file) {
         if (file.exists() && file.isDirectory()) {
-            return org.apache.commons.io.FileUtils.deleteQuietly(file);
+            return net.minecraft.util.org.apache.commons.io.FileUtils.deleteQuietly(file);
         }
         return false;
     }

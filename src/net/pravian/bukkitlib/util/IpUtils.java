@@ -118,7 +118,7 @@ public class IpUtils {
      * Un-escapes a config-friendly Ipv4-address.
      * 
      * <p>Example:<pre>
-     * IpUtils.fromEscapedString("192_168_1.192"); // 192.168.1.192
+     * IpUtils.fromEscapedString("192_168_1_192"); // 192.168.1.192
      * </pre></p>
      * 
      * @param escapedIp The IP-address to un-escape.

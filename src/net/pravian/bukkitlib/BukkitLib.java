@@ -6,22 +6,22 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Represents BukkitLib; a commons library for Bukkit.
  *
  * @author DarthSalamon
- * @version 1.6-Beta
+ * @version 1.7-Beta
  */
 public final class BukkitLib extends JavaPlugin {
 
     /**
      * The name of this library.
      */
-    public static final String name = "BukkitLib";
+    public static final String NAME = "BukkitLib";
     /**
      * The version of this library.
      */
-    public static final String version = "1.6-Beta";
+    public static final String VERSION = "1.7-Beta";
     /**
      * The author of this library.
      */
-    public static final String author = "DarthSalamon";
+    public static final String AUTHOR = "DarthSalamon";
     /**
      * The features of this library.
      */
@@ -47,6 +47,11 @@ public final class BukkitLib extends JavaPlugin {
      * The change log to this library.
      */
     public static final String[] CHANGELOG = new String[]{
+        "-- 1.7-Beta",
+        "  - Updated to CraftBukkit 1.7-R0.1",
+        "  - Added PluginLogger instance to BukkitCommand",
+        "  - Minor changes",
+        "",
         "-- 1.6-Beta",
         "  - Implemented Bukkit build generator, moved away from plugin-based BukkitLib",
         "  - Fixed all JavaDoc",

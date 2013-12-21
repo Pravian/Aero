@@ -1,5 +1,6 @@
 package net.pravian.bukkitlib.command;
 
+import net.pravian.bukkitlib.implementation.PluginLogger;
 import net.pravian.bukkitlib.util.LoggerUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,21 +14,27 @@ import org.bukkit.plugin.Plugin;
  */
 public class BukkitCommandHandler<T extends Plugin> {
 
-    private T plugin;
+    private final T plugin;
+    private final PluginLogger logger;
     private String commandPath;
     private BukkitPermissionHandler permissionHandler = null;
     private String commandPrefix = "Command_";
     private String permissionMessage = ChatColor.RED + "You don't have permission to use that command.";
     private String onlyFromConsoleMessage = ChatColor.YELLOW + "That command can only be executed from console.";
     private String onlyFromGameMessage = ChatColor.YELLOW + "Only players may execute that command.";
-
+    
     /**
      * Creates a new BukkitCommandHandler with the specified plugin.
      * 
      * @param plugin The plugin instance.
      */
     public BukkitCommandHandler(T plugin) {
+        this(plugin, new PluginLogger(plugin));
+    }
+    
+    public BukkitCommandHandler(T plugin, PluginLogger logger) {
         this.plugin = plugin;
+        this.logger = logger;
     }
     
     /**
@@ -143,16 +150,33 @@ public class BukkitCommandHandler<T extends Plugin> {
     /**
      * Returns the BukkitPermissionHandler which handles command permissions.
      * 
-     * <p>Might return null if no BukkitPermissionHandler has been set.
+     * <p>Might return null if no BukkitPermissionHandler has been set.</p>
      * 
      * @return BukkitPermissionHandler instance / null 
      * @see #getPermissionHandler()
      */
     public BukkitPermissionHandler getPermissionHandler() {
         return permissionHandler;
-        
     }
-
+    
+    /**
+     * Returns the plugin associated with this handler.
+     * 
+     * @return The Plugin
+     */
+    public T getPlugin() {
+        return plugin;
+    }
+    
+    /**
+     * Returns the PluginLogger associated with this handler.
+     * 
+     * @return The Logger
+     */
+    public PluginLogger getLogger() {
+        return logger;
+    }
+    
     /**
      * Handles the execution of a command.
      * 
@@ -170,7 +194,9 @@ public class BukkitCommandHandler<T extends Plugin> {
         try {
             dispatcher = (BukkitCommand) BukkitCommandHandler.class.getClassLoader().loadClass(
                     String.format("%s.%s%s", commandPath, commandPrefix, command.getName().toLowerCase())).newInstance();
-            dispatcher.setup(this, plugin, sender, command, dispatcher.getClass());
+            
+            dispatcher.setup(this, plugin, logger, sender, command, commandLabel, args, dispatcher.getClass());
+            
         } catch (Throwable ex) {
             LoggerUtils.severe(plugin, "Command not loaded: " + command.getName());
             LoggerUtils.severe(plugin, ex);
@@ -180,7 +206,7 @@ public class BukkitCommandHandler<T extends Plugin> {
 
         try {
             if (dispatcher.checkPermissions()) {
-                return dispatcher.run(sender, command, commandLabel, args);
+                return dispatcher.execute();
             }
         } catch (Throwable ex) {
             LoggerUtils.severe(plugin, "Command Error: " + commandLabel);

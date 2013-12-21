@@ -19,7 +19,6 @@
             
             <zipfileset src="${dist.dir}/${ant.project.name}-unmapped.jar" excludes="META-INF/*" />
             
-            
             <zipgroupfileset dir="${dist.dir}/lib/" includes="*.jar" excludes="*bukkit-*.jar" />
             
             <manifest>

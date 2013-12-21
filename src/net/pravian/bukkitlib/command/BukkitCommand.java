@@ -1,6 +1,6 @@
 package net.pravian.bukkitlib.command;
 
-import net.pravian.bukkitlib.util.LoggerUtils;
+import net.pravian.bukkitlib.implementation.PluginLogger;
 import net.pravian.bukkitlib.util.PlayerUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -29,11 +29,20 @@ public abstract class BukkitCommand<T extends Plugin> {
      * Represents the player sending the command.
      * 
      * <p><b>Warning</b>: Might be null if the console is sending the command.</p>
+     * @deprecated Getting rid of duplicate values.
      */
+    @Deprecated
     protected Player commandSenderPlayer;
+    /**
+     * Represents the PLuginLogger used.
+     */
+    protected PluginLogger logger;
+    
     private BukkitCommandHandler handler;
     private CommandSender commandSender;
     private Command command;
+    private String commandLabel;
+    private String[] args;
     private Class<?> commandClass;
     private String usage;
 
@@ -44,17 +53,31 @@ public abstract class BukkitCommand<T extends Plugin> {
      * 
      * @param handler The BukkitCommandHander from which the command is being executed.
      * @param plugin The plugin handling the command.
+     * @param logger The logger used to log data.
      * @param sender The CommandSender executing the command.
      * @param command The command being executed.
+     * @param commandLabel The commandLabel for this command.
+     * @param args The arguments for this command.
      * @param commandClass The class representing the command.
      */
-    public void setup(BukkitCommandHandler handler, T plugin, final CommandSender sender, Command command, final Class<? extends BukkitCommand> commandClass) {
+    public void setup(
+            final BukkitCommandHandler handler,
+            final T plugin,
+            final PluginLogger logger,
+            final CommandSender sender,
+            final Command command,
+            final String commandLabel,
+            final String[] args,
+            final Class<? extends BukkitCommand> commandClass) {
         this.handler = handler;
         this.plugin = plugin;
+        this.logger = logger;
         this.server = plugin.getServer();
         this.commandSender = sender;
-        this.commandClass = commandClass;
         this.command = command;
+        this.commandLabel = commandLabel;
+        this.args = args;
+        this.commandClass = commandClass;
 
         if (sender instanceof Player) {
             this.commandSenderPlayer = (Player) sender;
@@ -75,6 +98,17 @@ public abstract class BukkitCommand<T extends Plugin> {
     abstract public boolean run(final CommandSender sender, final Command command, final String commandLabel, final String[] args);
 
     /**
+     * Executes the command.
+     * 
+     * <p><b>In normal conditions, this should never be ran.</b></p>
+     * 
+     * @return true/false depending if the command executed successfully.
+     */
+    protected boolean execute() {
+        return run(commandSender, command, commandLabel, args);
+    }
+    
+    /**
      * Checks if the CommandSender has permissions to run this command.
      * 
      * <p>Validates if the player has the "permission" value from the CommandPermission annotation.
@@ -88,7 +122,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         final CommandPermissions permissions = commandClass.getAnnotation(CommandPermissions.class);
         
         if (permissions == null) {
-            LoggerUtils.warning(plugin, commandClass.getName() + " is missing permissions annotation.");
+            logger.warning(commandClass.getName() + " is missing permissions annotation.");
             this.usage = "";
             return true;
         }
@@ -113,7 +147,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         }
         
         if (handler.getPermissionHandler() != null) {
-            final boolean result = handler.getPermissionHandler().hasPermission(commandSender, command);
+            final boolean result = handler.getPermissionHandler().hasPermission(commandSender, command, args);
             
             if (!result) {
                 commandSender.sendMessage(handler.getPermissionMessage());
@@ -125,7 +159,7 @@ public abstract class BukkitCommand<T extends Plugin> {
             return true;
         }
         
-        if (!commandSenderPlayer.hasPermission(permission)) {
+        if (!((Player) commandSender).hasPermission(permission)) {
             commandSender.sendMessage(handler.getPermissionMessage());
             return false;
         }
@@ -232,7 +266,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @return The player that has been found (<b>Or null if the player could not be found!</b>)
      * @see PlayerUtils#getPlayer(String)
      */
-    public Player getPlayer(String name) {
+    public Player getPlayer(final String name) {
         return PlayerUtils.getPlayer(name);
     }
     
@@ -245,7 +279,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @return The OfflinePlayer that has been found (<b>Or null if the player could not be found!</b>)
      * @see PlayerUtils#getOfflinePlayer(String)
      */
-    public OfflinePlayer getOfflinePlayer(String name) {
+    public OfflinePlayer getOfflinePlayer(final String name) {
         return PlayerUtils.getOfflinePlayer(name);
     }
 }
