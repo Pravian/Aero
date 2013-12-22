@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -88,6 +89,47 @@ public class FileUtils {
      */
     public static File getRoot() {
         return new File(".");
+    }
+
+    /**
+     * Gets the Jar File where a given Plugin is loaded from. If the plugin is not in a Jar file, null is returned instead.
+     *
+     * @author bergerkiller
+     * @param plugin to get the Jar File of
+     * @return the Jar File in which the plugin resides, or null if none found
+     */
+    public static File getPluginJarFile(Plugin plugin) {
+        final Class<?> pluginClass = plugin.getClass();
+        try {
+            URI uri = pluginClass.getProtectionDomain().getCodeSource().getLocation().toURI();
+            File file = new File(uri);
+            if (file.exists()) {
+                return file;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    /**
+     * Obtains the folder in which plugin-specific information is contained.<br>
+     * Usually this folder is <b>/plugins/[pluginname]</b>.<br>
+     * This method can be used to properly obtain this folder if the plugin is not initialized yet.
+     *
+     * @author bergerkiller
+     * @param plugin to get the data folder of
+     * @return Plugin data folder (never null)
+     */
+    public static File getPluginDataFolder(Plugin plugin) {
+        File folder = plugin.getDataFolder();
+        if (folder == null) {
+            File jarFile = getPluginJarFile(plugin);
+            if (jarFile == null) {
+                throw new RuntimeException("Plugin data folder can not be obtained: Not a valid JAR plugin");
+            }
+            folder = new File(jarFile.getAbsoluteFile().getParentFile(), plugin.getName());
+        }
+        return folder;
     }
 
     /**

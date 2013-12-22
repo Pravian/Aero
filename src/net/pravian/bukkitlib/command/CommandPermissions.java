@@ -4,7 +4,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Represents the annotation for defining the permission, source and usage for a BukkitCommand
+ * Represents the annotation for defining the permission, source and usage for a BukkitCommand.
  *
  * @see BukkitCommand
  */
@@ -14,7 +14,7 @@ public @interface CommandPermissions {
     /**
      * The permission which is required to use this command.
      *
-     * <p>Ignored if a custom BukkitPermissionHandler has been set.</p>
+     * <p>Ignored if a custom BukkitPermissionHolder has been set.</p>
      *
      * @return The permission which is required for this command.
      * @see BukkitCommandHandler#setPermissionHandler(BukkitPermissionHandler)

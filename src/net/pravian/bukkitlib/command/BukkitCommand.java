@@ -38,13 +38,22 @@ public abstract class BukkitCommand<T extends Plugin> {
      * Represents the PLuginLogger used.
      */
     protected PluginLogger logger;
+    //
     private BukkitCommandHandler handler;
     private CommandSender commandSender;
     private Command command;
     private String commandLabel;
     private String[] args;
-    private Class<?> commandClass;
+    private Class<? extends BukkitCommand> commandClass;
     private String usage;
+
+    /**
+     * Creates a new BukkitCommand instance.
+     *
+     * <p><b>In normal conditions, you should never create BukkitCommand instances</b></p>
+     */
+    protected BukkitCommand() {
+    }
 
     /**
      * Sets up a BukkitCommand environment.
@@ -60,7 +69,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @param args The arguments for this command.
      * @param commandClass The class representing the command.
      */
-    public void setup(
+    protected void setup(
             final BukkitCommandHandler handler,
             final T plugin,
             final PluginLogger logger,
@@ -95,7 +104,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @param args The arguments to the command.
      * @return true/false depending if the command executed successfully.
      */
-    abstract public boolean run(final CommandSender sender, final Command command, final String commandLabel, final String[] args);
+    abstract protected boolean run(final CommandSender sender, final Command command, final String commandLabel, final String[] args);
 
     /**
      * Executes the command.
@@ -116,7 +125,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      *
      * @return true if the CommandSender has permission to use this command.
      */
-    public boolean checkPermissions() {
+    protected boolean checkPermissions() {
         final CommandPermissions permissions = commandClass.getAnnotation(CommandPermissions.class);
 
         if (permissions == null) {
@@ -130,6 +139,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         final String permission = permissions.permission();
         final SourceType source = permissions.source();
 
+        // Validate source
         if (source == SourceType.PLAYER && isConsole()) {
             commandSender.sendMessage(handler.getOnlyGameMessage());
             return false;
@@ -140,10 +150,26 @@ public abstract class BukkitCommand<T extends Plugin> {
             return false;
         }
 
-        if (isConsole() || "".equals(permission)) {
+        // If Console, always allow
+        if (isConsole()) {
             return true;
         }
 
+        // PermissionHolder?
+        if (handler.getPermissionHolder() != null) {
+            final String handlerPermission = handler.getPermissionHolder().getPermission(commandClass);
+
+            if (handlerPermission != null) {
+                final boolean result = commandSender.hasPermission(handlerPermission);
+
+                if (!result) {
+                    commandSender.sendMessage(handler.getPermissionMessage());
+                }
+                return result;
+            }
+        }
+
+        // PermissionHandler? (Deprecated)
         if (handler.getPermissionHandler() != null) {
             final boolean result = handler.getPermissionHandler().hasPermission(commandSender, command, args);
 
@@ -153,17 +179,18 @@ public abstract class BukkitCommand<T extends Plugin> {
             return result;
         }
 
-        if (permission == null || permission.equals("")) {
-            return true;
+        // Annotations?
+        if (permission != null && permission.equals("")) {
+            final boolean result = ((Player) commandSender).hasPermission(permission);
+
+            if (!result) {
+                commandSender.sendMessage(handler.getPermissionMessage());
+            }
+            return result;
         }
 
-        if (!((Player) commandSender).hasPermission(permission)) {
-            commandSender.sendMessage(handler.getPermissionMessage());
-            return false;
-        }
-
+        // Default to true
         return true;
-
     }
 
     /**
@@ -188,7 +215,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      *
      * @return true
      */
-    public boolean noPerms() {
+    protected boolean noPerms() {
         msg(handler.getPermissionMessage());
         return true;
     }
@@ -201,7 +228,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @see #noPerms()
      * @return true
      */
-    public boolean showUsage() {
+    protected boolean showUsage() {
         if (usage.equals("")) {
             return false;
         }
@@ -215,7 +242,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @param message The message to send.
      * @see #msg(CommandSender, String, ChatColor)
      */
-    public void msg(final String message) {
+    protected void msg(final String message) {
         msg(commandSender, message);
     }
 
@@ -226,7 +253,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @param message The message to send.
      * @see #msg(CommandSender, String, ChatColor)
      */
-    public void msg(final CommandSender receiver, final String message) {
+    protected void msg(final CommandSender receiver, final String message) {
         msg(receiver, message, ChatColor.GRAY);
     }
 
@@ -237,7 +264,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @param color The color in which the message must be sent.
      * @see #msg(CommandSender, String, ChatColor)
      */
-    public void msg(final String message, final ChatColor color) {
+    protected void msg(final String message, final ChatColor color) {
         msg(commandSender, message, color);
     }
 
@@ -248,7 +275,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @param message The message to send.
      * @param color The color in which the message must be sent.
      */
-    public void msg(final CommandSender receiver, final String message, final ChatColor color) {
+    protected void msg(final CommandSender receiver, final String message, final ChatColor color) {
         if (receiver == null) {
             return;
         }
@@ -264,7 +291,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @return The player that has been found (<b>Or null if the player could not be found!</b>)
      * @see PlayerUtils#getPlayer(String)
      */
-    public Player getPlayer(final String name) {
+    protected Player getPlayer(final String name) {
         return PlayerUtils.getPlayer(name);
     }
 
@@ -277,7 +304,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @return The OfflinePlayer that has been found (<b>Or null if the player could not be found!</b>)
      * @see PlayerUtils#getOfflinePlayer(String)
      */
-    public OfflinePlayer getOfflinePlayer(final String name) {
+    protected OfflinePlayer getOfflinePlayer(final String name) {
         return PlayerUtils.getOfflinePlayer(name);
     }
 }

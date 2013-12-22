@@ -7,9 +7,7 @@ import org.bukkit.plugin.Plugin;
 /**
  * Represents all Logger-related utilities.
  *
- * @deprecated see {@link net.pravian.bukkitlib.implementation.PluginLogger}
  */
-@Deprecated
 public class LoggerUtils {
 
     /**
@@ -17,7 +15,6 @@ public class LoggerUtils {
      *
      * @param message The message to print.
      */
-    @Deprecated
     public static void info(String message) {
         Bukkit.getLogger().info(message);
     }
@@ -28,7 +25,6 @@ public class LoggerUtils {
      * @param plugin The Plugin to use.
      * @param message The message to print.
      */
-    @Deprecated
     public static void info(Plugin plugin, String message) {
         plugin.getLogger().info(message);
     }
@@ -38,7 +34,6 @@ public class LoggerUtils {
      *
      * @param message The message to print.
      */
-    @Deprecated
     public static void warning(String message) {
         Bukkit.getLogger().warning(message);
     }
@@ -49,7 +44,6 @@ public class LoggerUtils {
      * @param plugin The Plugin to use.
      * @param message The message to print.
      */
-    @Deprecated
     public static void warning(Plugin plugin, String message) {
         plugin.getLogger().warning(message);
     }
@@ -61,7 +55,6 @@ public class LoggerUtils {
      *
      * @param message The message to print.
      */
-    @Deprecated
     public static void severe(Object message) {
         final String line;
 
@@ -82,7 +75,6 @@ public class LoggerUtils {
      * @param plugin The Plugin to use.
      * @param message The message to print.
      */
-    @Deprecated
     public static void severe(Plugin plugin, Object message) {
         final String line;
 

@@ -5,7 +5,10 @@ import org.bukkit.command.CommandSender;
 
 /**
  * Represents the interface which permission handles must inherit.
+ *
+ * @deprecated Now BukkitPermissionHolder
  */
+@Deprecated
 public interface BukkitPermissionHandler {
 
     /**
@@ -16,5 +19,6 @@ public interface BukkitPermissionHandler {
      * @param args The arguments the command has.
      * @return true/false depending on if the sender has permission to use the command.
      */
+    @Deprecated
     public boolean hasPermission(CommandSender sender, Command command, String[] args);
 }

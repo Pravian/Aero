@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Represents BukkitLib; a commons library for Bukkit.
  *
  * @author DarthSalamon
- * @version 1.0
+ * @version 1.1
  */
 public final class BukkitLib extends JavaPlugin {
 
@@ -17,7 +17,7 @@ public final class BukkitLib extends JavaPlugin {
     /**
      * The version of this library.
      */
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.1";
     /**
      * The author of this library.
      */
@@ -27,42 +27,51 @@ public final class BukkitLib extends JavaPlugin {
      */
     public static final String[] FEATURES = new String[]{
         "Compact serialization for Bukkit objects (Inventory, Block, Location(Block & Entity)",
-        "Easy configfile management with",
-        "Utils for: Logging, Plugin, Commands, Ips, Player, the Server, Worlds, Date, File management, the Chat",
+        "Easy config-file management with YamlConfig",
+        "Exporting of net.minecraft.* using ServerUtil",
+        "Utils for: Logging, Plugin, Commands, Ips, Players, Worlds, Dates, File management, the Chat, Inventories, Items",
         "Includes Code-Block for pasing around methods",
-        "Includes Cleanroom world generator"
+        "Includes Cleanroom world generator",
+        "Includes mcstats.org metrics",
+        "Various concurrency tools"
     };
     /**
      * The credits to the making of this library.
      */
     public static final String[] CREDITS = new String[]{
-        "HeXeRei452/WickedGamingUK (Bukkit) for his interest and support",
+        "HeXeRei452/WickedGamingUK (Bukkit Forums) for his interest and support",
         "StevenLawson (Github) for his great helper methods in TotalFreedomMod",
         "Phil2812 (Bukkit Forums) for his inventory serializer",
         "mkyong (mykong.com) for his great examples on how to write objects to files",
         "nvx (Bukkit Forums) for their Cleanroom generator",
-        "sk89q (sk89q.com) for his getField() method"
+        "sk89q (sk89q.com) for his getField() method",
+        "bergerkiller for various methods and utilities",
+        "The Essentials development team for a range of utilities"
     };
     /**
      * The change log to this library.
      */
     public static final String[] CHANGELOG = new String[]{
-        "-- 1.0",
+        "-- 1.1:",
+        "  - Added BukkitPermissionHolder, deprecates BukkitPermissionHandler",
+        "",
+        "-- 1.0:",
         "  - Batch format & cleanup",
         "  - Removed generator: SkyGrid",
+        "  - Undeprecated LoggerUtil",
         "",
-        "-- 1.7-Beta",
+        "-- 1.7-Beta:",
         "  - Updated to CraftBukkit 1.7-R0.1",
         "  - Added PluginLogger instance to BukkitCommand",
         "  - Minor changes",
         "",
-        "-- 1.6-Beta",
+        "-- 1.6-Beta:",
         "  - Implemented Bukkit build generator, moved away from plugin-based BukkitLib",
         "  - Fixed all JavaDoc",
         "  - Added debug-style logging in PluginLogger",
         "  - Minor changes",
         "",
-        "-- 1.5-Beta",
+        "-- 1.5-Beta:",
         "  - Added PluginLogger, replaces LoggerUtils (now deprecated)",
         "  - Renamed net.pravian.bukkitlib.utils to net.bukkitlib.pravian.util",
         "  - Small changes",

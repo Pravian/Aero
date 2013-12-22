@@ -18,13 +18,14 @@ public class BukkitCommandHandler<T extends Plugin> {
     private final PluginLogger logger;
     private String commandPath;
     private BukkitPermissionHandler permissionHandler = null;
+    private BukkitPermissionHolder permissionHolder = null;
     private String commandPrefix = "Command_";
     private String permissionMessage = ChatColor.RED + "You don't have permission to use that command.";
     private String onlyFromConsoleMessage = ChatColor.YELLOW + "That command can only be executed from console.";
     private String onlyFromGameMessage = ChatColor.YELLOW + "Only players may execute that command.";
 
     /**
-     * Creates a new BukkitCommandHandler with the specified plugin.
+     * Creates a new instance of BukkitCommandHandler with the specified plugin.
      *
      * @param plugin The plugin instance.
      */
@@ -142,6 +143,7 @@ public class BukkitCommandHandler<T extends Plugin> {
      *
      * @param handler The new PermissionHandler / null
      * @see BukkitPermissionHandler
+     * @deprecated Now setPermissionHolder
      */
     public void setPermissionHandler(BukkitPermissionHandler handler) {
         this.permissionHandler = handler;
@@ -154,9 +156,22 @@ public class BukkitCommandHandler<T extends Plugin> {
      *
      * @return BukkitPermissionHandler instance / null
      * @see #getPermissionHandler()
+     * @deprecated Now setPermissionHolder
      */
     public BukkitPermissionHandler getPermissionHandler() {
         return permissionHandler;
+    }
+
+    public void setPermissionHolder(BukkitPermissionHolder holder) {
+        this.permissionHolder = holder;
+
+        if (holder != null) {
+            holder.initPermissions();
+        }
+    }
+
+    public BukkitPermissionHolder getPermissionHolder() {
+        return permissionHolder;
     }
 
     /**
@@ -189,7 +204,7 @@ public class BukkitCommandHandler<T extends Plugin> {
      */
     public boolean handleCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
 
-        BukkitCommand<T> dispatcher;
+        final BukkitCommand<T> dispatcher;
 
         try {
             dispatcher = (BukkitCommand) BukkitCommandHandler.class.getClassLoader().loadClass(
@@ -200,7 +215,7 @@ public class BukkitCommandHandler<T extends Plugin> {
         } catch (Throwable ex) {
             LoggerUtils.severe(plugin, "Command not loaded: " + command.getName());
             LoggerUtils.severe(plugin, ex);
-            sender.sendMessage(ChatColor.RED + "Command Error: Command not loaded: " + command.getName());
+            sender.sendMessage(ChatColor.RED + "Command Error: Command  " + command.getName() + " not loaded!");
             return true;
         }
 
