@@ -8,11 +8,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -20,14 +16,15 @@ import org.bukkit.plugin.Plugin;
  */
 public class FileUtils {
 
+    /* // BukkitDev wants this gone
     /**
-     * Downloads a file from the specified URIL and saves it at the specified location.
+     * Downloads a file from the specified URL and saves it at the specified location.
      *
      * @param url The URL from where to download the file from.
      * @param output The file where the file will be stored.
      * @throws MalformedURLException
      * @throws IOException
-     */
+     *
     public static void downloadFile(String url, File output) throws MalformedURLException, IOException {
         final URL website = new URL(url);
         final ReadableByteChannel rbc = Channels.newChannel(website.openStream());
@@ -35,6 +32,7 @@ public class FileUtils {
         fos.getChannel().transferFrom(rbc, 0, 1 << 24);
         fos.close();
     }
+    */
 
     /**
      * Saves a raw Object to a file.

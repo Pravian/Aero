@@ -1,5 +1,6 @@
 package net.pravian.bukkitlib;
 
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -109,4 +110,8 @@ public final class BukkitLib extends JavaPlugin {
         "  - Using net.pravian.util.Block, SingletonBlock, ClosedBlock",
         ""
     };
+    
+    public static void init(Plugin plugin) {
+        
+    }
 }
