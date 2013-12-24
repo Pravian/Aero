@@ -25,7 +25,7 @@
  * authors and contributors and should not be interpreted as representing official policies,
  * either expressed or implied, of anybody else.
  */
-package net.pravian.metrics;
+package net.pravian.bukkitlib.metrics;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -479,7 +479,7 @@ public final class Metrics {
      * GZip compress a string of bytes
      *
      * @param input
-     * @return
+     * @return The resulting bytes
      */
     public static byte[] gzip(String input) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -554,7 +554,7 @@ public final class Metrics {
      * Escape a string to create a valid JSON string
      *
      * @param text
-     * @return
+     * @return The JSON String
      */
     private static String escapeJSON(String text) {
         StringBuilder builder = new StringBuilder();

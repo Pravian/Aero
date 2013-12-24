@@ -1,4 +1,4 @@
-package net.pravian.metrics;
+package net.pravian.bukkitlib.metrics;
 
 /**
  * Interface used to collect custom data for a plugin

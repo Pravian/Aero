@@ -1,4 +1,4 @@
-package net.pravian.metrics;
+package net.pravian.bukkitlib.metrics;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
