@@ -9,8 +9,6 @@ import org.bukkit.block.Block;
 /**
  * Represents a serializable Block
  *
- * <p><b>Warning</b> {@link #deserialize()} also sets the block-id and data. Be careful with this method.</p>
- *
  * @see SerializableObject
  */
 public class SerializableBlock extends SerializableObject<Block> {
@@ -86,6 +84,13 @@ public class SerializableBlock extends SerializableObject<Block> {
      */
     public byte getData() {
         return data;
+    }
+    
+    /**
+     * Sets the block at the location to the stored id and data value
+     */
+    public void put() {
+        getLocation().getBlock().setTypeIdAndData(id, data, false);
     }
 
     /**
