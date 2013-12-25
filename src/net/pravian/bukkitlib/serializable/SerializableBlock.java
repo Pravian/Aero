@@ -85,7 +85,7 @@ public class SerializableBlock extends SerializableObject<Block> {
     public byte getData() {
         return data;
     }
-    
+
     /**
      * Sets the block at the location to the stored id and data value
      */

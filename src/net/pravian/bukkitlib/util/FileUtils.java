@@ -17,7 +17,7 @@ import org.bukkit.plugin.Plugin;
 public class FileUtils {
 
     /* // BukkitDev wants this gone
-    /**
+     /**
      * Downloads a file from the specified URL and saves it at the specified location.
      *
      * @param url The URL from where to download the file from.
@@ -25,15 +25,14 @@ public class FileUtils {
      * @throws MalformedURLException
      * @throws IOException
      *
-    public static void downloadFile(String url, File output) throws MalformedURLException, IOException {
-        final URL website = new URL(url);
-        final ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-        final FileOutputStream fos = new FileOutputStream(output);
-        fos.getChannel().transferFrom(rbc, 0, 1 << 24);
-        fos.close();
-    }
-    */
-
+     public static void downloadFile(String url, File output) throws MalformedURLException, IOException {
+     final URL website = new URL(url);
+     final ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+     final FileOutputStream fos = new FileOutputStream(output);
+     fos.getChannel().transferFrom(rbc, 0, 1 << 24);
+     fos.close();
+     }
+     */
     /**
      * Saves a raw Object to a file.
      *

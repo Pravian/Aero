@@ -1,5 +1,8 @@
 package net.pravian.bukkitlib;
 
+import java.io.IOException;
+import net.pravian.bukkitlib.internal.InternalMetrics;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -110,8 +113,20 @@ public final class BukkitLib extends JavaPlugin {
         "  - Using net.pravian.util.Block, SingletonBlock, ClosedBlock",
         ""
     };
-    
+
+    /**
+     * Initializes BukkitLib
+     *
+     * <p><b>All plugins depending on BukkitLib should call this method at plugin load time.</b></p>
+     *
+     * @param plugin
+     */
     public static void init(Plugin plugin) {
-        
+        try {
+            final InternalMetrics metrics = new InternalMetrics(plugin, NAME, VERSION);
+            metrics.start();
+        } catch (IOException ex) {
+            Bukkit.getLogger().warning("[BukkitLib] Failed to submit metrics");
+        }
     }
 }
