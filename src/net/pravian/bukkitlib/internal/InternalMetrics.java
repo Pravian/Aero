@@ -59,9 +59,9 @@ public final class InternalMetrics {
     private static final String BASE_URL = "http://report.mcstats.org";
     private static final String REPORT_URL = "/plugin/%s";
     private static final int PING_INTERVAL = 15;
-    private final Plugin dependingPlugin;
-    private final String pluginName;
-    private final String pluginVersion;
+    private final Plugin dependingPlugin; // Plugin depending on BukkitLib
+    private final String pluginName; // BukkitLib
+    private final String pluginVersion; // BukkitLib
     private final Set<Graph> graphs = Collections.synchronizedSet(new HashSet<Graph>());
     private final YamlConfiguration configuration;
     private final File configurationFile;

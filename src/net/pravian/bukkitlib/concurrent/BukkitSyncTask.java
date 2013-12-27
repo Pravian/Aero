@@ -6,60 +6,68 @@ import org.bukkit.plugin.Plugin;
 /**
  * Represents a synchronous thread.
  */
-public abstract class BukkitSyncThread implements Runnable {
+public abstract class BukkitSyncTask implements Runnable, Cloneable {
 
     private final Plugin plugin;
     private int taskId;
-    private boolean running = false;
 
     /**
-     * Creates a new BukkitSyncThread with the specified plugin.
+     * Creates a new BukkitSyncTask with the specified plugin.
      *
      * @param plugin The plugin to create the thread with
      */
-    public BukkitSyncThread(Plugin plugin) {
+    public BukkitSyncTask(Plugin plugin) {
         this.plugin = plugin;
+        this.taskId = -1;
     }
 
     /**
      * Starts the thread.
+     *
+     * <p><b>Warning</b>: A task may only be scheduled once at a time. If you need two duplicate threads, use clone()</p>
+     *
      */
-    public synchronized void start() {
-        if (isStarted()) {
-            throw new IllegalStateException("Task already started!");
+    public synchronized boolean start() {
+        if (isRunning()) {
+            return false;
         }
 
-        running = true;
         taskId = Bukkit.getScheduler().runTask(plugin, this).getTaskId();
+        return true;
     }
 
     /**
      * Starts the thread after a certain amount of ticks.
      *
+     * <p><b>Warning</b>: A task may only be scheduled once at a time. If you need two duplicate threads, use clone()</p>
+     *
      * @param delay The starting delay
      */
-    public synchronized void start(long delay) {
-        if (isStarted()) {
-            throw new IllegalStateException("Task already started!");
+    public synchronized boolean start(long delay) {
+        if (isRunning()) {
+            return false;
         }
 
-        running = true;
         taskId = Bukkit.getScheduler().runTaskLater(plugin, this, delay).getTaskId();
+        return true;
     }
 
     /**
      * Starts the thread after a certain amount of ticks and schedules the thread for repetition.
      *
+     * <p><b>Warning</b>: A task may only be scheduled once at a time. If you need two duplicate threads, use clone()</p>
+     *
      * @param delay The starting delay
      * @param interval The interval between every thread cycle
+     * @return true if the thread was started successfully
      */
-    public synchronized void start(long delay, long interval) {
-        if (isStarted()) {
-            throw new IllegalStateException("Task already started!");
+    public synchronized boolean start(long delay, long interval) {
+        if (isRunning()) {
+            return false;
         }
 
-        running = true;
         taskId = plugin.getServer().getScheduler().runTaskTimer(plugin, this, delay, interval).getTaskId();
+        return true;
     }
 
     /**
@@ -87,20 +95,20 @@ public abstract class BukkitSyncThread implements Runnable {
      *
      * @return true if the thread is running.
      */
-    public synchronized boolean isStarted() {
-        return running;
+    public synchronized boolean isRunning() {
+        return taskId != -1 && Bukkit.getScheduler().isCurrentlyRunning(taskId);
     }
 
     /**
      * Stops the thread.
      */
-    public synchronized void stop() {
-        if (!isStarted()) {
-            throw new IllegalStateException("Task not started!");
+    public synchronized boolean stop() {
+        if (!isRunning()) {
+            return false;
         }
 
-        running = false;
         Bukkit.getScheduler().cancelTask(taskId);
+        return true;
     }
 
     /**
@@ -109,18 +117,29 @@ public abstract class BukkitSyncThread implements Runnable {
      * @return true if the thread is queued
      */
     public synchronized boolean isQueued() {
-        return Bukkit.getServer().getScheduler().isQueued(taskId);
+        return Bukkit.getScheduler().isQueued(taskId);
     }
 
     /**
      * Locks the current thread until the thread is finished.
      */
     public void waitFinished() {
-        while (isStarted()) {
+        while (isRunning()) {
             try {
                 Thread.sleep(20);
             } catch (InterruptedException ex) {
             }
+        }
+    }
+
+    @Override
+    public synchronized BukkitSyncTask clone() {
+        try {
+            final BukkitSyncTask task = (BukkitSyncTask) super.clone();
+            task.taskId = -1;
+            return task;
+        } catch (CloneNotSupportedException ex) {
+            return null;
         }
     }
 }

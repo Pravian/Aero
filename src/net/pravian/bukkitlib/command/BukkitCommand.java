@@ -1,6 +1,6 @@
 package net.pravian.bukkitlib.command;
 
-import net.pravian.bukkitlib.implementation.PluginLogger;
+import net.pravian.bukkitlib.implementation.BukkitLogger;
 import net.pravian.bukkitlib.util.PlayerUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -37,7 +37,7 @@ public abstract class BukkitCommand<T extends Plugin> {
     /**
      * Represents the PLuginLogger used.
      */
-    protected PluginLogger logger;
+    protected BukkitLogger logger;
     //
     private BukkitCommandHandler handler;
     private CommandSender commandSender;
@@ -72,7 +72,7 @@ public abstract class BukkitCommand<T extends Plugin> {
     protected void setup(
             final BukkitCommandHandler handler,
             final T plugin,
-            final PluginLogger logger,
+            final BukkitLogger logger,
             final CommandSender sender,
             final Command command,
             final String commandLabel,

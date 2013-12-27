@@ -2,6 +2,8 @@ package net.pravian.bukkitlib;
 
 import java.io.IOException;
 import net.pravian.bukkitlib.internal.InternalMetrics;
+import net.pravian.bukkitlib.internal.InternalMetrics.Graph;
+import net.pravian.bukkitlib.internal.InternalSimplePlotter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,7 +52,7 @@ public final class BukkitLib extends JavaPlugin {
         "nvx (Bukkit Forums) for their Cleanroom generator",
         "sk89q (sk89q.com) for his getField() method",
         "bergerkiller for various methods and utilities",
-        "The Essentials development team for a range of utilities"
+        "The Essentials development team for a larger range of utilities"
     };
     /**
      * The change log to this library.
@@ -58,6 +60,13 @@ public final class BukkitLib extends JavaPlugin {
     public static final String[] CHANGELOG = new String[]{
         "-- 1.1:",
         "  - Added BukkitPermissionHolder, deprecates BukkitPermissionHandler",
+        "  - Added internal metrics through BukkitLib.init()",
+        "  - Added BlockUtil",
+        "  - Added BukkitSyncTask and BukkitAsyncTask",
+        "  - Added ItemUtil",
+        "  - Added BukkitSign",
+        "  - Renamed PluginLogger to BukkitLogger",
+        "  - Added SelectionUtils",
         "",
         "-- 1.0:",
         "  - Batch format & cleanup",
@@ -124,6 +133,10 @@ public final class BukkitLib extends JavaPlugin {
     public static void init(Plugin plugin) {
         try {
             final InternalMetrics metrics = new InternalMetrics(plugin, NAME, VERSION);
+
+            final Graph plugins = metrics.createGraph("Plugins");
+            plugins.addPlotter(new InternalSimplePlotter(plugin.getDescription().getName()));
+
             metrics.start();
         } catch (IOException ex) {
             Bukkit.getLogger().warning("[BukkitLib] Failed to submit metrics");

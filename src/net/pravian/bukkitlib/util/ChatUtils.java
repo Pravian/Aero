@@ -1,9 +1,13 @@
 package net.pravian.bukkitlib.util;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 /**
  * Represents all Chat-related utilities.
@@ -52,5 +56,39 @@ public class ChatUtils {
      */
     public static ChatColor randomChatColor() {
         return CHAT_COLOR_POOL.get(RANDOM.nextInt(CHAT_COLOR_POOL.size()));
+    }
+
+    /**
+     * Sends all players a message.
+     *
+     * @param message The message to send.
+     */
+    public static void messagePlayers(String message) {
+        messagePlayers(message, "", Arrays.asList(Bukkit.getOnlinePlayers()));
+    }
+
+    /**
+     * Sends all players a message if they have the required permission.
+     *
+     * @param message The message to send.
+     * @param permission The permission the players must have.
+     */
+    public static void messagePlayers(String message, String permission) {
+        messagePlayers(message, permission, Arrays.asList(Bukkit.getOnlinePlayers()));
+    }
+
+    /**
+     * Sends certain players a message if they have the required permission.
+     *
+     * @param message The message to send.
+     * @param permission The permission the players must have.
+     * @param players The players to send the message to.
+     */
+    public static void messagePlayers(String message, String permission, Collection<Player> players) {
+        for (Player player : players) {
+            if (permission.equals("") || player.hasPermission(permission)) {
+                player.sendMessage(message);
+            }
+        }
     }
 }

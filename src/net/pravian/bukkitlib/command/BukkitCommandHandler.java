@@ -1,6 +1,6 @@
 package net.pravian.bukkitlib.command;
 
-import net.pravian.bukkitlib.implementation.PluginLogger;
+import net.pravian.bukkitlib.implementation.BukkitLogger;
 import net.pravian.bukkitlib.util.LoggerUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 public class BukkitCommandHandler<T extends Plugin> {
 
     private final T plugin;
-    private final PluginLogger logger;
+    private final BukkitLogger logger;
     private String commandPath;
     private BukkitPermissionHandler permissionHandler = null;
     private BukkitPermissionHolder permissionHolder = null;
@@ -30,10 +30,10 @@ public class BukkitCommandHandler<T extends Plugin> {
      * @param plugin The plugin instance.
      */
     public BukkitCommandHandler(T plugin) {
-        this(plugin, new PluginLogger(plugin));
+        this(plugin, new BukkitLogger(plugin));
     }
 
-    public BukkitCommandHandler(T plugin, PluginLogger logger) {
+    public BukkitCommandHandler(T plugin, BukkitLogger logger) {
         this.plugin = plugin;
         this.logger = logger;
     }
@@ -184,11 +184,11 @@ public class BukkitCommandHandler<T extends Plugin> {
     }
 
     /**
-     * Returns the PluginLogger associated with this handler.
+     * Returns the BukkitLogger associated with this handler.
      *
      * @return The Logger
      */
-    public PluginLogger getLogger() {
+    public BukkitLogger getLogger() {
         return logger;
     }
 

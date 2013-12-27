@@ -10,10 +10,10 @@ import org.bukkit.plugin.Plugin;
 /*
  * Represents a Plugin-specific Logger
  * .
- * <p><b>Note</b>: The methods in this class also accept all instances of 
+ * <p><b>Note</b>: The methods in this class also accept all instances of
  * {@link java.lang.Throwable} and will print the attached StackTrace.
  */
-public class PluginLogger extends Logger {
+public class BukkitLogger extends Logger {
 
     private String pluginName;
     private boolean debugMode;
@@ -23,25 +23,23 @@ public class PluginLogger extends Logger {
     public final Logger BUKKIT_LOGGER;
 
     /**
-     * Creates a new PluginLogger instance.
+     * Creates a new BukkitLogger instance.
      *
      * <p><b>Note</b>: This method also accepts all instances of {@link java.lang.Throwable} and will print the attached StackTrace.
      *
      * @param plugin The plugin for which the logger will be used.
      */
-    public PluginLogger(Plugin plugin) {
-        this(plugin, Bukkit.getLogger());
+    public BukkitLogger(Plugin plugin) {
+        this(plugin, plugin.getServer().getLogger());
     }
 
-    public PluginLogger(Plugin plugin, Logger raw) {
+    public BukkitLogger(Plugin plugin, Logger raw) {
         super(plugin.getClass().getCanonicalName(), null);
-        BUKKIT_LOGGER = raw;
-        super.setParent(BUKKIT_LOGGER);
-        super.setLevel(Level.ALL);
-
-        final String prefix = plugin.getDescription().getPrefix();
+        String prefix = plugin.getDescription().getPrefix();
         pluginName = prefix != null ? new StringBuilder().append("[").append(prefix).append("] ").toString() : "[" + plugin.getDescription().getName() + "] ";
-        debugMode = false;
+        setParent(raw);
+        setLevel(Level.ALL);
+        BUKKIT_LOGGER = raw;
     }
 
     /**

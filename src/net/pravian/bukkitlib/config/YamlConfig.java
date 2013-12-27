@@ -28,6 +28,24 @@ public class YamlConfig extends YamlConfiguration {
      *
      * <p>Example:
      * <pre>
+     * YamlConfig config = new YamlConfig(this, "config.yml");
+     * config.load();
+     * </pre></p>
+     *
+     * <p>Note: This will automatically attempt to load the config from the the plugin archive.</p>
+     *
+     * @param plugin The plugin to which the config belongs.
+     * @param fileName The filename of the config file.
+     */
+    public YamlConfig(Plugin plugin, String fileName) {
+        this(plugin, fileName, true);
+    }
+
+    /**
+     * Creates a new YamlConfig instance.
+     *
+     * <p>Example:
+     * <pre>
      * YamlConfig config = new YamlConfig(this, "config.yml", true);
      * config.load();
      * </pre></p>
