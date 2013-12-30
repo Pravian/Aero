@@ -3,7 +3,6 @@ package net.pravian.bukkitlib.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import net.pravian.java.implementation.SingletonBlock;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,18 +13,6 @@ import org.bukkit.entity.Player;
  * Represents all Player-related utilities.
  */
 public class PlayerUtils {
-
-    /**
-     * Executes the specified Block for every online player.
-     *
-     * @param block The codeblock to use.
-     * @see SingletonBlock
-     */
-    public static void eachPlayer(SingletonBlock<Player> block) {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            block.run(player);
-        }
-    }
 
     /**
      * Attempts to resolve the full Player-Name by a portion of it.

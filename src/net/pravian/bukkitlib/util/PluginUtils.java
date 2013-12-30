@@ -3,7 +3,6 @@ package net.pravian.bukkitlib.util;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import net.pravian.java.implementation.SingletonBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
@@ -13,18 +12,6 @@ import org.bukkit.plugin.Plugin;
  * Represents all Plugin-related utilities.
  */
 public class PluginUtils {
-
-    /**
-     * Executes the specified Block for every plugin.
-     *
-     * @param block The codeblock to use.
-     * @see SingletonBlock
-     */
-    public static void eachPlugin(SingletonBlock<Plugin> block) {
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            block.run(plugin);
-        }
-    }
 
     /**
      * Disables all plugins.

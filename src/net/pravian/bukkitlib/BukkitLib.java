@@ -36,7 +36,6 @@ public final class BukkitLib extends JavaPlugin {
         "Easy config-file management with YamlConfig",
         "Exporting of net.minecraft.* using ServerUtil",
         "Utils for: Logging, Plugin, Commands, Ips, Players, Worlds, Dates, File management, the Chat, Inventories, Items",
-        "Includes Code-Block for pasing around methods",
         "Includes Cleanroom world generator",
         "Includes mcstats.org metrics",
         "Various concurrency tools"
