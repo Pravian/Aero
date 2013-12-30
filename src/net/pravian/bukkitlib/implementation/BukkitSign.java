@@ -82,6 +82,15 @@ public class BukkitSign {
     }
 
     /**
+     * Returns the Block the sign is located at.
+     *
+     * @return The Block.
+     */
+    public Block getBlock() {
+        return sign.getBlock();
+    }
+
+    /**
      * Validates if a this BukkitSign was created correctly.
      *
      * @return True if the BukkitSign is valid.

@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Represents BukkitLib; a commons library for Bukkit.
  *
- * @author DarthSalamon
+ * @author Prozza
  * @version 1.1
  */
 public final class BukkitLib extends JavaPlugin {
@@ -27,7 +27,7 @@ public final class BukkitLib extends JavaPlugin {
     /**
      * The author of this library.
      */
-    public static final String AUTHOR = "DarthSalamon";
+    public static final String AUTHOR = "Prozza";
     /**
      * The features of this library.
      */
@@ -67,6 +67,7 @@ public final class BukkitLib extends JavaPlugin {
         "  - Added BukkitSign",
         "  - Renamed PluginLogger to BukkitLogger",
         "  - Added SelectionUtils",
+        "  - Added PlayerLobby",
         "",
         "-- 1.0:",
         "  - Batch format & cleanup",
