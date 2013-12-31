@@ -4,7 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 /*

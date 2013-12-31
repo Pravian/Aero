@@ -34,25 +34,45 @@
     </dependencies>
     
     
+    <distributionManagement>
+        <repository>
+            <id>projects-ftp</id>
+            <url>ftp://projects.pravian.net/var/www/html/repo/</url>
+        </repository>
+    </distributionManagement>
+    
     <build>
         <plugins>
-            
-            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9.1</version>
+                <configuration>
+                    <links>
+                        <link>http://jd.bukkit.org/dev/apidocs/</link>
+                    </links>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>javadoc</id>
+                        <id>javadocs</id>
+                        <!-- Restrict execution of source compilation to deploy -->
+                        <phase>deploy</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-            
-            
         </plugins>
+        
+        <extensions>
+            <!-- Enabling the use of FTP -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-6</version>
+            </extension>
+        </extensions>
+        
     </build>
 </project>
