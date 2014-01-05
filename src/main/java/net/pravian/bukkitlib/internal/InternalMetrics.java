@@ -30,6 +30,7 @@ package net.pravian.bukkitlib.internal;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.BufferedReader;
@@ -51,17 +52,14 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
-import org.bukkit.plugin.Plugin;
 
-public final class InternalMetrics {
+public final class InternalMetrics { // BukkitLib final
 
     private final static int REVISION = 7;
     private static final String BASE_URL = "http://report.mcstats.org";
     private static final String REPORT_URL = "/plugin/%s";
     private static final int PING_INTERVAL = 15;
-    private final Plugin dependingPlugin; // Plugin depending on BukkitLib
-    private final String pluginName; // BukkitLib
-    private final String pluginVersion; // BukkitLib
+    private final Plugin plugin;
     private final Set<Graph> graphs = Collections.synchronizedSet(new HashSet<Graph>());
     private final YamlConfiguration configuration;
     private final File configurationFile;
@@ -69,12 +67,23 @@ public final class InternalMetrics {
     private final boolean debug;
     private final Object optOutLock = new Object();
     private volatile BukkitTask task = null;
+    // BukkitLib start
+    private final String libName;
+    private final String libVersion;
+    // BukkitLib end
+    // BukkitLib add libName, libVersion
 
-    public InternalMetrics(Plugin dependingPlugin, String pluginName, String pluginVersion) throws IOException {
+    public InternalMetrics(final Plugin plugin, final String libName, final String libVersion) throws IOException {
+        if (plugin == null) {
+            throw new IllegalArgumentException("Plugin cannot be null");
+        }
 
-        this.dependingPlugin = dependingPlugin;
-        this.pluginName = pluginName;
-        this.pluginVersion = pluginVersion;
+        // BukkitLib start
+        this.libName = libName;
+        this.libVersion = libVersion;
+        // BukkitLib end
+
+        this.plugin = plugin;
 
         // load the config
         configurationFile = getConfigFile();
@@ -132,10 +141,9 @@ public final class InternalMetrics {
             }
 
             // Begin hitting the server with glorious data
-            task = Bukkit.getScheduler().runTaskTimerAsynchronously(dependingPlugin, new Runnable() {
+            task = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
                 private boolean firstPost = true;
 
-                @Override
                 public void run() {
                     try {
                         // This has to be synchronized or it can collide with the disable method.
@@ -230,7 +238,7 @@ public final class InternalMetrics {
         // plugin.getDataFolder() => base/plugins/PluginA/
         // pluginsFolder => base/plugins/
         // The base is not necessarily relative to the startup directory.
-        File pluginsFolder = dependingPlugin.getDataFolder().getParentFile();
+        File pluginsFolder = plugin.getDataFolder().getParentFile();
 
         // return => base/plugins/PluginMetrics/config.yml
         return new File(new File(pluginsFolder, "PluginMetrics"), "config.yml");
@@ -238,7 +246,10 @@ public final class InternalMetrics {
 
     private void postPlugin(final boolean isPing) throws IOException {
         // Server software specific section
+        // PluginDescriptionFile description = plugin.getDescription(); // BukkitLib comment
+        // String pluginName = description.getName(); // BukkitLib comment
         boolean onlineMode = Bukkit.getServer().getOnlineMode(); // TRUE if online mode is enabled
+        // String pluginVersion = description.getVersion(); // BukkitLib comment
         String serverVersion = Bukkit.getVersion();
         int playersOnline = Bukkit.getServer().getOnlinePlayers().length;
 
@@ -250,7 +261,7 @@ public final class InternalMetrics {
 
         // The plugin's description file containg all of the plugin data such as name, version, author, etc
         appendJSONPair(json, "guid", guid);
-        appendJSONPair(json, "plugin_version", pluginVersion);
+        appendJSONPair(json, "plugin_version", libVersion); // BukkitLib pluginVersion -> libVersion
         appendJSONPair(json, "server_version", serverVersion);
         appendJSONPair(json, "players_online", Integer.toString(playersOnline));
 
@@ -322,7 +333,7 @@ public final class InternalMetrics {
         json.append('}');
 
         // Create the url
-        URL url = new URL(BASE_URL + String.format(REPORT_URL, urlEncode(pluginName)));
+        URL url = new URL(BASE_URL + String.format(REPORT_URL, urlEncode(libName))); // BukkitLib pluginName -> libName
 
         // Connect to the website
         URLConnection connection;
@@ -350,7 +361,8 @@ public final class InternalMetrics {
         connection.setDoOutput(true);
 
         if (debug) {
-            System.out.println("[Metrics] Prepared request for " + pluginName + " uncompressed=" + uncompressed.length + " compressed=" + compressed.length);
+            // BukkitLib pluginName -> libName
+            System.out.println("[Metrics] Prepared request for " + libName + " uncompressed=" + uncompressed.length + " compressed=" + compressed.length);
         }
 
         // Write the data

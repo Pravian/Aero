@@ -2,6 +2,8 @@ package net.pravian.bukkitlib.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import net.pravian.bukkitlib.serializable.SerializableBlock;
 import net.pravian.bukkitlib.serializable.SerializableBlockLocation;
 import net.pravian.bukkitlib.serializable.SerializableEntityLocation;
@@ -180,6 +182,43 @@ public class YamlConfig extends YamlConfiguration {
         }
 
         return object;
+    }
+
+    /**
+     * Stores a Map of any generic type.
+     * 
+     * @param <K> The key type to the map.
+     * @param <V> The value type to the map.
+     * @param path The path at which the map should be stored.
+     * @param map The map to store.
+     */
+    public <K, V> void set(String path, Map<K, V> map) {
+        for (K key : map.keySet()) {
+            super.set(path + "." + key.toString(), map.get(key));
+        }
+    }
+
+    /**
+     * Retrieves a Map of any generic type.
+     * 
+     * <p><b>Note</b>: Any objects which couldn't be casted won't be returned in the map.</p>
+     * 
+     * @param <K> The key type to the map.
+     * @param <V> The value type to the map.
+     * @param path The path where the map is stored.
+     * @return The map.
+     */
+    public <K, V> Map<K, V> get(String path) {
+        final Map<K, V> keyMap = new HashMap<K, V>();
+
+        for (String item : super.getConfigurationSection(path).getKeys(false)) {
+            try {
+                keyMap.put((K) item, (V) super.getConfigurationSection(path).get(item));
+            } catch (Exception ex) {
+            }
+        }
+
+        return keyMap;
     }
 
     /**
