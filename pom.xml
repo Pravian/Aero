@@ -7,15 +7,12 @@
     <version>1.1</version>
     <packaging>jar</packaging>
 
-
     <name>BukkitLib</name>
     <url>http://pravian.net</url>
-    
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
     
     <repositories>
         <repository>
@@ -23,7 +20,6 @@
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
     </repositories>
-    
     
     <dependencies> 
         <dependency>
@@ -52,27 +48,16 @@
                         <link>http://jd.bukkit.org/dev/apidocs/</link>
                     </links>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>javadocs</id>
-                        <!-- Restrict execution of source compilation to deploy -->
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
         
         <extensions>
-            <!-- Enabling the use of FTP -->
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ftp</artifactId>
                 <version>1.0-beta-6</version>
             </extension>
         </extensions>
-        
     </build>
+    
 </project>

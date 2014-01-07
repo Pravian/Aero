@@ -67,6 +67,8 @@ public final class BukkitLib extends JavaPlugin {
         "  - Renamed PluginLogger to BukkitLogger",
         "  - Added SelectionUtils",
         "  - Added PlayerLobby",
+        "  - Added .setMap(Map) and .getMap() in YamlConfig",
+        "  - Fixed Bugs",
         "",
         "-- 1.0:",
         "  - Batch format & cleanup",

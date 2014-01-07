@@ -3,6 +3,7 @@
 /dist/
 /build/
 manifest.mf
+nbactions.xml
 
 # Eclipse excludes
 .project
