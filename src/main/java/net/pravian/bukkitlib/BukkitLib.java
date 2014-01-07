@@ -23,7 +23,7 @@ public final class BukkitLib extends JavaPlugin {
     /**
      * The version of this library.
      */
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.2";
     /**
      * The author of this library.
      */
@@ -57,6 +57,9 @@ public final class BukkitLib extends JavaPlugin {
      * The change log to this library.
      */
     public static final String[] CHANGELOG = new String[]{
+        "-- 1.2:",
+        "  -",
+        "",
         "-- 1.1:",
         "  - Added BukkitPermissionHolder, deprecates BukkitPermissionHandler",
         "  - Added internal metrics through BukkitLib.init()",
@@ -68,7 +71,8 @@ public final class BukkitLib extends JavaPlugin {
         "  - Added SelectionUtils",
         "  - Added PlayerLobby",
         "  - Added .setMap(Map) and .getMap() in YamlConfig",
-        "  - Fixed Bugs",
+        "  - Bugfixes",
+        "  - Javadoc fixes",
         "",
         "-- 1.0:",
         "  - Batch format & cleanup",
