@@ -1,7 +1,8 @@
 BukkitLib
 =========
 
-[![Build Status](https://travis-ci.org/Pravian/BukkitLib.png?branch=master)](https://travis-ci.org/Pravian/BukkitLib)
+<!--[![Build Status](https://travis-ci.org/Pravian/BukkitLib.png?branch=master)](https://travis-ci.org/Pravian/BukkitLib)-->
+[![Build Status](https://drone.io/github.com/Pravian/BukkitLib/status.png)](https://drone.io/github.com/Pravian/BukkitLib/latest)
 
 A commons libary for Bukkit.
 
