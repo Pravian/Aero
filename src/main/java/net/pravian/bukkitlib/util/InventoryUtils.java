@@ -3,7 +3,6 @@ package net.pravian.bukkitlib.util;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,7 +14,8 @@ public class InventoryUtils {
     /**
      * Gets the total item count of a given type and data
      *
-     * @author bergerkiller
+     * <p>Author: bergerkiller</p>
+     * 
      * @param inventory to look in
      * @param typeid of the items to look for, -1 for any item
      * @param data of the items to look for, -1 for any data
@@ -40,7 +40,8 @@ public class InventoryUtils {
      * Obtains an item of the given type and data in the inventory specified<br>
      * If multiple items with the same type and data exist, their amounts are added together
      *
-     * @author bergerkiller
+     * <p>Author: bergerkiller</p>
+     * 
      * @param inventory to look in
      * @param typeId of the items to look for, -1 for any item
      * @param data of the items to look for, -1 for any data
@@ -79,7 +80,8 @@ public class InventoryUtils {
     /**
      * Adds a certain amount to an item, without limiting to the max stack size
      *
-     * @author bergerkiller
+     * <p>Author: bergerkiller</p>
+     * 
      * @param item
      * @param amount to add
      */

@@ -10,7 +10,8 @@ public class SelectionUtils {
     /**
      * Returns a list of all the blocks in a circle within a certain radius of a location.
      *
-     * @author ArthurMaker
+     * <p>Author: ArthurMaker</p>
+     * 
      * @param centerLoc center Location
      * @param radius radius of the circle
      * @return list of blocks
@@ -49,7 +50,8 @@ public class SelectionUtils {
     /**
      * Returns a list of all the blocks in a cuboid.
      *
-     * @author ArthurMaker, CaptainBern
+     * <p>Authors: ArthurMaker, CaptainBern</p>
+     * 
      * @param position1 first position
      * @param position2 second position
      * @return list of blocks
@@ -82,7 +84,8 @@ public class SelectionUtils {
     /**
      * Returns a list of all the blocks in a diagonal line between two locations.
      *
-     * @author ArthurMaker
+     * <p>ArthurMaker</p>
+     * 
      * @param position1 first position
      * @param position2 second position
      * @return list of blocks
