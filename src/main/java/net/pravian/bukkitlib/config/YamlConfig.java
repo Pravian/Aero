@@ -186,7 +186,7 @@ public class YamlConfig extends YamlConfiguration {
 
     /**
      * Stores a Map of any generic type.
-     * 
+     *
      * @param <K> The key type to the map.
      * @param <V> The value type to the map.
      * @param path The path at which the map should be stored.
@@ -200,9 +200,9 @@ public class YamlConfig extends YamlConfiguration {
 
     /**
      * Retrieves a Map of any generic type.
-     * 
+     *
      * <p><b>Note</b>: Any objects which couldn't be casted won't be returned in the map.</p>
-     * 
+     *
      * @param <K> The key type to the map.
      * @param <V> The value type to the map.
      * @param path The path where the map is stored.

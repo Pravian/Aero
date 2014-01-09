@@ -11,7 +11,7 @@ public class BlockUtils {
      * <b>Will load the chunk if it isn't loaded</b>
      *
      * <p>Author: bergerkiller</p>
-     * 
+     *
      * @param block to check
      * @return the Chunk, or null if the world this location is in is not loaded
      */
@@ -27,7 +27,7 @@ public class BlockUtils {
      * Checks if this Block Location is within the boundaries of a chunk
      *
      * <p>Author: bergerkiller</p>
-     * 
+     *
      * @param block to check
      * @param chunk to check
      * @return true if within, false if not

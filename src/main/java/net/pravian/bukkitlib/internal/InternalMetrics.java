@@ -144,6 +144,7 @@ public final class InternalMetrics { // BukkitLib final
             task = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
                 private boolean firstPost = true;
 
+                @Override
                 public void run() {
                     try {
                         // This has to be synchronized or it can collide with the disable method.
@@ -171,6 +172,7 @@ public final class InternalMetrics { // BukkitLib final
                         if (debug) {
                             Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
                         }
+                        Bukkit.getLogger().warning("[BukkitLib] Failed to submit metrics"); // BukkitLib
                     }
                 }
             }, 0, PING_INTERVAL * 1200);

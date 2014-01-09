@@ -30,8 +30,8 @@ public class PlayerLobby extends ArrayList<Player> {
     /**
      * Creates a new PlayerLobby instance.
      *
-     * <p>Passing true as the second argument will result in a dynamic lobby. A dynamic lobby has all the features a regular player lobby has with exception that the players in the lobby is always
-     * equal to the online players. Attempts to add or remove players will fail in that case.</p>
+     * <p>Passing true as the second argument will result in a dynamic lobby. A dynamic lobby has all the features a regular player lobby has with exception that the players in the lobby is
+     * always equal to the online players. Attempts to add or remove players will fail in that case.</p>
      *
      * @param dynamic Whenever to make the lobby dynamic.
      */
@@ -99,8 +99,8 @@ public class PlayerLobby extends ArrayList<Player> {
     /**
      * Removes the first occurrence of the specified element from this list, if it is present.
      *
-     * <p>If the list does not contain the element, it is unchanged. More formally, removes the element with the lowest index i such that (o==null ? get(i)==null : o.equals(get(i))) (if such an
-     * element exists). Returns true if this list contained the specified element (or equivalently, if this list changed as a result of the call).
+     * <p>If the list does not contain the element, it is unchanged. More formally, removes the element with the lowest index i such that (o==null ? get(i)==null : o.equals(get(i))) (if such
+     * an element exists). Returns true if this list contained the specified element (or equivalently, if this list changed as a result of the call).
      *
      * @param player - element to be removed from this list, if present
      * @return true if this list contained the specified element
@@ -146,8 +146,8 @@ public class PlayerLobby extends ArrayList<Player> {
     /**
      * Returns the raw message format.
      *
-     * <p>The message format is a single string representing how messages from {@link #message(java.lang.String) message(String)} should be formatted. When message() gets called, all occurrences of
-     * the underscore character will be replaced by the message. The default message format is <b>_</b>.
+     * <p>The message format is a single string representing how messages from {@link #message(java.lang.String) message(String)} should be formatted. When message() gets called, all
+     * occurrences of the underscore character will be replaced by the message. The default message format is <b>_</b>.
      * </p>
      *
      * @return The message format.

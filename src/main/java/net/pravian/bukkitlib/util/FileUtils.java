@@ -92,7 +92,7 @@ public class FileUtils {
      * Gets the Jar File where a given Plugin is loaded from. If the plugin is not in a Jar file, null is returned instead.
      *
      * <p>Author: bergerkiller</p>
-     * 
+     *
      * @param plugin to get the Jar File of
      * @return the Jar File in which the plugin resides, or null if none found
      */
@@ -115,7 +115,7 @@ public class FileUtils {
      * This method can be used to properly obtain this folder if the plugin is not initialized yet.
      *
      * <p>Author: bergerkiller</p>
-     * 
+     *
      * @param plugin to get the data folder of
      * @return Plugin data folder (never null)
      */

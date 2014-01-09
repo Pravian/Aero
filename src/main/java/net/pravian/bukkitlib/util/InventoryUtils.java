@@ -15,7 +15,7 @@ public class InventoryUtils {
      * Gets the total item count of a given type and data
      *
      * <p>Author: bergerkiller</p>
-     * 
+     *
      * @param inventory to look in
      * @param typeid of the items to look for, -1 for any item
      * @param data of the items to look for, -1 for any data
@@ -41,7 +41,7 @@ public class InventoryUtils {
      * If multiple items with the same type and data exist, their amounts are added together
      *
      * <p>Author: bergerkiller</p>
-     * 
+     *
      * @param inventory to look in
      * @param typeId of the items to look for, -1 for any item
      * @param data of the items to look for, -1 for any data
@@ -81,7 +81,7 @@ public class InventoryUtils {
      * Adds a certain amount to an item, without limiting to the max stack size
      *
      * <p>Author: bergerkiller</p>
-     * 
+     *
      * @param item
      * @param amount to add
      */

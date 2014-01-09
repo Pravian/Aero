@@ -120,8 +120,9 @@ public abstract class BukkitCommand<T extends Plugin> {
     /**
      * Checks if the CommandSender has permissions to run this command.
      *
-     * <p>Validates if the player has the "permission" value from the CommandPermission annotation. If a custom BukkitPermissionHandler has been registered, it will use that instead. Regardless of
-     * which permission handler is used, the SourceType will always be checked. If the CommandSender does not have permission to use the command, a no-permission message will be sent.</p>
+     * <p>Validates if the player has the "permission" value from the CommandPermission annotation. If a custom BukkitPermissionHandler has been registered, it will use that instead.
+     * Regardless of which permission handler is used, the SourceType will always be checked. If the CommandSender does not have permission to use the command, a no-permission message will
+     * be sent.</p>
      *
      * @return true if the CommandSender has permission to use this command.
      */
