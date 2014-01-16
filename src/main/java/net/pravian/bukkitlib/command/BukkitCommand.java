@@ -2,6 +2,7 @@ package net.pravian.bukkitlib.command;
 
 import net.pravian.bukkitlib.implementation.BukkitLogger;
 import net.pravian.bukkitlib.util.PlayerUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -130,7 +131,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         final CommandPermissions permissions = commandClass.getAnnotation(CommandPermissions.class);
 
         if (permissions == null) {
-            logger.warning(commandClass.getName() + " is missing permissions annotation.");
+            logger.warning(commandClass.getName() + " is missing permissions annotation!");
             this.usage = "";
             return true;
         }
@@ -181,7 +182,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         }
 
         // Annotations?
-        if (permission != null && permission.equals("")) {
+        if (permission != null && !permission.equals("")) {
             final boolean result = ((Player) commandSender).hasPermission(permission);
 
             if (!result) {

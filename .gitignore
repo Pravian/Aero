@@ -4,6 +4,7 @@
 /build/
 manifest.mf
 nbactions.xml
+nb-configuration.xml
 
 # Eclipse excludes
 .project

@@ -9,6 +9,7 @@
 
     <name>BukkitLib</name>
     <url>http://pravian.net</url>
+    <description>A commons library for Bukkit.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -69,5 +70,4 @@
             </extension>
         </extensions>
     </build>
-    
 </project>

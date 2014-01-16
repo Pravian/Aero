@@ -6,7 +6,10 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 /**
@@ -141,4 +144,32 @@ public class PlayerUtils {
     public static String concatPlayernames(Collection<String> names) {
         return StringUtils.join(names, ", ");
     }
+    
+    
+    /**
+     * Returns the location an entity is pointing at in a 300 block range or null if there is no solid block in the entity's range.
+     *
+     * @param entity The entity pointing at the location.
+     * @return The location / null
+     * @see #getTarget(org.bukkit.entity.LivingEntity, int)
+     */
+    public static Location getTarget(LivingEntity entity) {
+        return getTarget(entity, 300);
+    }
+
+    /**
+     * Returns the location an entity is pointing at in the specified range or null if there is no solid block in the entity's range.
+     *
+     * @param entity The entity pointing at the location.
+     * @param range The maximum range a location can be at
+     * @return The location / null
+     */
+    public static Location getTarget(LivingEntity entity, int range) {
+        final Block block = entity.getTargetBlock(MaterialUtils.TRANSPARENT_MATERIALS, range);
+        if (block == null) {
+            return null;
+        }
+        return block.getLocation();
+    }
+    
 }

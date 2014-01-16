@@ -58,7 +58,7 @@ public final class BukkitLib extends JavaPlugin {
      */
     public static final String[] CHANGELOG = new String[]{
         "-- 1.2:",
-        "  -",
+        "  - Fixed errors not showing when metrics failed",
         "",
         "-- 1.1:",
         "  - Added BukkitPermissionHolder, deprecates BukkitPermissionHandler",
