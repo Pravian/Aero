@@ -144,8 +144,7 @@ public class PlayerUtils {
     public static String concatPlayernames(Collection<String> names) {
         return StringUtils.join(names, ", ");
     }
-    
-    
+
     /**
      * Returns the location an entity is pointing at in a 300 block range or null if there is no solid block in the entity's range.
      *
@@ -171,5 +170,4 @@ public class PlayerUtils {
         }
         return block.getLocation();
     }
-    
 }

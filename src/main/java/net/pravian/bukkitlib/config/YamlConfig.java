@@ -192,7 +192,7 @@ public class YamlConfig extends YamlConfiguration {
      * @param path The path at which the map should be stored.
      * @param map The map to store.
      */
-    public <K, V> void set(String path, Map<K, V> map) {
+    public <K, V> void setMap(String path, Map<K, V> map) {
         for (K key : map.keySet()) {
             super.set(path + "." + key.toString(), map.get(key));
         }
@@ -208,7 +208,7 @@ public class YamlConfig extends YamlConfiguration {
      * @param path The path where the map is stored.
      * @return The map.
      */
-    public <K, V> Map<K, V> get(String path) {
+    public <K, V> Map<K, V> getMap(String path) {
         final Map<K, V> keyMap = new HashMap<K, V>();
 
         for (String item : super.getConfigurationSection(path).getKeys(false)) {

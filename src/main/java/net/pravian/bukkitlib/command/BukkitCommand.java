@@ -2,7 +2,6 @@ package net.pravian.bukkitlib.command;
 
 import net.pravian.bukkitlib.implementation.BukkitLogger;
 import net.pravian.bukkitlib.util.PlayerUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -85,6 +84,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         this.server = plugin.getServer();
         this.commandSender = sender;
         this.command = command;
+        this.usage = command.getUsage();
         this.commandLabel = commandLabel;
         this.args = args;
         this.commandClass = commandClass;
@@ -121,9 +121,8 @@ public abstract class BukkitCommand<T extends Plugin> {
     /**
      * Checks if the CommandSender has permissions to run this command.
      *
-     * <p>Validates if the player has the "permission" value from the CommandPermission annotation. If a custom BukkitPermissionHandler has been registered, it will use that instead.
-     * Regardless of which permission handler is used, the SourceType will always be checked. If the CommandSender does not have permission to use the command, a no-permission message will
-     * be sent.</p>
+     * <p>Validates if the player has the "permission" value from the CommandPermission annotation. If a custom BukkitPermissionHandler has been registered, it will use that instead. Regardless of
+     * which permission handler is used, the SourceType will always be checked. If the CommandSender does not have permission to use the command, a no-permission message will be sent.</p>
      *
      * @return true if the CommandSender has permission to use this command.
      */
@@ -135,8 +134,6 @@ public abstract class BukkitCommand<T extends Plugin> {
             this.usage = "";
             return true;
         }
-
-        this.usage = permissions.usage();
 
         final String permission = permissions.permission();
         final SourceType source = permissions.source();

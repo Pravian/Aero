@@ -27,19 +27,4 @@ public @interface CommandPermissions {
      * @return The required source.
      */
     SourceType source() default SourceType.ANY;
-
-    /**
-     * The description on how this command is used.
-     *
-     * <p>All occurrences of "
-     * <pre><command></pre>" will be replaced by the command label.</p>
-     *
-     * <p>Example (/ban):
-     * <pre>
-     * /<command> <player> [reason] [until]
-     * </pre></p>
-     *
-     * @return The usage of this command.
-     */
-    String usage() default "";
 }

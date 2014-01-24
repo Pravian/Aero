@@ -12,7 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Represents BukkitLib; a commons library for Bukkit.
  *
  * @author Prozza
- * @version 1.1
  */
 public final class BukkitLib extends JavaPlugin {
 
@@ -59,6 +58,11 @@ public final class BukkitLib extends JavaPlugin {
     public static final String[] CHANGELOG = new String[]{
         "-- 1.2:",
         "  - Fixed errors not showing when metrics failed",
+        "  - Fixed glitch with command permissions",
+        "  - Added setWeather in WorldUtils",
+        "  - Added IncrementalGraph",
+        "  - Removed usage in CommandPermissions",
+        "  - Refractored .set and .get to .setMap and .getMap in YamlConfig",
         "",
         "-- 1.1:",
         "  - Added BukkitPermissionHolder, deprecates BukkitPermissionHandler",

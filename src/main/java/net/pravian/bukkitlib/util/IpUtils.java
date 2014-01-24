@@ -18,8 +18,8 @@ public class IpUtils {
     /**
      * Matches two "fuzzy IPs" to each other with the specified amount of octets.
      *
-     * <p>Fuzzy IPs are IPv4-addresses which may contain wildcard values. Example: <i>192.168.*.*</i>. This method matches two (or one) fuzzy IP(s) to each other and return a boolean based
-     * on the result.</p>
+     * <p>Fuzzy IPs are IPv4-addresses which may contain wildcard values. Example: <i>192.168.*.*</i>. This method matches two (or one) fuzzy IP(s) to each other and return a boolean based on the
+     * result.</p>
      *
      * <p>A simple example: the example-IP, <i>192.168.*.*</i>, contains 2 fuzzy octets. Both 192.168.2.1 and 192.168.123.231 match this fuzzy IP but 123.12.2.2 does not.</p>
      *
