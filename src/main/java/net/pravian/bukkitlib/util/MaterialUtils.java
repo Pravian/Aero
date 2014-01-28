@@ -7,7 +7,7 @@ import org.bukkit.Material;
 public class MaterialUtils {
 
     /**
-     * @author Essentials Team
+     * <p>Author: Essentials Team</p>
      */
     protected static final HashSet<Byte> TRANSPARENT_MATERIALS = new HashSet<Byte>();
 

@@ -33,8 +33,8 @@ public class ServerUtils {
     /**
      * Bans a player from the server using banned-players.txt
      *
-     * <p>This method is helpful because Bukkit by default does not allow banning with options (Expiry date, source, etc.). Any of these options may be omitted by passing in null to the corresponding
-     * parameter.</p>
+     * <p>This method is helpful because Bukkit by default does not allow banning with options (Expiry date, source, etc.). Any of these options may be omitted by passing in null to the
+     * corresponding parameter.</p>
      *
      * @param name The username to ban.
      * @param reason The reason for the ban.
@@ -98,8 +98,8 @@ public class ServerUtils {
     /**
      * Bans an IP from the server using banned-ips.txt
      *
-     * <p>This method is helpful because Bukkit by default does not allow banning with options (Expiry date, source, etc.). Any of these options may be omitted by passing in null to the corresponding
-     * parameter.</p>
+     * <p>This method is helpful because Bukkit by default does not allow banning with options (Expiry date, source, etc.). Any of these options may be omitted by passing in null to the
+     * corresponding parameter.</p>
      *
      * @param ip The IP to ban.
      * @param reason The reason for the ban.

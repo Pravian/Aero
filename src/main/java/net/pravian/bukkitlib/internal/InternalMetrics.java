@@ -47,11 +47,12 @@ import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
+import net.pravian.bukkitlib.metrics.Graph;
+import net.pravian.bukkitlib.metrics.Plotter;
 
 public final class InternalMetrics { // BukkitLib final
 
@@ -67,21 +68,16 @@ public final class InternalMetrics { // BukkitLib final
     private final boolean debug;
     private final Object optOutLock = new Object();
     private volatile BukkitTask task = null;
-    // BukkitLib start
     private final String libName;
     private final String libVersion;
-    // BukkitLib end
-    // BukkitLib add libName, libVersion
 
     public InternalMetrics(final Plugin plugin, final String libName, final String libVersion) throws IOException {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null");
         }
 
-        // BukkitLib start
         this.libName = libName;
         this.libVersion = libVersion;
-        // BukkitLib end
 
         this.plugin = plugin;
 
@@ -153,10 +149,6 @@ public final class InternalMetrics { // BukkitLib final
                             if (isOptOut() && task != null) {
                                 task.cancel();
                                 task = null;
-                                // Tell all plotters to stop gathering information.
-                                for (Graph graph : graphs) {
-                                    graph.onOptOut();
-                                }
                             }
                         }
 
@@ -181,7 +173,7 @@ public final class InternalMetrics { // BukkitLib final
         }
     }
 
-    public boolean isOptOut() {
+    private boolean isOptOut() {
         synchronized (optOutLock) {
             try {
                 // Reload the metrics file
@@ -201,40 +193,7 @@ public final class InternalMetrics { // BukkitLib final
         }
     }
 
-    public void enable() throws IOException {
-        // This has to be synchronized or it can collide with the check in the task.
-        synchronized (optOutLock) {
-            // Check if the server owner has already set opt-out, if not, set it.
-            if (isOptOut()) {
-                configuration.set("opt-out", false);
-                configuration.save(configurationFile);
-            }
-
-            // Enable Task, if it is not running
-            if (task == null) {
-                start();
-            }
-        }
-    }
-
-    public void disable() throws IOException {
-        // This has to be synchronized or it can collide with the check in the task.
-        synchronized (optOutLock) {
-            // Check if the server owner has already set opt-out, if not, set it.
-            if (!isOptOut()) {
-                configuration.set("opt-out", true);
-                configuration.save(configurationFile);
-            }
-
-            // Disable Task, if it is running
-            if (task != null) {
-                task.cancel();
-                task = null;
-            }
-        }
-    }
-
-    public File getConfigFile() {
+    private File getConfigFile() {
         // I believe the easiest way to get the base folder (e.g craftbukkit set via -P) for plugins to use
         // is to abuse the plugin object we already have
         // plugin.getDataFolder() => base/plugins/PluginA/
@@ -406,7 +365,7 @@ public final class InternalMetrics { // BukkitLib final
         }
     }
 
-    public static byte[] gzip(String input) {
+    private static byte[] gzip(String input) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         GZIPOutputStream gzos = null;
 
@@ -436,7 +395,7 @@ public final class InternalMetrics { // BukkitLib final
         }
     }
 
-    private static void appendJSONPair(StringBuilder json, String key, String value) throws UnsupportedEncodingException {
+    public static void appendJSONPair(StringBuilder json, String key, String value) throws UnsupportedEncodingException {
         boolean isValueNumeric = false;
 
         try {
@@ -504,86 +463,5 @@ public final class InternalMetrics { // BukkitLib final
 
     private static String urlEncode(final String text) throws UnsupportedEncodingException {
         return URLEncoder.encode(text, "UTF-8");
-    }
-
-    public static class Graph {
-
-        private final String name;
-        private final Set<Plotter> plotters = new LinkedHashSet<Plotter>();
-
-        private Graph(final String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void addPlotter(final Plotter plotter) {
-            plotters.add(plotter);
-        }
-
-        public void removePlotter(final Plotter plotter) {
-            plotters.remove(plotter);
-        }
-
-        public Set<Plotter> getPlotters() {
-            return Collections.unmodifiableSet(plotters);
-        }
-
-        @Override
-        public int hashCode() {
-            return name.hashCode();
-        }
-
-        @Override
-        public boolean equals(final Object object) {
-            if (!(object instanceof Graph)) {
-                return false;
-            }
-
-            final Graph graph = (Graph) object;
-            return graph.name.equals(name);
-        }
-
-        protected void onOptOut() {
-        }
-    }
-
-    public static abstract class Plotter {
-
-        private final String name;
-
-        public Plotter() {
-            this("Default");
-        }
-
-        public Plotter(final String name) {
-            this.name = name;
-        }
-
-        public abstract int getValue();
-
-        public String getColumnName() {
-            return name;
-        }
-
-        public void reset() {
-        }
-
-        @Override
-        public int hashCode() {
-            return getColumnName().hashCode();
-        }
-
-        @Override
-        public boolean equals(final Object object) {
-            if (!(object instanceof Plotter)) {
-                return false;
-            }
-
-            final Plotter plotter = (Plotter) object;
-            return plotter.name.equals(name) && plotter.getValue() == getValue();
-        }
     }
 }

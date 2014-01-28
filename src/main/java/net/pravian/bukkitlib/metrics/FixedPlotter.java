@@ -1,14 +1,14 @@
 package net.pravian.bukkitlib.metrics;
 
-public class IncrementalPlotter extends Plotter {
+public class FixedPlotter extends Plotter {
 
     private final int value;
 
-    public IncrementalPlotter(final String name) {
+    public FixedPlotter(final String name) {
         this(name, 1);
     }
 
-    public IncrementalPlotter(final String name, final int value) {
+    public FixedPlotter(final String name, final int value) {
         super(name);
         this.value = value;
     }

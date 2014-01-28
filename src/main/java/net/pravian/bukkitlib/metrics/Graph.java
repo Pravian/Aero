@@ -20,7 +20,14 @@ public class Graph {
      */
     private final Set<Plotter> plotters = new LinkedHashSet<Plotter>();
 
-    protected Graph(final String name) {
+    /**
+     * Creates a raw graph.
+     *
+     * <p><b>This should never be used.</b></p>
+     *
+     * @param name Graph name
+     */
+    public Graph(final String name) {
         this.name = name;
     }
 
