@@ -13,7 +13,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.builddate>${maven.build.timestamp}</maven.builddate>
+        <app.version>${project.version}</app.version>
+        <app.buildnumber>${maven.buildnumber}</app.buildnumber>
+        <app.builddate>${maven.build.timestamp}</app.builddate>
         <maven.build.timestamp.format>MM/dd/yyyy hh:mm aa</maven.build.timestamp.format>
     </properties>
     
@@ -89,6 +91,17 @@
                     <items>
                         <item>buildNumber</item>
                     </items>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
                 </configuration>
             </plugin>
             

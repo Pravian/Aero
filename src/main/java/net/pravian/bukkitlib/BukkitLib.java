@@ -22,10 +22,6 @@ public final class BukkitLib extends JavaPlugin {
      */
     public static final String NAME = "BukkitLib";
     /**
-     * The version of this library.
-     */
-    public static final String VERSION = "1.3";
-    /**
      * The author of this library.
      */
     public static final String AUTHOR = "Prozza";
@@ -147,6 +143,7 @@ public final class BukkitLib extends JavaPlugin {
         ""
     };
     private static boolean init = false;
+    private static String buildVersion;
     private static String buildNumber;
     private static String buildDate;
 
@@ -163,10 +160,10 @@ public final class BukkitLib extends JavaPlugin {
         loadBuildInformation();
 
         try {
-            final InternalMetrics metrics = new InternalMetrics(plugin, NAME, VERSION);
+            final InternalMetrics metrics = new InternalMetrics(plugin, NAME, buildVersion);
 
             final Graph version = metrics.createGraph("Version");
-            version.addPlotter(new FixedDonutPlotter(VERSION, buildNumber));
+            version.addPlotter(new FixedDonutPlotter(buildVersion, buildNumber));
 
             final Graph plugins = metrics.createGraph("Plugins");
             plugins.addPlotter(new FixedDonutPlotter(plugin.getDescription().getName(), plugin.getDescription().getVersion()));
@@ -175,6 +172,18 @@ public final class BukkitLib extends JavaPlugin {
         } catch (IOException ex) {
             Bukkit.getLogger().warning("[BukkitLib] Failed to submit metrics");
         }
+    }
+
+    /**
+     * Returns the build version of this BukkitLib build.
+     *
+     * @return The BukkitLib version.
+     */
+    public static String getVersion() {
+        if (!init) {
+            throw new BukkitLibNotInitializedException();
+        }
+        return buildVersion;
     }
 
     /**
@@ -199,7 +208,7 @@ public final class BukkitLib extends JavaPlugin {
             throw new BukkitLibNotInitializedException();
         }
 
-        return VERSION + "." + buildNumber;
+        return buildVersion + "." + buildNumber;
     }
 
     /**
@@ -225,6 +234,7 @@ public final class BukkitLib extends JavaPlugin {
             build.load(in);
             in.close();
 
+            buildVersion = build.getProperty("app.buildversion");
             buildNumber = build.getProperty("app.buildnumber");
             buildDate = build.getProperty("app.builddate");
 
