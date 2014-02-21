@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * Represents all Date-related utilities.
  */
-public class DateUtils {
+public class TimeUtils {
 
     /**
      * The storage format for parsing dates.

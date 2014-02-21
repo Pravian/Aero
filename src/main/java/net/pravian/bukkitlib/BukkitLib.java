@@ -24,7 +24,7 @@ public final class BukkitLib extends JavaPlugin {
     /**
      * The version of this library.
      */
-    public static final String VERSION = "1.2";
+    public static final String VERSION = "1.3";
     /**
      * The author of this library.
      */
@@ -58,17 +58,25 @@ public final class BukkitLib extends JavaPlugin {
      * The change log to this library.
      */
     public static final String[] CHANGELOG = new String[]{
+        "-- 1.3:",
+        " - Added class proxies for Entity, LivingEntity and Player",
+        " - Added functionality for multiple permissions in PermissionHolder",
+        " - Added superpermission in CommandHandler",
+        " - Added BukkitMessage interface for use in commands",
+        " - Removed all terrain generators",
+        " - Refractored DateUtils to TimeUtils",
+        "",
         "-- 1.2:",
-        "  - Fixed errors not showing when metrics failed",
-        "  - Fixed glitch with command permissions",
         "  - Added setWeather in WorldUtils",
         "  - Added IncrementalGraph",
-        "  - Removed usage in CommandPermissions",
-        "  - Refractored .set and .get to .setMap and .getMap in YamlConfig",
         "  - Added DonutPlotter, FixedPlotter and FixedDonutPlotter",
-        "  - Cleaned up InternalMetrics",
         "  - Added BukkitLibNotInitializedException",
         "  - Added build number and date tracking through maven",
+        "  - Removed usage in CommandPermissions",
+        "  - Refractored .set and .get to .setMap and .getMap in YamlConfig",
+        "  - Cleaned up InternalMetrics",
+        "  - Fixed errors not showing when metrics failed",
+        "  - Fixed glitch with command permissions",
         "",
         "-- 1.1:",
         "  - Added BukkitPermissionHolder, deprecates BukkitPermissionHandler",
@@ -77,12 +85,12 @@ public final class BukkitLib extends JavaPlugin {
         "  - Added BukkitSyncTask and BukkitAsyncTask",
         "  - Added ItemUtil",
         "  - Added BukkitSign",
-        "  - Renamed PluginLogger to BukkitLogger",
         "  - Added SelectionUtils",
         "  - Added PlayerLobby",
         "  - Added .setMap(Map) and .getMap() in YamlConfig",
-        "  - Bugfixes",
-        "  - Javadoc fixes",
+        "  - Refractored PluginLogger to BukkitLogger",
+        "  - Fixed a few bugs",
+        "  - Fixed Javadoc",
         "",
         "-- 1.0:",
         "  - Batch format & cleanup",

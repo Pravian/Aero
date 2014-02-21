@@ -9,9 +9,9 @@ public class FixedDonutPlotter extends DonutPlotter {
 
     /**
      * Creates a new DonutPlotter instance with the specified major and minor names and a value of 1.
-     * 
+     *
      * <p>The major name indicates the center area of the donut graph whilst the minor name indicates the edges.</p>
-     * 
+     *
      * @param major The donut filling (usually air).
      * @param minor The donut crust (usually dough with icing).
      */
@@ -20,10 +20,10 @@ public class FixedDonutPlotter extends DonutPlotter {
     }
 
     /**
-     * Creates a new DonutPlotter instance with the specified value and major and minor names. 
-     * 
+     * Creates a new DonutPlotter instance with the specified value and major and minor names.
+     *
      * <p>The major name indicates the center area of the donut graph whilst the minor name indicates the edges.</p>
-     * 
+     *
      * @param major The donut filling (usually air).
      * @param minor The donut crust (usually dough with icing).
      */

@@ -1,5 +1,6 @@
 package net.pravian.bukkitlib.command;
 
+import java.util.Set;
 import net.pravian.bukkitlib.implementation.BukkitLogger;
 import net.pravian.bukkitlib.util.PlayerUtils;
 import org.bukkit.ChatColor;
@@ -155,17 +156,26 @@ public abstract class BukkitCommand<T extends Plugin> {
             return true;
         }
 
+        // super permission?
+        if (handler.getSuperPermission() != null && !handler.getSuperPermission().equals("")) {
+            if (commandSender.hasPermission(handler.getSuperPermission())) {
+                return true;
+            }
+        }
+
         // PermissionHolder?
         if (handler.getPermissionHolder() != null) {
-            final String handlerPermission = handler.getPermissionHolder().getPermission(commandClass);
+            final Set<String> handlerPermissions = handler.getPermissionHolder().getPermissions(commandClass);
 
-            if (handlerPermission != null) {
-                final boolean result = commandSender.hasPermission(handlerPermission);
-
-                if (!result) {
-                    commandSender.sendMessage(handler.getPermissionMessage());
+            if (handlerPermissions != null) {
+                for (String handlerPermission : handlerPermissions) {
+                    if (commandSender.hasPermission(handlerPermission)) {
+                        return true;
+                    }
                 }
-                return result;
+
+                commandSender.sendMessage(handler.getPermissionMessage());
+                return false;
             }
         }
 
@@ -234,6 +244,16 @@ public abstract class BukkitCommand<T extends Plugin> {
         }
         msg(usage.replaceAll("<command>", command.getLabel()));
         return true;
+    }
+
+    /**
+     * Sends the sender of this command a message (in Gray).
+     *
+     * @param message The message to send.
+     * @see #msg(CommandSender, String, ChatColor)
+     */
+    protected void msg(final BukkitMessage message) {
+        msg(message.getMessage());
     }
 
     /**

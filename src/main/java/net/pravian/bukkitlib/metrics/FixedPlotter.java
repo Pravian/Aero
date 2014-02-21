@@ -9,7 +9,7 @@ public class FixedPlotter extends Plotter {
 
     /**
      * Creates a new FixedPlotter instance with a value of 1.
-     * 
+     *
      * @param name The plotter name.
      */
     public FixedPlotter(final String name) {
@@ -18,7 +18,7 @@ public class FixedPlotter extends Plotter {
 
     /**
      * Creates a new FixedPlotter instance with the specified value.
-     * 
+     *
      * @param name The plotter name.
      * @param value The plotter value.
      */

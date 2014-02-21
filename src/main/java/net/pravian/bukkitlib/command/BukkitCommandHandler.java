@@ -17,6 +17,7 @@ public class BukkitCommandHandler<T extends Plugin> {
     private final T plugin;
     private final BukkitLogger logger;
     private String commandPath;
+    private String superPermission;
     private BukkitPermissionHandler permissionHandler = null;
     private BukkitPermissionHolder permissionHolder = null;
     private String commandPrefix = "Command_";
@@ -33,15 +34,47 @@ public class BukkitCommandHandler<T extends Plugin> {
         this(plugin, new BukkitLogger(plugin));
     }
 
+    /**
+     * Creates a new instance of BukkitCommandHandler with the specified plugin and logger.
+     *
+     * @param plugin The plugin instance.
+     * @param logger The logger to send error messages to.
+     */
     public BukkitCommandHandler(T plugin, BukkitLogger logger) {
         this.plugin = plugin;
         this.logger = logger;
+        this.superPermission = plugin.getName().toLowerCase() + ".*";
+    }
+
+    /**
+     * Sets the super permission for this command handler.
+     *
+     * <p>Optional: Defaults to <b>[lowercase pluginname].*<b></p>
+     *
+     * <p>The super permission indicates an override for players. Any sender who has this permission will be able to run all commands executed by this CommandHandler provided the source type
+     * is correct.</p>
+     *
+     * @param superPermission The super permission to set.
+     */
+    public void setSuperPermission(String superPermission) {
+        this.superPermission = superPermission;
+    }
+
+    /**
+     * Returns the super permission set for this command handler.
+     *
+     * @return The super permission set.
+     * @see #setSuperPermission(java.lang.String)
+     */
+    public String getSuperPermission() {
+        return superPermission;
     }
 
     /**
      * Sets the location of the commands this CommandHandler is handling.
      *
      * <p><b>Required</b>!</p>
+     *
      * <p>This method <b>must</b> be called before calling {@link #handleCommand(CommandSender, Command, String, String[])}
      *
      * @param commandLocation The location of this command.
