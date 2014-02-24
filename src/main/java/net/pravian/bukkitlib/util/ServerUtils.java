@@ -13,6 +13,9 @@ import net.minecraft.server.v1_7_R1.PropertyManager;
  */
 public class ServerUtils {
 
+    private ServerUtils() {
+    }
+
     /**
      * Sets a configuration option in server.properties.
      *
@@ -292,13 +295,8 @@ public class ServerUtils {
      * Returns the MineCraft server instance running the server.
      *
      * @return The MinecraftServer instance.
-     * @deprecated Added methods to reflect commonly needed functions.
      */
-    @Deprecated()
     public static MinecraftServer getMineCraftServer() {
         return MinecraftServer.getServer();
-    }
-
-    private ServerUtils() {
     }
 }

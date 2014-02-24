@@ -16,6 +16,9 @@ import org.bukkit.plugin.Plugin;
  */
 public class FileUtils {
 
+    private FileUtils() {
+    }
+
     /*
      * // BukkitDev wants this gone /** Downloads a file from the specified URL and saves it at the specified location.
      *
@@ -176,8 +179,5 @@ public class FileUtils {
         }
         out.close();
         in.close();
-    }
-
-    private FileUtils() {
     }
 }

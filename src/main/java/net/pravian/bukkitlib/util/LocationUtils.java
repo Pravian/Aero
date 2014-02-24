@@ -7,6 +7,9 @@ import org.bukkit.Location;
  */
 public class LocationUtils {
 
+    private LocationUtils() {
+    }
+
     /**
      * Returns a "pretty" formatted location.
      *
@@ -19,8 +22,5 @@ public class LocationUtils {
                 Math.round(location.getX()),
                 Math.round(location.getY()),
                 Math.round(location.getZ()));
-    }
-
-    private LocationUtils() {
     }
 }

@@ -13,6 +13,9 @@ import org.bukkit.plugin.Plugin;
  */
 public class PluginUtils {
 
+    private PluginUtils() {
+    }
+
     /**
      * Disables all plugins.
      *
@@ -87,8 +90,5 @@ public class PluginUtils {
     public static void reloadPlugin(Plugin plugin) {
         Bukkit.getPluginManager().disablePlugin(plugin);
         Bukkit.getPluginManager().enablePlugin(plugin);
-    }
-
-    private PluginUtils() {
     }
 }

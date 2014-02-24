@@ -198,7 +198,7 @@ public class TimeUtils {
      * @see #parseDate(Date)
      */
     public static Date parseString(String date) {
-        if (date == null || date.equals("") || date.trim().equalsIgnoreCase("never")) {
+        if (date == null || date.isEmpty() || date.trim().equalsIgnoreCase("never")) {
             return null;
         }
         try {

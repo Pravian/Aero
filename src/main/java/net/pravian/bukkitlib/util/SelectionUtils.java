@@ -7,6 +7,9 @@ import org.bukkit.World;
 
 public class SelectionUtils {
 
+    private SelectionUtils() {
+    }
+
     /**
      * Returns a list of all the blocks in a circle within a certain radius of a location.
      *
@@ -157,9 +160,6 @@ public class SelectionUtils {
     }
 
     // Support
-    /**
-     * @author ArthurMaker
-     */
     private static int getHighest(int x, int y, int z) {
         if ((x >= y) && (x >= z)) {
             return 1;
@@ -168,8 +168,5 @@ public class SelectionUtils {
             return 2;
         }
         return 3;
-    }
-
-    private SelectionUtils() {
     }
 }

@@ -15,6 +15,9 @@ public class IpUtils {
             + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
             + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 
+    private IpUtils() {
+    }
+
     /**
      * Matches two "fuzzy IPs" to each other with the specified amount of octets.
      *
@@ -150,8 +153,5 @@ public class IpUtils {
      */
     public static boolean isValidIp(String ip) {
         return Pattern.compile(IP_PATTERN).matcher(ip.trim()).matches();
-    }
-
-    private IpUtils() {
     }
 }

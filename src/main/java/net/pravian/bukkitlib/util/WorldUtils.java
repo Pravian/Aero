@@ -7,6 +7,9 @@ import org.bukkit.World;
  */
 public class WorldUtils {
 
+    private WorldUtils() {
+    }
+
     /**
      * Sets the world time in ticks.
      *
@@ -53,6 +56,4 @@ public class WorldUtils {
         STORM;
     }
 
-    private WorldUtils() {
-    }
 }

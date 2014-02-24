@@ -9,6 +9,9 @@ import org.bukkit.block.Block;
  */
 public class BlockUtils {
 
+    private BlockUtils() {
+    }
+
     /**
      * Gets the chunk a Block Location is in<br>
      * <b>Will load the chunk if it isn't loaded</b>
@@ -37,8 +40,5 @@ public class BlockUtils {
      */
     public static boolean isIn(Block block, Chunk chunk) {
         return (block.getX() >> 4) == chunk.getX() && (block.getZ() >> 4) == chunk.getZ();
-    }
-
-    private BlockUtils() {
     }
 }

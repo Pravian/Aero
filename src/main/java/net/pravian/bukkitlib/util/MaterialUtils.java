@@ -63,6 +63,9 @@ public class MaterialUtils {
         }
     }
 
+    private MaterialUtils() {
+    }
+
     /**
      * Returns all transparent materials
      *
@@ -76,8 +79,5 @@ public class MaterialUtils {
         }
 
         return materials;
-    }
-
-    private MaterialUtils() {
     }
 }

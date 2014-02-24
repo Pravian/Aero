@@ -10,6 +10,9 @@ import org.bukkit.plugin.Plugin;
  */
 public class LoggerUtils {
 
+    private LoggerUtils() {
+    }
+
     /**
      * Prints an info-message to the raw Bukkit logger.
      *
@@ -85,8 +88,5 @@ public class LoggerUtils {
         }
 
         plugin.getLogger().info(line);
-    }
-
-    private LoggerUtils() {
     }
 }

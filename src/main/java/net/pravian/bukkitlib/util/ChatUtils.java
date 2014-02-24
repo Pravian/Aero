@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
  */
 public class ChatUtils {
 
-    private static final Random RANDOM = new Random();
     /**
      * A static list of all ChatColors.
      *
@@ -36,6 +35,10 @@ public class ChatUtils {
             ChatColor.RED,
             ChatColor.LIGHT_PURPLE,
             ChatColor.YELLOW);
+    private static final Random RANDOM = new Random();
+
+    private ChatUtils() {
+    }
 
     /**
      * Translates a String with color codes (&2, &4, etc) to a colored string.
@@ -89,8 +92,5 @@ public class ChatUtils {
                 player.sendMessage(message);
             }
         }
-    }
-
-    private ChatUtils() {
     }
 }

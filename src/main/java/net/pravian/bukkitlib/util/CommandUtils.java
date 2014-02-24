@@ -12,22 +12,7 @@ import org.bukkit.command.CommandMap;
  */
 public class CommandUtils {
 
-    /**
-     * @author sk89q
-     */
-    @SuppressWarnings("unchecked")
-    private static <T> T getField(Object from, String name) {
-        Class<?> checkClass = from.getClass();
-        do {
-            try {
-                Field field = checkClass.getDeclaredField(name);
-                field.setAccessible(true);
-                return (T) field.get(from);
-            } catch (NoSuchFieldException ex) {
-            } catch (IllegalAccessException ex) {
-            }
-        } while (checkClass.getSuperclass() != Object.class && ((checkClass = checkClass.getSuperclass()) != null));
-        return null;
+    private CommandUtils() {
     }
 
     /**
@@ -164,6 +149,21 @@ public class CommandUtils {
         return (String[]) ArrayUtils.remove(commandMessage.split(" "), 0);
     }
 
-    private CommandUtils() {
+    /**
+     * @author sk89q
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> T getField(Object from, String name) {
+        Class<?> checkClass = from.getClass();
+        do {
+            try {
+                Field field = checkClass.getDeclaredField(name);
+                field.setAccessible(true);
+                return (T) field.get(from);
+            } catch (NoSuchFieldException ex) {
+            } catch (IllegalAccessException ex) {
+            }
+        } while (checkClass.getSuperclass() != Object.class && ((checkClass = checkClass.getSuperclass()) != null));
+        return null;
     }
 }
