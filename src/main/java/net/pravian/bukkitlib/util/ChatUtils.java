@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 /**
@@ -45,7 +44,7 @@ public class ChatUtils {
      * @return The Colored string.
      */
     public static String colorize(String string) {
-        return ChatColor.translateAlternateColorCodes('&', string);
+        return ChatColor.translateAlternateColorCodes('§', ChatColor.translateAlternateColorCodes('&', string));
     }
 
     /**
@@ -90,5 +89,8 @@ public class ChatUtils {
                 player.sendMessage(message);
             }
         }
+    }
+
+    private ChatUtils() {
     }
 }

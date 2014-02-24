@@ -12,6 +12,15 @@ nb-configuration.xml
 /bin/
 /.settings/
 
+# IntelliJ excludes
+*.iml
+*.ipr
+*.iws
+/.idea
+
+# Maven excludes
+/target
+
 # OS generated files
 .DS_Store
 ._*
@@ -19,6 +28,3 @@ nb-configuration.xml
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Maven
-/target

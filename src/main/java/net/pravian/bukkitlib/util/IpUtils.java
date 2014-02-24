@@ -151,4 +151,7 @@ public class IpUtils {
     public static boolean isValidIp(String ip) {
         return Pattern.compile(IP_PATTERN).matcher(ip.trim()).matches();
     }
+
+    private IpUtils() {
+    }
 }

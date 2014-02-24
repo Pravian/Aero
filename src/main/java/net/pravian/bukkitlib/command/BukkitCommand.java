@@ -128,6 +128,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      *
      * @return true if the CommandSender has permission to use this command.
      */
+    @SuppressWarnings("deprecation")
     protected boolean checkPermissions() {
         final CommandPermissions permissions = commandClass.getAnnotation(CommandPermissions.class);
 
@@ -157,7 +158,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         }
 
         // super permission?
-        if (handler.getSuperPermission() != null && !handler.getSuperPermission().equals("")) {
+        if (handler.getSuperPermission() != null && !handler.getSuperPermission().isEmpty()) {
             if (commandSender.hasPermission(handler.getSuperPermission())) {
                 return true;
             }
@@ -177,16 +178,6 @@ public abstract class BukkitCommand<T extends Plugin> {
                 commandSender.sendMessage(handler.getPermissionMessage());
                 return false;
             }
-        }
-
-        // PermissionHandler? (Deprecated)
-        if (handler.getPermissionHandler() != null) {
-            final boolean result = handler.getPermissionHandler().hasPermission(commandSender, command, args);
-
-            if (!result) {
-                commandSender.sendMessage(handler.getPermissionMessage());
-            }
-            return result;
         }
 
         // Annotations?

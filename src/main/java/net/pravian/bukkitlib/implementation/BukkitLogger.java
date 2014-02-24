@@ -7,10 +7,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.plugin.Plugin;
 
 /*
- * Represents a Plugin-specific Logger
- * .
- * <p><b>Note</b>: The methods in this class also accept all instances of
- * {@link java.lang.Throwable} and will print the attached StackTrace.
+ * Represents a Plugin-specific Logger . <p><b>Note</b>: The methods in this class also accept all instances of {@link java.lang.Throwable} and will print the attached StackTrace.
  */
 public class BukkitLogger extends Logger {
 

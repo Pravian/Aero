@@ -208,6 +208,7 @@ public class YamlConfig extends YamlConfiguration {
      * @param path The path where the map is stored.
      * @return The map.
      */
+    @SuppressWarnings("unchecked")
     public <K, V> Map<K, V> getMap(String path) {
         final Map<K, V> keyMap = new HashMap<K, V>();
 

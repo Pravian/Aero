@@ -18,12 +18,11 @@ public class BukkitCommandHandler<T extends Plugin> {
     private final BukkitLogger logger;
     private String commandPath;
     private String superPermission;
-    private BukkitPermissionHandler permissionHandler = null;
-    private BukkitPermissionHolder permissionHolder = null;
-    private String commandPrefix = "Command_";
-    private String permissionMessage = ChatColor.RED + "You don't have permission to use that command.";
-    private String onlyFromConsoleMessage = ChatColor.YELLOW + "That command can only be executed from console.";
-    private String onlyFromGameMessage = ChatColor.YELLOW + "Only players may execute that command.";
+    private BukkitPermissionHolder permissionHolder;
+    private String commandPrefix;
+    private String permissionMessage;
+    private String onlyFromConsoleMessage;
+    private String onlyFromGameMessage;
 
     /**
      * Creates a new instance of BukkitCommandHandler with the specified plugin.
@@ -41,6 +40,11 @@ public class BukkitCommandHandler<T extends Plugin> {
      * @param logger The logger to send error messages to.
      */
     public BukkitCommandHandler(T plugin, BukkitLogger logger) {
+        this.onlyFromGameMessage = ChatColor.YELLOW + "Only players may execute that command.";
+        this.onlyFromConsoleMessage = ChatColor.YELLOW + "That command can only be executed from console.";
+        this.permissionMessage = ChatColor.RED + "You don't have permission to use that command.";
+        this.commandPrefix = "Command_";
+        this.permissionHolder = null;
         this.plugin = plugin;
         this.logger = logger;
         this.superPermission = plugin.getName().toLowerCase() + ".*";
@@ -169,32 +173,6 @@ public class BukkitCommandHandler<T extends Plugin> {
         return onlyFromGameMessage;
     }
 
-    /**
-     * Sets a new PermissionHandler to handle command permissions.
-     *
-     * <p>Optionally, set to null to return to annotation-based permission handling.</p>
-     *
-     * @param handler The new PermissionHandler / null
-     * @see BukkitPermissionHandler
-     * @deprecated Now setPermissionHolder
-     */
-    public void setPermissionHandler(BukkitPermissionHandler handler) {
-        this.permissionHandler = handler;
-    }
-
-    /**
-     * Returns the BukkitPermissionHandler which handles command permissions.
-     *
-     * <p>Might return null if no BukkitPermissionHandler has been set.</p>
-     *
-     * @return BukkitPermissionHandler instance / null
-     * @see #getPermissionHandler()
-     * @deprecated Now setPermissionHolder
-     */
-    public BukkitPermissionHandler getPermissionHandler() {
-        return permissionHandler;
-    }
-
     public void setPermissionHolder(BukkitPermissionHolder holder) {
         this.permissionHolder = holder;
 
@@ -235,6 +213,7 @@ public class BukkitCommandHandler<T extends Plugin> {
      * @return true/false depending if the command executed successfully.
      * @see BukkitCommand#run(CommandSender, Command, String, String[])
      */
+    @SuppressWarnings("unchecked")
     public boolean handleCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
 
         final BukkitCommand<T> dispatcher;

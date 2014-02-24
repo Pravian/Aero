@@ -11,6 +11,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public class InventoryUtils {
 
+    private InventoryUtils() {
+    }
+
     /**
      * Gets the total item count of a given type and data
      *
@@ -47,6 +50,7 @@ public class InventoryUtils {
      * @param data of the items to look for, -1 for any data
      * @return Amount of items in the inventory
      */
+    @SuppressWarnings("deprecation")
     public static ItemStack findItem(Inventory inventory, int typeId, int data) {
         org.bukkit.inventory.ItemStack rval = null;
         int itemData = data;

@@ -18,14 +18,14 @@
         <app.builddate>${maven.build.timestamp}</app.builddate>
         <maven.build.timestamp.format>MM/dd/yyyy hh:mm aa</maven.build.timestamp.format>
     </properties>
-    
+
     <repositories>
         <repository>
             <id>craftbukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
     </repositories>
-    
+
     <!-- Dummy SCM -->
     <scm>
         <connection>scm:svn:http://127.0.0.1/svn/my-project</connection>
@@ -33,14 +33,14 @@
         <tag>HEAD</tag>
         <url>http://127.0.0.1/websvn/my-project</url>
     </scm>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.7.2-R0.2</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
@@ -48,33 +48,35 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-    
-    
+
+
     <distributionManagement>
         <repository>
             <id>projects-ftp</id>
             <url>ftp://projects.pravian.net/var/www/html/repo/</url>
         </repository>
     </distributionManagement>
-             
-                 
-    
+
+
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                    <showDeprecation>true</showDeprecation>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.0-beta-4</version>
+                <version>1.2</version>
                 <executions>
                     <execution>
                         <phase>generate-resources</phase>
@@ -83,7 +85,7 @@
                         </goals>
                     </execution>
                 </executions>
-                
+
                 <configuration>
                     <buildNumberPropertyName>maven.buildnumber</buildNumberPropertyName>
                     <buildNumberPropertiesFileLocation>${basedir}/buildnumber.properties</buildNumberPropertiesFileLocation>
@@ -93,18 +95,18 @@
                     </items>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
+                <version>2.4</version>
                 <configuration>
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -116,14 +118,14 @@
                 </configuration>
             </plugin>
         </plugins>
-        
+
         <resources>
             <resource>
                 <directory>src/main/resources/</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
-        
+
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>

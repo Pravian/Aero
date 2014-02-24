@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Material;
 
+@SuppressWarnings("deprecation")
 public class MaterialUtils {
 
     /**
@@ -12,7 +13,6 @@ public class MaterialUtils {
     protected static final HashSet<Byte> TRANSPARENT_MATERIALS = new HashSet<Byte>();
 
     static {
-
         final HashSet<Integer> MATERIALS = new HashSet<Integer>();
         MATERIALS.add(Material.AIR.getId());
         MATERIALS.add(Material.SAPLING.getId());
@@ -76,5 +76,8 @@ public class MaterialUtils {
         }
 
         return materials;
+    }
+
+    private MaterialUtils() {
     }
 }

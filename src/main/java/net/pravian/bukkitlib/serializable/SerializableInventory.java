@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @see SerializableObject
  */
+@SuppressWarnings("deprecation")
 public class SerializableInventory extends SerializableObject<Inventory> {
 
     private final Inventory inventory;

@@ -11,6 +11,7 @@ import org.bukkit.block.Block;
  *
  * @see SerializableObject
  */
+@SuppressWarnings("deprecation")
 public class SerializableBlock extends SerializableObject<Block> {
 
     private final String worldName;
@@ -40,7 +41,7 @@ public class SerializableBlock extends SerializableObject<Block> {
      * @param block The String to serialize from.
      */
     public SerializableBlock(String block) {
-        if (block == null || block.equals("") || block.split(":").length != 4) {
+        if (block == null || block.isEmpty() || block.split(":").length != 4) {
             this.worldName = null;
             this.x = 0;
             this.y = 0;

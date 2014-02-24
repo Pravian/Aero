@@ -11,11 +11,15 @@ public class ItemUtils {
         return item.getType() == compare.getType();
     }
 
+    @SuppressWarnings("deprecation")
     public static boolean isSameTypeAndDamage(ItemStack item, ItemStack compare) {
         return isSameType(item, compare) && item.getData().getData() == compare.getData().getData();
     }
 
     public static boolean isEqual(ItemStack item, ItemStack compare) {
         return isSameTypeAndDamage(item, compare) && item.getAmount() == compare.getAmount();
+    }
+
+    private ItemUtils() {
     }
 }

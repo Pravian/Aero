@@ -224,4 +224,5 @@ public class BukkitSign {
         WALL_SIGN,
         SIGN_POST;
     }
+
 }

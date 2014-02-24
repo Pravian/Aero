@@ -17,6 +17,9 @@ import org.bukkit.entity.Player;
  */
 public class PlayerUtils {
 
+    private PlayerUtils() {
+    }
+
     /**
      * Attempts to resolve the full Player-Name by a portion of it.
      *
@@ -164,6 +167,7 @@ public class PlayerUtils {
      * @return The location / null
      */
     public static Location getTarget(LivingEntity entity, int range) {
+        @SuppressWarnings("deprecation")
         final Block block = entity.getTargetBlock(MaterialUtils.TRANSPARENT_MATERIALS, range);
         if (block == null) {
             return null;

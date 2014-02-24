@@ -52,4 +52,7 @@ public class WorldUtils {
         RAIN,
         STORM;
     }
+
+    private WorldUtils() {
+    }
 }

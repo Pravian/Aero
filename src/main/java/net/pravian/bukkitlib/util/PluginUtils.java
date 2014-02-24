@@ -88,4 +88,7 @@ public class PluginUtils {
         Bukkit.getPluginManager().disablePlugin(plugin);
         Bukkit.getPluginManager().enablePlugin(plugin);
     }
+
+    private PluginUtils() {
+    }
 }

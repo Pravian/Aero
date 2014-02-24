@@ -86,4 +86,7 @@ public class LoggerUtils {
 
         plugin.getLogger().info(line);
     }
+
+    private LoggerUtils() {
+    }
 }

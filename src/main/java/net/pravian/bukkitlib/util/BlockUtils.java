@@ -4,6 +4,9 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+/**
+ * Represents all Block-related utilities.
+ */
 public class BlockUtils {
 
     /**
@@ -34,5 +37,8 @@ public class BlockUtils {
      */
     public static boolean isIn(Block block, Chunk chunk) {
         return (block.getX() >> 4) == chunk.getX() && (block.getZ() >> 4) == chunk.getZ();
+    }
+
+    private BlockUtils() {
     }
 }

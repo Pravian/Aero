@@ -169,4 +169,7 @@ public class SelectionUtils {
         }
         return 3;
     }
+
+    private SelectionUtils() {
+    }
 }

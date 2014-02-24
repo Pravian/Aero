@@ -20,4 +20,7 @@ public class LocationUtils {
                 Math.round(location.getY()),
                 Math.round(location.getZ()));
     }
+
+    private LocationUtils() {
+    }
 }

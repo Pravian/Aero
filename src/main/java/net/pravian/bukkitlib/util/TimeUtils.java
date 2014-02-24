@@ -5,19 +5,69 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Represents all Date-related utilities.
+ * Represents all Time-related utilities.
  */
 public class TimeUtils {
 
     /**
      * The storage format for parsing dates.
      */
-    public static String DATE_STORAGE_FORMAT = "EEE, d MMM yyyy HH:mm:ss Z";
+    public static final String DATE_STORAGE_FORMAT = "EEE, d MMM yyyy HH:mm:ss Z";
+    private static final Map<String, Integer> times = new HashMap<String, Integer>();
+
+    static {
+        times.put("dawn", 22000);
+        times.put("sunrise", 23000);
+        times.put("morning", 24000);
+        times.put("day", 24000);
+        times.put("midday", 28000);
+        times.put("noon", 28000);
+        times.put("afternoon", 30000);
+        times.put("evening", 32000);
+        times.put("sunset", 37000);
+        times.put("dusk", 37500);
+        times.put("night", 38000);
+        times.put("midnight", 16000);
+    }
+
+    private TimeUtils() {
+    }
+
+    /**
+     * Returns the tick value based on a name.
+     *
+     * <p>Returns -1 if no time format was detected</p>
+     *
+     * <p>Author: bergerkiller</p>
+     *
+     * @param timeName The time name to parse.
+     */
+    public static long getTime(String timeName) {
+        try {
+            String[] bits = timeName.split(":");
+            if (bits.length == 2) {
+                long hours = 1000 * (Long.parseLong(bits[0]) - 8);
+                long minutes = 1000 * Long.parseLong(bits[1]) / 60;
+                return hours + minutes;
+            } else {
+                return (long) ((Double.parseDouble(timeName) - 8) * 1000);
+            }
+        } catch (Exception ex) {
+            // Or some shortcuts
+            Integer time = times.get(timeName == null ? null : timeName.toLowerCase());
+            if (time != null) {
+                return time.longValue();
+            }
+        }
+        return -1;
+    }
 
     /**
      * Parses a date offset from a string.

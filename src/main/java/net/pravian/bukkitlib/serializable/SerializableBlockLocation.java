@@ -35,7 +35,7 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
      * @param location The String to serialize from.
      */
     public SerializableBlockLocation(String location) {
-        if (location == null || location.equals("") || location.split(":").length != 4) {
+        if (location == null || location.isEmpty() || location.split(":").length != 4) {
             this.worldName = null;
             this.x = 0;
             this.y = 0;

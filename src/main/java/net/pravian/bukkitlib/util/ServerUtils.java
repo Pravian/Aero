@@ -298,4 +298,7 @@ public class ServerUtils {
     public static MinecraftServer getMineCraftServer() {
         return MinecraftServer.getServer();
     }
+
+    private ServerUtils() {
+    }
 }

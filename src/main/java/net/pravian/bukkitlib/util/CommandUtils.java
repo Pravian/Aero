@@ -15,6 +15,7 @@ public class CommandUtils {
     /**
      * @author sk89q
      */
+    @SuppressWarnings("unchecked")
     private static <T> T getField(Object from, String name) {
         Class<?> checkClass = from.getClass();
         do {
@@ -45,6 +46,7 @@ public class CommandUtils {
      * @param commandMap The CommandMap from where to retrieve the commands from.
      * @return A HashMap with all loaded commands.
      */
+    @SuppressWarnings("unchecked")
     public static HashMap<String, Command> getKnownCommands(CommandMap commandMap) {
         Object knownCommands = getField(commandMap, "knownCommands");
         if (knownCommands != null) {
@@ -160,5 +162,8 @@ public class CommandUtils {
      */
     public static String[] parseCommandArgs(String commandMessage) {
         return (String[]) ArrayUtils.remove(commandMessage.split(" "), 0);
+    }
+
+    private CommandUtils() {
     }
 }

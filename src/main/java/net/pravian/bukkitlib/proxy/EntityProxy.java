@@ -9,212 +9,220 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-public class EntityProxy implements Entity {
+/**
+ * Represents a proxy for an entity.
+ *
+ * @param <T> The Type of entity, optional.
+ * @author bergerkiller
+ */
+public class EntityProxy<T extends Entity> extends ProxyBase<T> implements Entity {
 
-    private final Entity entity;
-
-    public EntityProxy(Entity entity) {
-        this.entity = entity;
+    /**
+     * Creates a new EntityProxy instance.
+     *
+     * @param base The proxy base.
+     */
+    public EntityProxy(T base) {
+        super(base);
     }
 
     @Override
-    public Location getLocation() {
-        return entity.getLocation();
+    public List<MetadataValue> getMetadata(String arg0) {
+        return base.getMetadata(arg0);
     }
 
     @Override
-    public Location getLocation(Location lctn) {
-        return entity.getLocation(lctn);
+    public boolean hasMetadata(String arg0) {
+        return base.hasMetadata(arg0);
     }
 
     @Override
-    public void setVelocity(Vector vector) {
-        entity.setVelocity(vector);
+    public void removeMetadata(String arg0, Plugin arg1) {
+        base.removeMetadata(arg0, arg1);
     }
 
     @Override
-    public Vector getVelocity() {
-        return entity.getVelocity();
-    }
-
-    @Override
-    public boolean isOnGround() {
-        return entity.isOnGround();
-    }
-
-    @Override
-    public World getWorld() {
-        return entity.getWorld();
-    }
-
-    @Override
-    public boolean teleport(Location lctn) {
-        return entity.teleport(lctn);
-    }
-
-    @Override
-    public boolean teleport(Location lctn, PlayerTeleportEvent.TeleportCause tc) {
-        return entity.teleport(lctn, tc);
-    }
-
-    @Override
-    public boolean teleport(Entity entity) {
-        return this.entity.teleport(entity);
-    }
-
-    @Override
-    public boolean teleport(Entity entity, PlayerTeleportEvent.TeleportCause tc) {
-        return this.entity.teleport(entity, tc);
-    }
-
-    @Override
-    public List<Entity> getNearbyEntities(double d, double d1, double d2) {
-        return entity.getNearbyEntities(d, d1, d2);
-    }
-
-    @Override
-    public int getEntityId() {
-        return entity.getEntityId();
-
-    }
-
-    @Override
-    public int getFireTicks() {
-        return entity.getFireTicks();
-    }
-
-    @Override
-    public int getMaxFireTicks() {
-        return entity.getMaxFireTicks();
-    }
-
-    @Override
-    public void setFireTicks(int i) {
-        entity.setFireTicks(i);
-    }
-
-    @Override
-    public void remove() {
-        entity.remove();
-    }
-
-    @Override
-    public boolean isDead() {
-        return entity.isDead();
-    }
-
-    @Override
-    public boolean isValid() {
-        return entity.isValid();
-    }
-
-    @Override
-    public Server getServer() {
-        return entity.getServer();
-    }
-
-    @Override
-    public Entity getPassenger() {
-        return entity.getPassenger();
-    }
-
-    @Override
-    public boolean setPassenger(Entity entity) {
-        return this.entity.setPassenger(entity);
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return entity.isEmpty();
+    public void setMetadata(String arg0, MetadataValue arg1) {
+        base.setMetadata(arg0, arg1);
     }
 
     @Override
     public boolean eject() {
-        return entity.eject();
+        return base.eject();
+    }
+
+    @Override
+    public int getEntityId() {
+        return base.getEntityId();
     }
 
     @Override
     public float getFallDistance() {
-        return entity.getFallDistance();
+        return base.getFallDistance();
     }
 
     @Override
-    public void setFallDistance(float f) {
-        entity.setFallDistance(f);
-    }
-
-    @Override
-    public void setLastDamageCause(EntityDamageEvent ede) {
-        entity.setLastDamageCause(ede);
+    public int getFireTicks() {
+        return base.getFireTicks();
     }
 
     @Override
     public EntityDamageEvent getLastDamageCause() {
-        return entity.getLastDamageCause();
+        return base.getLastDamageCause();
     }
 
     @Override
-    public UUID getUniqueId() {
-        return entity.getUniqueId();
+    public Location getLocation() {
+        return base.getLocation();
+    }
+
+    @Override
+    public Location getLocation(Location arg0) {
+        return base.getLocation(arg0);
+    }
+
+    @Override
+    public int getMaxFireTicks() {
+        return base.getMaxFireTicks();
+    }
+
+    @Override
+    public List<Entity> getNearbyEntities(double arg0, double arg1, double arg2) {
+        return base.getNearbyEntities(arg0, arg1, arg2);
+    }
+
+    @Override
+    public Entity getPassenger() {
+        return base.getPassenger();
+    }
+
+    @Override
+    public Server getServer() {
+        return base.getServer();
     }
 
     @Override
     public int getTicksLived() {
-        return entity.getTicksLived();
-    }
-
-    @Override
-    public void setTicksLived(int i) {
-        entity.setTicksLived(i);
-    }
-
-    @Override
-    public void playEffect(EntityEffect ee) {
-        entity.playEffect(ee);
+        return base.getTicksLived();
     }
 
     @Override
     public EntityType getType() {
-        return entity.getType();
+        return base.getType();
     }
 
     @Override
-    public boolean isInsideVehicle() {
-        return entity.isInsideVehicle();
-    }
-
-    @Override
-    public boolean leaveVehicle() {
-        return entity.leaveVehicle();
+    public UUID getUniqueId() {
+        return base.getUniqueId();
     }
 
     @Override
     public Entity getVehicle() {
-        return entity.getVehicle();
+        return base.getVehicle();
     }
 
     @Override
-    public void setMetadata(String string, MetadataValue mv) {
-        entity.setMetadata(string, mv);
+    public Vector getVelocity() {
+        return base.getVelocity();
     }
 
     @Override
-    public List<MetadataValue> getMetadata(String string) {
-        return entity.getMetadata(string);
+    public World getWorld() {
+        return base.getWorld();
     }
 
     @Override
-    public boolean hasMetadata(String string) {
-        return entity.hasMetadata(string);
+    public boolean isDead() {
+        return base.isDead();
     }
 
     @Override
-    public void removeMetadata(String string, Plugin plugin) {
-        entity.removeMetadata(string, plugin);
+    public boolean isEmpty() {
+        return base.isEmpty();
+    }
+
+    @Override
+    public boolean isInsideVehicle() {
+        return base.isInsideVehicle();
+    }
+
+    @Override
+    public boolean isValid() {
+        return base.isValid();
+    }
+
+    @Override
+    public boolean leaveVehicle() {
+        return base.leaveVehicle();
+    }
+
+    @Override
+    public void playEffect(EntityEffect arg0) {
+        base.playEffect(arg0);
+    }
+
+    @Override
+    public void remove() {
+        base.remove();
+    }
+
+    @Override
+    public void setFallDistance(float arg0) {
+        base.setFallDistance(arg0);
+    }
+
+    @Override
+    public void setFireTicks(int arg0) {
+        base.setFireTicks(arg0);
+    }
+
+    @Override
+    public void setLastDamageCause(EntityDamageEvent arg0) {
+        base.setLastDamageCause(arg0);
+    }
+
+    @Override
+    public boolean setPassenger(Entity arg0) {
+        return base.setPassenger(arg0);
+    }
+
+    @Override
+    public void setTicksLived(int arg0) {
+        base.setTicksLived(arg0);
+    }
+
+    @Override
+    public void setVelocity(Vector arg0) {
+        base.setVelocity(arg0);
+    }
+
+    @Override
+    public boolean teleport(Location arg0) {
+        return base.teleport(arg0);
+    }
+
+    @Override
+    public boolean teleport(Entity arg0) {
+        return base.teleport(arg0);
+    }
+
+    @Override
+    public boolean teleport(Location arg0, TeleportCause arg1) {
+        return base.teleport(arg0, arg1);
+    }
+
+    @Override
+    public boolean teleport(Entity arg0, TeleportCause arg1) {
+        return base.teleport(arg0, arg1);
+    }
+
+    @Override
+    public boolean isOnGround() {
+        return base.isOnGround();
     }
 }
