@@ -163,6 +163,10 @@ public final class BukkitLib extends JavaPlugin {
      * @param plugin
      */
     public static void init(Plugin plugin) {
+        if (plugin == null) {
+            throw new IllegalStateException();
+        }
+        
         init = true;
 
         loadBuildInformation();

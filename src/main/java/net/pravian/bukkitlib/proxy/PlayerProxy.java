@@ -606,227 +606,227 @@ public class PlayerProxy extends EntityProxy<Player> implements Player {
 
     @Override
     public void setRemainingAir(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setRemainingAir(i);
     }
 
     @Override
     public int getMaximumAir() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getMaximumAir();
     }
 
     @Override
     public void setMaximumAir(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setMaximumAir(i);
     }
 
     @Override
     public int getMaximumNoDamageTicks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getMaximumNoDamageTicks();
     }
 
     @Override
     public void setMaximumNoDamageTicks(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setMaximumNoDamageTicks(i);
     }
 
     @Override
     public double getLastDamage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getLastDamage();
     }
 
     @Override
     public int _INVALID_getLastDamage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base._INVALID_getLastDamage();
     }
 
     @Override
     public void setLastDamage(double d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setLastDamage(d);
     }
 
     @Override
     public void _INVALID_setLastDamage(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base._INVALID_setLastDamage(i);
     }
 
     @Override
     public int getNoDamageTicks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getNoDamageTicks();
     }
 
     @Override
     public void setNoDamageTicks(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setNoDamageTicks(i);
     }
 
     @Override
     public Player getKiller() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getKiller();
     }
 
     @Override
     public boolean addPotionEffect(PotionEffect pe) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.addPotionEffect(pe);
     }
 
     @Override
     public boolean addPotionEffect(PotionEffect pe, boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.addPotionEffect(pe, bln);
     }
 
     @Override
     public boolean addPotionEffects(Collection<PotionEffect> clctn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.addPotionEffects(clctn);
     }
 
     @Override
     public boolean hasPotionEffect(PotionEffectType pet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.hasPotionEffect(pet);
     }
 
     @Override
     public void removePotionEffect(PotionEffectType pet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.removePotionEffect(pet);
     }
 
     @Override
     public Collection<PotionEffect> getActivePotionEffects() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getActivePotionEffects();
     }
 
     @Override
     public boolean hasLineOfSight(Entity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.hasLineOfSight(entity);
     }
 
     @Override
     public boolean getRemoveWhenFarAway() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getRemoveWhenFarAway();
     }
 
     @Override
     public void setRemoveWhenFarAway(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setRemoveWhenFarAway(bln);
     }
 
     @Override
     public EntityEquipment getEquipment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getEquipment();
     }
 
     @Override
     public void setCanPickupItems(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setCanPickupItems(bln);
     }
 
     @Override
     public boolean getCanPickupItems() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getCanPickupItems();
     }
 
     @Override
     public void setCustomName(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setCustomName(string);
     }
 
     @Override
     public String getCustomName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getCustomName();
     }
 
     @Override
     public void setCustomNameVisible(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setCustomNameVisible(bln);
     }
 
     @Override
     public boolean isCustomNameVisible() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isCustomNameVisible();
     }
 
     @Override
     public boolean isLeashed() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isLeashed();
     }
 
     @Override
     public Entity getLeashHolder() throws IllegalStateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getLeashHolder();
     }
 
     @Override
     public boolean setLeashHolder(Entity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.setLeashHolder(entity);
     }
 
     @Override
     public void damage(double d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.damage(d);
     }
 
     @Override
     public void _INVALID_damage(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base._INVALID_damage(i);
     }
 
     @Override
     public void damage(double d, Entity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.damage(d, entity);
     }
 
     @Override
     public void _INVALID_damage(int i, Entity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base._INVALID_damage(i, entity);
     }
 
     @Override
     public double getHealth() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getHealth();
     }
 
     @Override
     public int _INVALID_getHealth() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base._INVALID_getHealth();
     }
 
     @Override
     public void setHealth(double d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setHealth(d);
     }
 
     @Override
     public void _INVALID_setHealth(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base._INVALID_damage(i);
     }
 
     @Override
     public double getMaxHealth() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getMaxHealth();
     }
 
     @Override
     public int _INVALID_getMaxHealth() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base._INVALID_getHealth();
     }
 
     @Override
     public void setMaxHealth(double d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setMaxHealth(d);
     }
 
     @Override
     public void _INVALID_setMaxHealth(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base._INVALID_setMaxHealth(i);
     }
 
     @Override
     public void resetMaxHealth() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.resetMaxHealth();
     }
 
     @Override
     public boolean isPermissionSet(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isPermissionSet(string);
     }
 
     @Override
