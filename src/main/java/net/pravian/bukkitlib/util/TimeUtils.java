@@ -10,6 +10,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import net.pravian.bukkitlib.internal.PlayerData;
+import org.bukkit.entity.Player;
 
 /**
  * Represents all Time-related utilities.
@@ -191,6 +193,7 @@ public class TimeUtils {
      * Parses a Date to a string using {@link #DATE_STORAGE_FORMAT}.
      *
      * <p>The default storage format is config-friendly, so it may be used in YamlConfig.</p>
+     *
      * <p>Parsing <i>never</i> returns null.</p>
      *
      * @param date The String to parse to a date.
@@ -203,8 +206,39 @@ public class TimeUtils {
         }
         try {
             return new SimpleDateFormat(DATE_STORAGE_FORMAT, Locale.ENGLISH).parse(date);
-        } catch (ParseException e) {
+        } catch (ParseException ex) {
             return new Date(0L);
         }
+    }
+
+    /**
+     * Returns the current Unix timestamp in seconds.
+     *
+     * @return The number of seconds since the Unix epoch.
+     */
+    public static long getUnix() {
+        return System.currentTimeMillis() / 1000L;
+    }
+
+    /**
+     * Converts a Unix timestamp to a date.
+     *
+     * @param timestamp The Timestamp to parse.
+     * @return The date represented by the timestamp.
+     */
+    public static Date getUnixDate(long timestamp) {
+        return new Date(timestamp * 1000L);
+    }
+
+    /**
+     * Returns the amount of seconds the player has been online for.
+     *
+     * <p>Returns 0 if the player is not online.</p>
+     *
+     * @param player The player.
+     * @return The amount of seconds.
+     */
+    public static long getPlayerJoinSeconds(Player player) {
+        return getUnix() - PlayerData.getPlayerUnixJoin(player);
     }
 }

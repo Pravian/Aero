@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import net.pravian.bukkitlib.internal.InternalMetrics;
+import net.pravian.bukkitlib.internal.PlayerData;
 import net.pravian.bukkitlib.metrics.Graph;
 import net.pravian.bukkitlib.metrics.FixedDonutPlotter;
 import org.bukkit.Bukkit;
@@ -65,6 +66,8 @@ public final class BukkitLib extends JavaPlugin {
         " - Added BukkitMessage interface for use in commands",
         " - Added functionality: ChatUtils.colorize() now also validates '§'",
         " - Added StringUtils",
+        " - Added getUnix(), getUnixDate(Date) and getPlayerOnlineTime()",
+        " - Added PlayerData as a base for storing player-specific data.",
         " - Removed all terrain generators",
         " - Removed BukkitPermissionHandler",
         " - Refractored DateUtils to TimeUtils",
@@ -166,10 +169,12 @@ public final class BukkitLib extends JavaPlugin {
         if (plugin == null) {
             throw new IllegalStateException();
         }
-        
+
         init = true;
 
         loadBuildInformation();
+
+        PlayerData.startListening(plugin);
 
         try {
             final InternalMetrics metrics = new InternalMetrics(plugin, NAME, buildVersion);
@@ -239,17 +244,18 @@ public final class BukkitLib extends JavaPlugin {
     private static void loadBuildInformation() {
         // Plugin build-number and build-date
         try {
-            final InputStream in = BukkitLib.class.getResourceAsStream(
-                    "/" + BukkitLib.class.getPackage().getName().replace('.', '/') + "/build.properties");
+            final InputStream in = BukkitLib.class
+                    .getResourceAsStream(
+                    "/" + BukkitLib.class
+                    .getPackage().getName().replace('.', '/') + "/build.properties");
             final Properties build = new Properties();
 
             build.load(in);
-            in.close();
 
+            in.close();
             buildVersion = build.getProperty("app.buildversion");
             buildNumber = build.getProperty("app.buildnumber");
             buildDate = build.getProperty("app.builddate");
-
         } catch (Exception ex) {
             Bukkit.getLogger().warning("[BukkitLib] Could not load build information!");
         }
