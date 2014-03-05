@@ -25,6 +25,7 @@ public final class BukkitLib {
      * The author of this library.
      */
     public static final String AUTHOR = "Prozza";
+    //
     private static boolean init = false;
     private static String buildVersion;
     private static String buildNumber;
@@ -61,6 +62,11 @@ public final class BukkitLib {
         }
     }
 
+    /**
+     * Validates if BukkitLib has been initialized.
+     *
+     * @return True if BukkitLib has been initialized.
+     */
     public static boolean isInitialized() {
         return init;
     }
