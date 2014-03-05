@@ -831,156 +831,156 @@ public class PlayerProxy extends EntityProxy<Player> implements Player {
 
     @Override
     public boolean isPermissionSet(Permission prmsn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isPermissionSet(prmsn);
     }
 
     @Override
     public boolean hasPermission(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.hasPermission(string);
     }
 
     @Override
     public boolean hasPermission(Permission prmsn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.hasPermission(prmsn);
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String string, boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.addAttachment(plugin, string, bln);
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.addAttachment(plugin);
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String string, boolean bln, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.addAttachment(plugin, string, bln, i);
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.addAttachment(plugin, i);
     }
 
     @Override
     public void removeAttachment(PermissionAttachment pa) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.removeAttachment(pa);
     }
 
     @Override
     public void recalculatePermissions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.recalculatePermissions();
     }
 
     @Override
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getEffectivePermissions();
     }
 
     @Override
     public boolean isOp() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isOp();
     }
 
     @Override
     public void setOp(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setOp(bln);
     }
 
     @Override
     public boolean isConversing() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isConversing();
     }
 
     @Override
     public void acceptConversationInput(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.acceptConversationInput(string);
     }
 
     @Override
     public boolean beginConversation(Conversation c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.beginConversation(c);
     }
 
     @Override
     public void abandonConversation(Conversation c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.abandonConversation(c);
     }
 
     @Override
     public void abandonConversation(Conversation c, ConversationAbandonedEvent cae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.abandonConversation(c, cae);
     }
 
     @Override
     public void sendMessage(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.sendMessage(string);
     }
 
     @Override
     public void sendMessage(String[] strings) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.sendMessage(strings);
     }
 
     @Override
     public boolean isOnline() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isOnline();
     }
 
     @Override
     public boolean isBanned() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isBanned();
     }
 
     @Override
     public void setBanned(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setBanned(bln);
     }
 
     @Override
     public boolean isWhitelisted() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.isWhitelisted();
     }
 
     @Override
     public void setWhitelisted(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.setWhitelisted(bln);
     }
 
     @Override
     public Player getPlayer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getPlayer();
     }
 
     @Override
     public long getFirstPlayed() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getFirstPlayed();
     }
 
     @Override
     public long getLastPlayed() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getLastPlayed();
     }
 
     @Override
     public boolean hasPlayedBefore() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.hasPlayedBefore();
     }
 
     @Override
     public Map<String, Object> serialize() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.serialize();
     }
 
     @Override
     public void sendPluginMessage(Plugin plugin, String string, byte[] bytes) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        base.sendPluginMessage(plugin, string, bytes);
     }
 
     @Override
     public Set<String> getListeningPluginChannels() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return base.getListeningPluginChannels();
     }
 }

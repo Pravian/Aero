@@ -18,9 +18,9 @@
         </goals>
     </action>
     <action>
-            <actionName>CUSTOM-Test</actionName>
-            <displayName>Test</displayName>
-        </action>
-    
+        <actionName>CUSTOM-Test</actionName>
+        <displayName>Test</displayName>
+    </action>
+
 
 </actions>

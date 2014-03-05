@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import net.pravian.bukkitlib.internal.InternalMetrics;
-import net.pravian.bukkitlib.internal.PlayerData;
 import net.pravian.bukkitlib.metrics.Graph;
 import net.pravian.bukkitlib.metrics.FixedDonutPlotter;
 import org.bukkit.Bukkit;
@@ -173,8 +172,6 @@ public final class BukkitLib extends JavaPlugin {
         init = true;
 
         loadBuildInformation();
-
-        PlayerData.startListening(plugin);
 
         try {
             final InternalMetrics metrics = new InternalMetrics(plugin, NAME, buildVersion);

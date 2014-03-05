@@ -10,8 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import net.pravian.bukkitlib.internal.PlayerData;
-import org.bukkit.entity.Player;
 
 /**
  * Represents all Time-related utilities.
@@ -228,17 +226,5 @@ public class TimeUtils {
      */
     public static Date getUnixDate(long timestamp) {
         return new Date(timestamp * 1000L);
-    }
-
-    /**
-     * Returns the amount of seconds the player has been online for.
-     *
-     * <p>Returns 0 if the player is not online.</p>
-     *
-     * @param player The player.
-     * @return The amount of seconds.
-     */
-    public static long getPlayerJoinSeconds(Player player) {
-        return getUnix() - PlayerData.getPlayerUnixJoin(player);
     }
 }
