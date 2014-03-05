@@ -31,7 +31,7 @@ public class SerializableBlock extends SerializableObject<Block> {
         this.x = block.getLocation().getBlockX();
         this.y = block.getLocation().getBlockY();
         this.z = block.getLocation().getBlockZ();
-        this.id = block.getType().getId();
+        this.id = block.getTypeId();
         this.data = block.getData();
     }
 
@@ -110,7 +110,7 @@ public class SerializableBlock extends SerializableObject<Block> {
 
     @Override
     public String serialize() {
-        return worldName + x + ":" + y + ":" + z + ":" + id + ":" + data;
+        return worldName + ":" + x + ":" + y + ":" + z + ":" + id + ":" + data;
     }
 
     @Override

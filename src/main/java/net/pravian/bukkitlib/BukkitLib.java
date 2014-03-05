@@ -8,15 +8,14 @@ import net.pravian.bukkitlib.metrics.Graph;
 import net.pravian.bukkitlib.metrics.FixedDonutPlotter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Represents BukkitLib; a commons library for Bukkit.
- *
- * @author Prozza
  */
 public final class BukkitLib {
 
+    private BukkitLib() {
+    }
     /**
      * The name of this library.
      */
@@ -26,10 +25,15 @@ public final class BukkitLib {
      */
     public static final String AUTHOR = "Prozza";
     //
-    private static boolean init = false;
+    private static boolean init;
+    //
     private static String buildVersion;
     private static String buildNumber;
     private static String buildDate;
+
+    static {
+        init = false;
+    }
 
     /**
      * Initializes BukkitLib

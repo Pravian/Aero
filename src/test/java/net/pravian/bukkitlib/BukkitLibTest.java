@@ -38,6 +38,11 @@ public class BukkitLibTest {
     @Test
     @Order(5)
     public void testInit() {
+
+        if (BukkitLib.isInitialized()) {
+            fail();
+        }
+
         try {
             BukkitLib.init(null);
             fail();
@@ -50,6 +55,10 @@ public class BukkitLibTest {
             BukkitLib.init(plugin);
             fail();
         } catch (NullPointerException ex) { // Thrown at metrics
+        }
+
+        if (!BukkitLib.isInitialized()) {
+            fail();
         }
 
         // These shouldn't throw exceptions anymore
