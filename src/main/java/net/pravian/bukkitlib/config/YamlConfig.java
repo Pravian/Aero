@@ -3,6 +3,7 @@ package net.pravian.bukkitlib.config;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import net.pravian.bukkitlib.serializable.SerializableBlock;
 import net.pravian.bukkitlib.serializable.SerializableBlockLocation;
@@ -11,8 +12,12 @@ import net.pravian.bukkitlib.serializable.SerializableInventory;
 import net.pravian.bukkitlib.serializable.SerializableObject;
 import net.pravian.bukkitlib.util.FileUtils;
 import net.pravian.bukkitlib.util.LoggerUtils;
+import org.bukkit.Color;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.util.Vector;
 
 /**
  * Represents a definable YAML configuration.
@@ -80,6 +85,164 @@ public class YamlConfig extends YamlConfiguration {
     }
 
     /**
+     * @see #set(java.lang.String, java.lang.Object)
+     */
+    public void set(PathContainer path, Object value) {
+        super.set(path.getPath(), value);
+    }
+
+    /**
+     * @see #getString(java.lang.String)
+     */
+    public String getString(PathContainer path) {
+        return super.getString(path.getPath());
+    }
+
+    /**
+     * @see #getBoolean(java.lang.String)
+     */
+    public boolean getBoolean(PathContainer path) {
+        return super.getBoolean(path.getPath());
+    }
+
+    /**
+     * @see #getInt(java.lang.String)
+     */
+    public int getInt(PathContainer path) {
+        return super.getInt(path.getPath());
+    }
+
+    /**
+     * @see #getDouble(java.lang.String)
+     */
+    public double getDouble(PathContainer path) {
+        return super.getDouble(path.getPath());
+    }
+
+    /**
+     * @see #getLong(java.lang.String)
+     */
+    public long getLong(PathContainer path) {
+        return super.getLong(path.getPath());
+    }
+
+    /**
+     * @see #getColor(java.lang.String)
+     */
+    public Color getColor(PathContainer path) {
+        return super.getColor(path.getPath());
+    }
+
+    /**
+     * @see #getItemStack(java.lang.String)
+     */
+    public ItemStack getItemStack(PathContainer path) {
+        return super.getItemStack(path.getPath());
+    }
+
+    /**
+     * @see #getOfflinePlayer(java.lang.String)
+     */
+    public OfflinePlayer getOfflinePlayer(PathContainer path) {
+        return super.getOfflinePlayer(path.getPath());
+    }
+
+    /**
+     * @see #getVector(java.lang.String)
+     */
+    public Vector getVector(PathContainer path) {
+        return super.getVector(path.getPath());
+    }
+
+    /**
+     * @see #getStringList(java.lang.String)
+     */
+    public List<String> getStringList(PathContainer path) {
+        return super.getStringList(path.getPath());
+    }
+
+    /**
+     * @see #getIntegerList(java.lang.String)
+     */
+    public List<Integer> getIntegerList(PathContainer path) {
+        return super.getIntegerList(path.getPath());
+    }
+
+    /**
+     * @see #getCharacterList(java.lang.String)
+     */
+    public List<Character> getCharacterList(PathContainer path) {
+        return super.getCharacterList(path.getPath());
+    }
+
+    /**
+     * @see #getBooleanList(java.lang.String)
+     */
+    public List<Boolean> getBooleanList(PathContainer path) {
+        return super.getBooleanList(path.getPath());
+    }
+
+    /**
+     * @see #getByteList(java.lang.String)
+     */
+    public List<Byte> getByteList(PathContainer path) {
+        return super.getByteList(path.getPath());
+    }
+
+    /**
+     * @see #getDoubleList(java.lang.String)
+     */
+    public List<Double> getDoubleList(PathContainer path) {
+        return super.getDoubleList(path.getPath());
+    }
+
+    /**
+     * @see #getFloatList(java.lang.String)
+     */
+    public List<Float> getFloatList(PathContainer path) {
+        return super.getFloatList(path.getPath());
+    }
+
+    /**
+     * @see #getLongList(java.lang.String)
+     */
+    public List<Long> getLongList(PathContainer path) {
+        return super.getLongList(path.getPath());
+    }
+
+    /**
+     * @see #getShortList(java.lang.String)
+     */
+    public List<Short> getShortList(PathContainer path) {
+        return super.getShortList(path.getPath());
+    }
+
+    /**
+     * @see #getList(java.lang.String)
+     */
+    public List<?> getList(PathContainer path) {
+        return super.getList(path.getPath());
+    }
+
+    /**
+     * @see #getMapList(java.lang.String)
+     */
+    public List<Map<?, ?>> getMapList(PathContainer path) {
+        return super.getMapList(path.getPath());
+    }
+
+    public Object getDefault(PathContainer path) {
+        return super.getDefault(path.getPath());
+    }
+
+    /**
+     * @see #setSerializable(java.lang.String, net.pravian.bukkitlib.serializable.SerializableObject)
+     */
+    public void setSerializable(PathContainer path, SerializableObject<?> object) {
+        setSerializable(path.getPath(), object);
+    }
+
+    /**
      * Stores an instance of SerializableObject.
      *
      * <p><b>Warning</b>: SerializableObjects should never be stored using {@link #set(String, Object)}
@@ -88,7 +251,7 @@ public class YamlConfig extends YamlConfiguration {
      * @param object
      * @see SerializableObject
      */
-    public void setSerializable(String path, SerializableObject object) {
+    public void setSerializable(String path, SerializableObject<?> object) {
         super.set(path, object.serialize());
     }
 
@@ -192,10 +355,36 @@ public class YamlConfig extends YamlConfiguration {
      * @param path The path at which the map should be stored.
      * @param map The map to store.
      */
+    public <K, V> void getMap(PathContainer path, Map<K, V> map) {
+        setMap(path.getPath(), map);
+    }
+
+    /**
+     * Stores a Map of any generic type.
+     *
+     * @param <K> The key type to the map.
+     * @param <V> The value type to the map.
+     * @param path The path at which the map should be stored.
+     * @param map The map to store.
+     */
     public <K, V> void setMap(String path, Map<K, V> map) {
         for (K key : map.keySet()) {
             super.set(path + "." + key.toString(), map.get(key));
         }
+    }
+
+    /**
+     * Retrieves a Map of any generic type.
+     *
+     * <p><b>Note</b>: Any objects which couldn't be casted won't be returned in the map.</p>
+     *
+     * @param <K> The key type to the map.
+     * @param <V> The value type to the map.
+     * @param path The path where the map is stored.
+     * @return The map.
+     */
+    public <K, V> Map<K, V> getMap(PathContainer path) {
+        return getMap(path.getPath());
     }
 
     /**
