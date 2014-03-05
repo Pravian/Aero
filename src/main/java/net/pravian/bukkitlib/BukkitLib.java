@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Prozza
  */
-public final class BukkitLib extends JavaPlugin {
+public final class BukkitLib {
 
     /**
      * The name of this library.
@@ -25,133 +25,6 @@ public final class BukkitLib extends JavaPlugin {
      * The author of this library.
      */
     public static final String AUTHOR = "Prozza";
-    /**
-     * The features of this library.
-     */
-    public static final String[] FEATURES = new String[]{
-        "Compact serialization for Bukkit objects (Inventory, Block, Location(Block & Entity)",
-        "Easy config-file management with YamlConfig",
-        "Exporting of net.minecraft.* using ServerUtil",
-        "Utils for: Logging, Plugin, Commands, Ips, Players, Worlds, Dates, File management, the Chat, Inventories, Items",
-        "Includes Cleanroom world generator",
-        "Includes mcstats.org metrics",
-        "Various concurrency tools"
-    };
-    /**
-     * The credits to the making of this library.
-     */
-    public static final String[] CREDITS = new String[]{
-        "HeXeRei452/WickedGamingUK (Bukkit Forums) for his interest and support",
-        "StevenLawson (Github) for his great helper methods in TotalFreedomMod",
-        "Phil2812 (Bukkit Forums) for his inventory serializer",
-        "mkyong (mykong.com) for his great examples on how to write objects to files",
-        "nvx (Bukkit Forums) for their Cleanroom generator",
-        "sk89q (sk89q.com) for his getField() method",
-        "bergerkiller for various methods and utilities",
-        "The Essentials development team for a larger range of utilities"
-    };
-    /**
-     * The change log to this library.
-     */
-    public static final String[] CHANGELOG = new String[]{
-        "-- 1.3:",
-        " - Added class proxies for:",
-        "   - Inventory",
-        "   - Block",
-        "   - CommandSender",
-        "   - Player",
-        " - Added functionality for multiple permissions in PermissionHolder",
-        " - Added superpermission in CommandHandler",
-        " - Added BukkitMessage interface for use in commands",
-        " - Added functionality: ChatUtils.colorize() now also validates '§'",
-        " - Added StringUtils",
-        " - Added getUnix(), getUnixDate(Date) and getPlayerOnlineTime()",
-        " - Added PlayerData as a base for storing player-specific data.",
-        " - Removed all terrain generators",
-        " - Removed BukkitPermissionHandler",
-        " - Refractored DateUtils to TimeUtils",
-        " - Project cleanup",
-        "",
-        "-- 1.2:",
-        "  - Added setWeather in WorldUtils",
-        "  - Added IncrementalGraph",
-        "  - Added DonutPlotter, FixedPlotter and FixedDonutPlotter",
-        "  - Added BukkitLibNotInitializedException",
-        "  - Added build number and date tracking through maven",
-        "  - Removed usage in CommandPermissions",
-        "  - Refractored .set and .get to .setMap and .getMap in YamlConfig",
-        "  - Cleaned up InternalMetrics",
-        "  - Fixed errors not showing when metrics failed",
-        "  - Fixed glitch with command permissions",
-        "",
-        "-- 1.1:",
-        "  - Added BukkitPermissionHolder, deprecates BukkitPermissionHandler",
-        "  - Added internal metrics through BukkitLib.init()",
-        "  - Added BlockUtil",
-        "  - Added BukkitSyncTask and BukkitAsyncTask",
-        "  - Added ItemUtil",
-        "  - Added BukkitSign",
-        "  - Added SelectionUtils",
-        "  - Added PlayerLobby",
-        "  - Added .setMap(Map) and .getMap() in YamlConfig",
-        "  - Refractored PluginLogger to BukkitLogger",
-        "  - Fixed a few bugs",
-        "  - Fixed Javadoc",
-        "",
-        "-- 1.0:",
-        "  - Batch format & cleanup",
-        "  - Removed generator: SkyGrid",
-        "  - Undeprecated LoggerUtil",
-        "",
-        "-- 1.7-Beta:",
-        "  - Updated to CraftBukkit 1.7-R0.1",
-        "  - Added PluginLogger instance to BukkitCommand",
-        "  - Minor changes",
-        "",
-        "-- 1.6-Beta:",
-        "  - Implemented Bukkit build generator, moved away from plugin-based BukkitLib",
-        "  - Fixed all JavaDoc",
-        "  - Added debug-style logging in PluginLogger",
-        "  - Minor changes",
-        "",
-        "-- 1.5-Beta:",
-        "  - Added PluginLogger, replaces LoggerUtils (now deprecated)",
-        "  - Renamed net.pravian.bukkitlib.utils to net.bukkitlib.pravian.util",
-        "  - Small changes",
-        "",
-        "-- 1.4-Beta:",
-        "  - Added JavaDoc",
-        "  - Minor changes",
-        "",
-        "-- 1.3-Beta:",
-        "  - Added BukkitPermissionHandler",
-        "  - Added ability to assign permission handlers with BukkitCommandHandler.setPermissionHandler()",
-        "  - Changed all net.pravian.bukkitlib.command classes and methods to instantiated versions",
-        "  - Moved net.pravian.util.* to net.pravian.java.*",
-        "",
-        "-- 1.2-Beta:",
-        "  - Added VoidChunkGenerator",
-        "  - Added SkyGridGenerator",
-        "  - Added BukkitCommand, BukkitCommandHandler, CommandPermissions and SourceType",
-        "  - Added Plugin interface",
-        "  - Removed BukkitLib.init()",
-        "  - Few more Utils methods",
-        "",
-        "-- 1.1-Beta:",
-        "  - Added BukkitLib.init(JavaPlugin)",
-        "  - Moved everything which needs plugins over to BukkitLib.getPlugin()",
-        "",
-        "-- 1.0-Beta: Initial release --",
-        "  - Added Cleanroom generator",
-        "  - Added YamlConfig",
-        "  - Added SerializableBlock",
-        "  - Added SerializableBlockLocation",
-        "  - Added SerializableEntityLocation",
-        "  - Added SerializableInventory",
-        "  - Added ChatUtils, CommandUtils, DateUtils, FileUtils, IpUtils, LoggerUtils, PlayerUtils, ServerUtils and WorldUtils",
-        "  - Using net.pravian.util.Block, SingletonBlock, ClosedBlock",
-        ""
-    };
     private static boolean init = false;
     private static String buildVersion;
     private static String buildNumber;
@@ -186,6 +59,10 @@ public final class BukkitLib extends JavaPlugin {
         } catch (IOException ex) {
             Bukkit.getLogger().warning("[BukkitLib] Failed to submit metrics");
         }
+    }
+
+    public static boolean isInitialized() {
+        return init;
     }
 
     /**
