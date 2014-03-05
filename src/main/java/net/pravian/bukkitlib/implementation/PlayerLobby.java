@@ -2,6 +2,8 @@ package net.pravian.bukkitlib.implementation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
@@ -10,11 +12,12 @@ import org.bukkit.entity.Player;
 /**
  * Represents a collection of players.
  */
-public class PlayerLobby extends ArrayList<Player> {
+public class PlayerLobby extends ArrayList<Player> implements List<Player> {
 
+    private static final long serialVersionUID = 1L;
     private final boolean dynamic;
     //
-    private String messageFormat = "_";
+    private String messageFormat;
 
     /**
      * Creates a new PlayerLobby instance.
@@ -30,13 +33,27 @@ public class PlayerLobby extends ArrayList<Player> {
     /**
      * Creates a new PlayerLobby instance.
      *
-     * <p>Passing true as the second argument will result in a dynamic lobby. A dynamic lobby has all the features a regular player lobby has with exception that the players in the lobby is
-     * always equal to the online players. Attempts to add or remove players will fail in that case.</p>
+     * <p>Passing true as the argument will result in a dynamic lobby. A dynamic lobby has all the features a regular player lobby has with exception that the players in the lobby are always
+     * all online players. Attempts to add or remove players will fail in that case.</p>
      *
      * @param dynamic Whenever to make the lobby dynamic.
      */
     public PlayerLobby(boolean dynamic) {
         this.dynamic = dynamic;
+        this.messageFormat = "_";
+    }
+
+    private void removeExpired() {
+        if (dynamic) {
+            return;
+        }
+
+        final Iterator<Player> iterator = super.iterator();
+        while (iterator.hasNext()) {
+            if (!iterator.next().isOnline()) {
+                iterator.remove();
+            }
+        }
     }
 
     /**
@@ -45,40 +62,23 @@ public class PlayerLobby extends ArrayList<Player> {
      * @return The players.
      */
     public List<Player> getPlayers() {
+        removeExpired();
+
+
         if (dynamic) {
             return Arrays.asList(Bukkit.getServer().getOnlinePlayers());
         } else {
-            return this;
-        }
-    }
-
-    private void removeExpired() {
-        if (dynamic) {
-            return;
-        }
-
-        final List<Player> removes = new ArrayList<Player>();
-        for (Player player : getPlayers()) {
-            if (!player.isOnline()) {
-                removes.add(player);
-                continue;
-            }
-        }
-
-        for (Player player : removes) {
-            super.remove(player);
+            return Collections.unmodifiableList(this);
         }
     }
 
     @Override
     public int size() {
-        removeExpired();
-        return super.size();
+        return getPlayers().size();
     }
 
     @Override
     public boolean add(Player player) {
-        removeExpired();
         if (getPlayers().contains(player) || dynamic) {
             return false;
         }
@@ -106,7 +106,6 @@ public class PlayerLobby extends ArrayList<Player> {
      * @return true if this list contained the specified element
      */
     public boolean remove(Player player) {
-        removeExpired();
         if (!getPlayers().contains(player) || dynamic) {
             return false;
         }
@@ -123,7 +122,6 @@ public class PlayerLobby extends ArrayList<Player> {
      * @return True if the player exists in the lobby.
      */
     public boolean contains(String playerName) {
-        removeExpired();
         for (Player player : getPlayers()) {
             if (player.getName().equalsIgnoreCase(playerName)) {
                 return true;
@@ -221,7 +219,6 @@ public class PlayerLobby extends ArrayList<Player> {
      * @param message The message to kick with.
      */
     public void kickAll(String message) {
-        removeExpired();
         for (Player player : getPlayers()) {
             player.kickPlayer(message);
         }
@@ -234,8 +231,6 @@ public class PlayerLobby extends ArrayList<Player> {
      * @return The players who have the permission.
      */
     public List<Player> getPermitted(String permission) {
-        removeExpired();
-
         final List<Player> permitted = new ArrayList<Player>();
 
         for (Player player : getPlayers()) {
@@ -244,5 +239,20 @@ public class PlayerLobby extends ArrayList<Player> {
             }
         }
         return permitted;
+    }
+
+    /**
+     * Returns list of the names of the players in the lobby.
+     *
+     * @return The player names.
+     */
+    public List<String> getNames() {
+        final List<String> names = new ArrayList<String>();
+
+        for (Player player : getPlayers()) {
+            names.add(player.getName());
+        }
+
+        return names;
     }
 }

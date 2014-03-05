@@ -1,13 +1,46 @@
 package net.pravian.bukkitlib.implementation;
 
 import java.util.List;
+import net.pravian.bukkitlib.config.YamlConfig;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitPlugin extends JavaPlugin {
 
+    private YamlConfig config = null;
+    private PluginLogger logger = null;
+
     /**
-     * Returns the version of this plugin
+     * Returns the YamlConfig associated to this plugin.
+     *
+     * <p>Assuming using <b>config.yml</b> and copying defaults.</p>
+     *
+     * @return The YamlConfig instance.
+     */
+    public YamlConfig getYamlConfig() {
+        if (config == null) {
+            config = new YamlConfig(this, "config.yml");
+        }
+
+        return config;
+    }
+
+    /**
+     * Returns the PluginLogger associated to this plugin.
+     *
+     * @return The PluginLogger instance.
+     */
+    public PluginLogger getPluginLogger() {
+        if (logger == null) {
+            logger = new PluginLogger(this);
+        }
+
+        return logger;
+    }
+
+    /**
+     * Returns the version of this plugin.
      *
      * @return the version
      */
@@ -34,7 +67,7 @@ public class BukkitPlugin extends JavaPlugin {
     }
 
     /**
-     * Registers an event-listener
+     * Registers an event-listener.
      *
      * @param listener to register
      * @return true if the listener registered correctly

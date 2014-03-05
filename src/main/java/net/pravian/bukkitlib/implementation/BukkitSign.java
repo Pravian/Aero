@@ -53,7 +53,7 @@ public class BukkitSign {
     /**
      * Creates a new BukkitSign instance from a BlockState.
      *
-     * <p>Note: If create is true, a sign will be created at the specified location, if there isn't one already. If no sign is present and create is false, this instance will be invalid.
+     * <p>Note: If create is true, a sign will be created at the specified location if there isn't one already. If no sign is present and create is false, this instance will be invalid.
      * Validity can be checked using isSign()</p>
      *
      * @param state The BlockState of the sign.
