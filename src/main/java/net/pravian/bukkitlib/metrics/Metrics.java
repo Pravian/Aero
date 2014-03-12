@@ -45,6 +45,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
+import net.pravian.bukkitlib.BukkitLib;
+import net.pravian.bukkitlib.MetricsDisabledException;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -111,6 +113,10 @@ public final class Metrics {
     public Metrics(final Plugin plugin) throws IOException {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null");
+        }
+
+        if (BukkitLib.isExplicitMetricsDisabled(plugin)) {
+            throw new MetricsDisabledException();
         }
 
         this.plugin = plugin;

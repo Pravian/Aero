@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Represents a custom graph on the website
+ * Represents a custom graph on the website.
  *
  * @author Tyler Blair
  */

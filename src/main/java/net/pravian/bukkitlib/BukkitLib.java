@@ -2,12 +2,15 @@ package net.pravian.bukkitlib;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 import net.pravian.bukkitlib.internal.InternalMetrics;
 import net.pravian.bukkitlib.metrics.Graph;
 import net.pravian.bukkitlib.metrics.FixedDonutPlotter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginBase;
 
 /**
  * Represents BukkitLib; a commons library for Bukkit.
@@ -25,6 +28,7 @@ public final class BukkitLib {
      */
     public static final String AUTHOR = "Prozza";
     //
+    private static final Set<String> noMetrics;
     private static boolean init;
     //
     private static String buildVersion;
@@ -32,6 +36,7 @@ public final class BukkitLib {
     private static String buildDate;
 
     static {
+        noMetrics = new HashSet<String>();
         init = false;
     }
 
@@ -42,7 +47,7 @@ public final class BukkitLib {
      *
      * @param plugin
      */
-    public static void init(Plugin plugin) {
+    public static void init(PluginBase plugin) {
         if (plugin == null) {
             throw new IllegalStateException();
         }
@@ -50,6 +55,10 @@ public final class BukkitLib {
         init = true;
 
         loadBuildInformation();
+
+        if (noMetrics.contains(plugin.getName())) {
+            return;
+        }
 
         try {
             final InternalMetrics metrics = new InternalMetrics(plugin, NAME, buildVersion);
@@ -123,6 +132,21 @@ public final class BukkitLib {
         }
 
         return buildDate;
+    }
+
+    /**
+     * Explicitly disables the metrics for this plugin.
+     *
+     * <p><b>Note</b>: Using this will make the author sad... ;(
+     *
+     * @param plugin The plugin to disable metrics for.
+     */
+    public static void explictDisableMetrics(PluginBase plugin) {
+        noMetrics.add(plugin.getName());
+    }
+
+    public static boolean isExplicitMetricsDisabled(Plugin plugin) {
+        return noMetrics.contains(plugin.getName());
     }
 
     private static void loadBuildInformation() {
