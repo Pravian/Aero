@@ -2,9 +2,12 @@ package net.pravian.bukkitlib.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.pravian.bukkitlib.serializable.SerializableBlock;
 import net.pravian.bukkitlib.serializable.SerializableBlockLocation;
 import net.pravian.bukkitlib.serializable.SerializableEntityLocation;
@@ -24,7 +27,7 @@ import org.bukkit.util.Vector;
  *
  * @see YamlConfiguration
  */
-public class YamlConfig extends YamlConfiguration {
+public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlConfig> {
 
     private final Plugin PLUGIN;
     private final File CONFIG_FILE;
@@ -87,6 +90,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #set(java.lang.String, java.lang.Object)
      */
+    @Override
     public void set(PathContainer path, Object value) {
         super.set(path.getPath(), value);
     }
@@ -94,6 +98,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getString(java.lang.String)
      */
+    @Override
     public String getString(PathContainer path) {
         return super.getString(path.getPath());
     }
@@ -101,6 +106,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getBoolean(java.lang.String)
      */
+    @Override
     public boolean getBoolean(PathContainer path) {
         return super.getBoolean(path.getPath());
     }
@@ -108,6 +114,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getInt(java.lang.String)
      */
+    @Override
     public int getInt(PathContainer path) {
         return super.getInt(path.getPath());
     }
@@ -115,6 +122,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getDouble(java.lang.String)
      */
+    @Override
     public double getDouble(PathContainer path) {
         return super.getDouble(path.getPath());
     }
@@ -122,6 +130,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getLong(java.lang.String)
      */
+    @Override
     public long getLong(PathContainer path) {
         return super.getLong(path.getPath());
     }
@@ -129,6 +138,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getColor(java.lang.String)
      */
+    @Override
     public Color getColor(PathContainer path) {
         return super.getColor(path.getPath());
     }
@@ -136,6 +146,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getItemStack(java.lang.String)
      */
+    @Override
     public ItemStack getItemStack(PathContainer path) {
         return super.getItemStack(path.getPath());
     }
@@ -143,6 +154,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getOfflinePlayer(java.lang.String)
      */
+    @Override
     public OfflinePlayer getOfflinePlayer(PathContainer path) {
         return super.getOfflinePlayer(path.getPath());
     }
@@ -150,6 +162,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getVector(java.lang.String)
      */
+    @Override
     public Vector getVector(PathContainer path) {
         return super.getVector(path.getPath());
     }
@@ -157,6 +170,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getStringList(java.lang.String)
      */
+    @Override
     public List<String> getStringList(PathContainer path) {
         return super.getStringList(path.getPath());
     }
@@ -164,6 +178,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getIntegerList(java.lang.String)
      */
+    @Override
     public List<Integer> getIntegerList(PathContainer path) {
         return super.getIntegerList(path.getPath());
     }
@@ -171,6 +186,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getCharacterList(java.lang.String)
      */
+    @Override
     public List<Character> getCharacterList(PathContainer path) {
         return super.getCharacterList(path.getPath());
     }
@@ -178,6 +194,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getBooleanList(java.lang.String)
      */
+    @Override
     public List<Boolean> getBooleanList(PathContainer path) {
         return super.getBooleanList(path.getPath());
     }
@@ -185,6 +202,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getByteList(java.lang.String)
      */
+    @Override
     public List<Byte> getByteList(PathContainer path) {
         return super.getByteList(path.getPath());
     }
@@ -192,6 +210,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getDoubleList(java.lang.String)
      */
+    @Override
     public List<Double> getDoubleList(PathContainer path) {
         return super.getDoubleList(path.getPath());
     }
@@ -199,6 +218,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getFloatList(java.lang.String)
      */
+    @Override
     public List<Float> getFloatList(PathContainer path) {
         return super.getFloatList(path.getPath());
     }
@@ -206,6 +226,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getLongList(java.lang.String)
      */
+    @Override
     public List<Long> getLongList(PathContainer path) {
         return super.getLongList(path.getPath());
     }
@@ -213,6 +234,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getShortList(java.lang.String)
      */
+    @Override
     public List<Short> getShortList(PathContainer path) {
         return super.getShortList(path.getPath());
     }
@@ -220,6 +242,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getList(java.lang.String)
      */
+    @Override
     public List<?> getList(PathContainer path) {
         return super.getList(path.getPath());
     }
@@ -227,10 +250,12 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #getMapList(java.lang.String)
      */
+    @Override
     public List<Map<?, ?>> getMapList(PathContainer path) {
         return super.getMapList(path.getPath());
     }
 
+    @Override
     public Object getDefault(PathContainer path) {
         return super.getDefault(path.getPath());
     }
@@ -238,6 +263,7 @@ public class YamlConfig extends YamlConfiguration {
     /**
      * @see #setSerializable(java.lang.String, net.pravian.bukkitlib.serializable.SerializableObject)
      */
+    @Override
     public void setSerializable(PathContainer path, SerializableObject<?> object) {
         setSerializable(path.getPath(), object);
     }
@@ -251,96 +277,48 @@ public class YamlConfig extends YamlConfiguration {
      * @param object
      * @see SerializableObject
      */
+    @Override
     public void setSerializable(String path, SerializableObject<?> object) {
         super.set(path, object.serialize());
     }
 
     /**
-     * Retrieves a stored SerializableBlock
-     *
-     * @param path The path where the SerializedObject is stored.
-     * @return The retrieved item. / null
-     * @see SerializableBlock
+     * @see #getSerializable(java.lang.String, java.lang.Class)
      */
-    public SerializableBlock getSerializableBlock(String path) {
-        final String serialized = super.getString(path);
-
-        if (serialized == null) {
-            return null;
-        }
-
-        SerializableBlock object = new SerializableBlock(serialized);
-
-        if (object.deserialize() == null) {
-            return null;
-        }
-
-        return object;
+    @Override
+    public <T extends SerializableObject<?>> T getSerializable(PathContainer path, Class<T> type) {
+        return getSerializable(path.getPath(), type);
     }
 
     /**
-     * Retrieves a stored SerializableBlockLocation
+     * Retrieves a stored SerializableObject
      *
      * @param path The path where the SerializedObject is stored.
-     * @return The retrieved item. / null
-     * @see SerializableBlockLocation
+     * @return The retrieved item / null.
+     * @see SerializableObject
      */
-    public SerializableBlockLocation getSerializableBlockLocation(String path) {
+    @Override
+    public <T extends SerializableObject<?>> T getSerializable(String path, Class<T> type) {
         final String serialized = super.getString(path);
 
         if (serialized == null) {
             return null;
         }
 
-        SerializableBlockLocation object = new SerializableBlockLocation(serialized);
-
-        if (object.deserialize() == null) {
+        final Constructor<T> cons;
+        try {
+            cons = type.getDeclaredConstructor(String.class);
+        } catch (Exception ex) {
+            LoggerUtils.severe(ex);
             return null;
         }
 
-        return object;
-    }
+        final T object;
 
-    /**
-     * Retrieves a stored SerializableEntityLocation
-     *
-     * @param path The path where the SerializedObject is stored.
-     * @return The retrieved item. / null
-     * @see SerializableEntityLocation
-     */
-    public SerializableEntityLocation getSerializableEntityLocation(String path) {
-        final String serialized = super.getString(path);
-
-        if (serialized == null) {
-            return null;
-        }
-
-        SerializableEntityLocation object = new SerializableEntityLocation(serialized);
-
-        if (object.deserialize() == null) {
-            return null;
-        }
-
-        return object;
-    }
-
-    /**
-     * Retrieves a stored SerializableInventory
-     *
-     * @param path The path where the SerializedObject is stored.
-     * @return The retrieved item. / null
-     * @see SerializableInventory
-     */
-    public SerializableInventory getSerializableInventory(String path) {
-        final String serialized = super.getString(path);
-
-        if (serialized == null) {
-            return null;
-        }
-
-        SerializableInventory object = new SerializableInventory(serialized);
-
-        if (object.deserialize() == null) {
+        try {
+            object = cons.newInstance(serialized);
+        } catch (Exception ex) {
+            LoggerUtils.severe(ex);
             return null;
         }
 
@@ -355,6 +333,7 @@ public class YamlConfig extends YamlConfiguration {
      * @param path The path at which the map should be stored.
      * @param map The map to store.
      */
+    @Override
     public <K, V> void getMap(PathContainer path, Map<K, V> map) {
         setMap(path.getPath(), map);
     }
@@ -367,6 +346,7 @@ public class YamlConfig extends YamlConfiguration {
      * @param path The path at which the map should be stored.
      * @param map The map to store.
      */
+    @Override
     public <K, V> void setMap(String path, Map<K, V> map) {
         for (K key : map.keySet()) {
             super.set(path + "." + key.toString(), map.get(key));
@@ -383,6 +363,7 @@ public class YamlConfig extends YamlConfiguration {
      * @param path The path where the map is stored.
      * @return The map.
      */
+    @Override
     public <K, V> Map<K, V> getMap(PathContainer path) {
         return getMap(path.getPath());
     }
@@ -398,6 +379,7 @@ public class YamlConfig extends YamlConfiguration {
      * @return The map.
      */
     @SuppressWarnings("unchecked")
+    @Override
     public <K, V> Map<K, V> getMap(String path) {
         final Map<K, V> keyMap = new HashMap<K, V>();
 
@@ -416,6 +398,7 @@ public class YamlConfig extends YamlConfiguration {
      *
      * @see #YamlConfig(Plugin, String, boolean)
      */
+    @Override
     public void save() {
         try {
             super.save(CONFIG_FILE);
@@ -432,6 +415,7 @@ public class YamlConfig extends YamlConfiguration {
      *
      * @see #YamlConfig(Plugin, String, boolean)
      */
+    @Override
     public void load() {
         try {
             if (COPY_DEFAULTS) {
@@ -462,7 +446,8 @@ public class YamlConfig extends YamlConfiguration {
      * @return The YamlConfiguration.
      * @see YamlConfiguration
      */
-    public YamlConfiguration getConfig() {
+    @Override
+    public YamlConfig getConfig() {
         return this;
     }
 
