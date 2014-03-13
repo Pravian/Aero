@@ -25,7 +25,7 @@
  * authors and contributors and should not be interpreted as representing official policies,
  * either expressed or implied, of anybody else.
  */
-package net.pravian.bukkitlib.internal;
+package net.pravian.bukkitlib;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -54,7 +54,7 @@ import java.util.zip.GZIPOutputStream;
 import net.pravian.bukkitlib.metrics.Graph;
 import net.pravian.bukkitlib.metrics.Plotter;
 
-public final class InternalMetrics { // BukkitLib final
+final class InternalMetrics {
 
     private final static int REVISION = 7;
     private static final String BASE_URL = "http://report.mcstats.org";
@@ -71,7 +71,7 @@ public final class InternalMetrics { // BukkitLib final
     private final String libName;
     private final String libVersion;
 
-    public InternalMetrics(final Plugin plugin, final String libName, final String libVersion) throws IOException {
+    protected InternalMetrics(final Plugin plugin, final String libName, final String libVersion) throws IOException {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null");
         }

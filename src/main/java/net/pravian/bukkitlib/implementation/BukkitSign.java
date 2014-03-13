@@ -213,7 +213,7 @@ public class BukkitSign {
      * @return True if a sign is empty.
      */
     public boolean isEmpty() {
-        return getLine(0).equals("") && getLine(1).equals("") && getLine(2).equals("") && getLine(3).equals("");
+        return getLine(0).isEmpty() && getLine(1).isEmpty() && getLine(2).isEmpty() && getLine(3).isEmpty();
     }
 
     /**

@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-import net.pravian.bukkitlib.internal.InternalMetrics;
+import java.util.concurrent.Callable;
 import net.pravian.bukkitlib.metrics.Graph;
 import net.pravian.bukkitlib.metrics.FixedDonutPlotter;
 import org.bukkit.Bukkit;
@@ -28,12 +28,12 @@ public final class BukkitLib {
      */
     public static final String AUTHOR = "Prozza";
     //
-    private static final Set<String> noMetrics;
-    private static boolean init;
-    //
     private static String buildVersion;
     private static String buildNumber;
     private static String buildDate;
+    //
+    private static final Set<String> noMetrics;
+    private static boolean init;
 
     static {
         noMetrics = new HashSet<String>();
@@ -141,10 +141,36 @@ public final class BukkitLib {
      *
      * @param plugin The plugin to disable metrics for.
      */
-    public static void explictDisableMetrics(PluginBase plugin) {
+    public static void explicitDisableMetrics(PluginBase plugin) {
         noMetrics.add(plugin.getName());
     }
 
+    /**
+     * Sets the exception handler.
+     *
+     * <p>All runtime-exceptions will be handled by the exception handler.</p>
+     *
+     * <p>Set to null to reset to the default handler. The default handler prints the output on the screen.</p>
+     *
+     * @param handler The new handler.
+     */
+    public static void setExceptionHandler(ExceptionHandler handler) {
+        InternalExceptionHandler.setExceptionHandler(handler);
+    }
+
+    /**
+     * Explicitly enables throwing exceptions.
+     */
+    public static void explicitEnableExceptionThrowing() {
+        InternalExceptionHandler.setThrowExceptions(true);
+    }
+
+    /**
+     * Validates if metrics are disabled for a plugin.
+     *
+     * @param plugin The plugin.
+     * @return True if metrics are disabled.
+     */
     public static boolean isExplicitMetricsDisabled(Plugin plugin) {
         return noMetrics.contains(plugin.getName());
     }

@@ -57,7 +57,7 @@ public class SerializableInventory extends SerializableObject<Inventory> {
                     newSerialized += i + "#" + serializedItemStack + ";";
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
             newSerialized = null;
         }
 
@@ -105,7 +105,7 @@ public class SerializableInventory extends SerializableObject<Inventory> {
                 newInventory.setItem(stackPosition, is);
             }
 
-        } catch (Exception e) {
+        } catch (Exception ex) {
             newInventory = null;
         }
 

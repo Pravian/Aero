@@ -1,6 +1,6 @@
 package net.pravian.bukkitlib;
 
-public class MetricsDisabledException extends IllegalStateException {
+public final class MetricsDisabledException extends IllegalStateException {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,6 +1,6 @@
 package net.pravian.bukkitlib;
 
-public class BukkitLibNotInitializedException extends IllegalStateException {
+public final class BukkitLibNotInitializedException extends IllegalStateException {
 
     private static final long serialVersionUID = 1L;
 

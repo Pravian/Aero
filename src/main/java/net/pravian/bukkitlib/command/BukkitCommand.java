@@ -40,12 +40,12 @@ public abstract class BukkitCommand<T extends Plugin> {
      */
     protected BukkitLogger logger;
     //
-    private BukkitCommandHandler handler;
+    private BukkitCommandHandler<?> handler;
     private CommandSender commandSender;
     private Command command;
     private String commandLabel;
     private String[] args;
-    private Class<? extends BukkitCommand> commandClass;
+    private Class<? extends BukkitCommand<T>> commandClass;
     private String usage;
 
     /**
@@ -71,14 +71,14 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @param commandClass The class representing the command.
      */
     protected void setup(
-            final BukkitCommandHandler handler,
+            final BukkitCommandHandler<?> handler,
             final T plugin,
             final BukkitLogger logger,
             final CommandSender sender,
             final Command command,
             final String commandLabel,
             final String[] args,
-            final Class<? extends BukkitCommand> commandClass) {
+            final Class<? extends BukkitCommand<T>> commandClass) {
         this.handler = handler;
         this.plugin = plugin;
         this.logger = logger;
@@ -181,7 +181,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         }
 
         // Annotations?
-        if (permission != null && !permission.equals("")) {
+        if (permission != null && !permission.isEmpty()) {
             final boolean result = ((Player) commandSender).hasPermission(permission);
 
             if (!result) {

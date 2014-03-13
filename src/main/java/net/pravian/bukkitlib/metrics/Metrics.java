@@ -46,7 +46,9 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
 import net.pravian.bukkitlib.BukkitLib;
+import net.pravian.bukkitlib.InternalExceptionHandler;
 import net.pravian.bukkitlib.MetricsDisabledException;
+import net.pravian.bukkitlib.util.LoggerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -169,7 +171,7 @@ public final class Metrics {
      */
     public void addGraph(final Graph graph) {
         if (graph == null) {
-            throw new IllegalArgumentException("Graph cannot be null");
+            InternalExceptionHandler.handle(plugin, new IllegalArgumentException("Graph cannot be null"));
         }
 
         graphs.add(graph);
@@ -221,9 +223,9 @@ public final class Metrics {
                         // After the first post we set firstPost to false
                         // Each post thereafter will be a ping
                         firstPost = false;
-                    } catch (IOException e) {
+                    } catch (IOException ex) {
                         if (debug) {
-                            Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
+                            InternalExceptionHandler.handle(plugin, ex);
                         }
                     }
                 }
@@ -245,12 +247,12 @@ public final class Metrics {
                 configuration.load(getConfigFile());
             } catch (IOException ex) {
                 if (debug) {
-                    Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
+                    InternalExceptionHandler.handle(plugin, ex);
                 }
                 return true;
             } catch (InvalidConfigurationException ex) {
                 if (debug) {
-                    Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
+                    InternalExceptionHandler.handle(plugin, ex);
                 }
                 return true;
             }
@@ -438,7 +440,7 @@ public final class Metrics {
         connection.setDoOutput(true);
 
         if (debug) {
-            System.out.println("[Metrics] Prepared request for " + pluginName + " uncompressed=" + uncompressed.length + " compressed=" + compressed.length);
+            LoggerUtils.info("[Metrics] Prepared request for " + pluginName + " uncompressed=" + uncompressed.length + " compressed=" + compressed.length);
         }
 
         // Write the data
@@ -589,7 +591,7 @@ public final class Metrics {
                 default:
                     if (chr < ' ') {
                         String t = "000" + Integer.toHexString(chr);
-                        builder.append("\\u" + t.substring(t.length() - 4));
+                        builder.append("\\u").append(t.substring(t.length() - 4));
                     } else {
                         builder.append(chr);
                     }

@@ -1,5 +1,6 @@
 package net.pravian.bukkitlib.command;
 
+import net.pravian.bukkitlib.InternalExceptionHandler;
 import net.pravian.bukkitlib.implementation.BukkitLogger;
 import net.pravian.bukkitlib.util.LoggerUtils;
 import org.bukkit.ChatColor;
@@ -213,7 +214,7 @@ public class BukkitCommandHandler<T extends Plugin> {
      * @return true/false depending if the command executed successfully.
      * @see BukkitCommand#run(CommandSender, Command, String, String[])
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked"})
     public boolean handleCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
 
         final BukkitCommand<T> dispatcher;
@@ -222,11 +223,11 @@ public class BukkitCommandHandler<T extends Plugin> {
             dispatcher = (BukkitCommand) BukkitCommandHandler.class.getClassLoader().loadClass(
                     String.format("%s.%s%s", commandPath, commandPrefix, command.getName().toLowerCase())).newInstance();
 
-            dispatcher.setup(this, plugin, logger, sender, command, commandLabel, args, dispatcher.getClass());
+            dispatcher.setup(this, plugin, logger, sender, command, commandLabel, args, (Class<? extends BukkitCommand<T>>) dispatcher.getClass());
 
-        } catch (Throwable ex) {
-            LoggerUtils.severe(plugin, "Command not loaded: " + command.getName());
-            LoggerUtils.severe(plugin, ex);
+        } catch (Exception ex) {
+            InternalExceptionHandler.handle(plugin, "Command not loaded: " + command.getName());
+            InternalExceptionHandler.handle(plugin, ex);
             sender.sendMessage(ChatColor.RED + "Command Error: Command  " + command.getName() + " not loaded!");
             return true;
         }
@@ -235,9 +236,9 @@ public class BukkitCommandHandler<T extends Plugin> {
             if (dispatcher.checkPermissions()) {
                 return dispatcher.execute();
             }
-        } catch (Throwable ex) {
-            LoggerUtils.severe(plugin, "Command Error: " + commandLabel);
-            LoggerUtils.severe(plugin, ex);
+        } catch (RuntimeException ex) {
+            InternalExceptionHandler.handle(plugin, "Command Error: " + commandLabel);
+            InternalExceptionHandler.handle(plugin, ex);
             sender.sendMessage(ChatColor.RED + "Command Error:  " + command.getName());
         }
         return true;

@@ -6,12 +6,7 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.pravian.bukkitlib.serializable.SerializableBlock;
-import net.pravian.bukkitlib.serializable.SerializableBlockLocation;
-import net.pravian.bukkitlib.serializable.SerializableEntityLocation;
-import net.pravian.bukkitlib.serializable.SerializableInventory;
+import net.pravian.bukkitlib.InternalExceptionHandler;
 import net.pravian.bukkitlib.serializable.SerializableObject;
 import net.pravian.bukkitlib.util.FileUtils;
 import net.pravian.bukkitlib.util.LoggerUtils;
@@ -309,7 +304,7 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
         try {
             cons = type.getDeclaredConstructor(String.class);
         } catch (Exception ex) {
-            LoggerUtils.severe(ex);
+            InternalExceptionHandler.handle(PLUGIN, ex);
             return null;
         }
 
@@ -318,7 +313,7 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
         try {
             object = cons.newInstance(serialized);
         } catch (Exception ex) {
-            LoggerUtils.severe(ex);
+            InternalExceptionHandler.handle(PLUGIN, ex);
             return null;
         }
 
@@ -387,6 +382,7 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
             try {
                 keyMap.put((K) item, (V) super.getConfigurationSection(path).get(item));
             } catch (Exception ex) {
+                InternalExceptionHandler.handle(PLUGIN, ex);
             }
         }
 
@@ -403,8 +399,8 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
         try {
             super.save(CONFIG_FILE);
         } catch (Exception ex) {
-            LoggerUtils.severe(PLUGIN, "Could not save configuration file: " + CONFIG_FILE.getName());
-            LoggerUtils.severe(PLUGIN, ex);
+            InternalExceptionHandler.handle(PLUGIN, "Could not save configuration file: " + CONFIG_FILE.getName());
+            InternalExceptionHandler.handle(PLUGIN, ex);
         }
     }
 
@@ -435,8 +431,8 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
 
             super.load(CONFIG_FILE);
         } catch (Exception ex) {
-            LoggerUtils.severe(PLUGIN, "Could not load configuration file: " + CONFIG_FILE.getName());
-            LoggerUtils.severe(PLUGIN, ex);
+            InternalExceptionHandler.handle(PLUGIN, "Could not load configuration file: " + CONFIG_FILE.getName());
+            InternalExceptionHandler.handle(PLUGIN, ex);
         }
     }
 
@@ -461,8 +457,8 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
         try {
             DEFAULT_CONFIG.load(PLUGIN.getResource(CONFIG_FILE.getName()));
         } catch (Throwable ex) {
-            LoggerUtils.severe(PLUGIN, "Could not load default configuration: " + CONFIG_FILE.getName());
-            LoggerUtils.severe(PLUGIN, ex);
+            InternalExceptionHandler.handle(PLUGIN, "Could not load default configuration: " + CONFIG_FILE.getName());
+            InternalExceptionHandler.handle(PLUGIN, ex);
             return null;
         }
         return DEFAULT_CONFIG;

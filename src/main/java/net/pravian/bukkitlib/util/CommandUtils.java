@@ -2,6 +2,7 @@ package net.pravian.bukkitlib.util;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import net.pravian.bukkitlib.InternalExceptionHandler;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -161,7 +162,9 @@ public class CommandUtils {
                 field.setAccessible(true);
                 return (T) field.get(from);
             } catch (NoSuchFieldException ex) {
+                InternalExceptionHandler.handle(ex);
             } catch (IllegalAccessException ex) {
+                InternalExceptionHandler.handle(ex);
             }
         } while (checkClass.getSuperclass() != Object.class && ((checkClass = checkClass.getSuperclass()) != null));
         return null;

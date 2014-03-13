@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import net.pravian.bukkitlib.InternalExceptionHandler;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -98,7 +99,8 @@ public class FileUtils {
             if (file.exists()) {
                 return file;
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            InternalExceptionHandler.handle(plugin, ex);
         }
         return null;
     }

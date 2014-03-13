@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import net.minecraft.util.org.apache.commons.lang3.StringUtils;
+import net.pravian.bukkitlib.InternalExceptionHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -92,6 +93,7 @@ public class PlayerLobby extends ArrayList<Player> implements List<Player> {
         try {
             return remove((Player) object);
         } catch (Exception ex) {
+            InternalExceptionHandler.handle(ex);
         }
         return false;
     }

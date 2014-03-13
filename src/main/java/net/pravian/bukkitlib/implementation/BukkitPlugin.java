@@ -1,6 +1,7 @@
 package net.pravian.bukkitlib.implementation;
 
 import java.util.List;
+import net.pravian.bukkitlib.InternalExceptionHandler;
 import net.pravian.bukkitlib.config.YamlConfig;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginLogger;
@@ -97,8 +98,10 @@ public class BukkitPlugin extends JavaPlugin {
         try {
             register(listener.newInstance());
         } catch (InstantiationException ex) {
+            InternalExceptionHandler.handle(this, ex);
             return false;
         } catch (IllegalAccessException ex) {
+            InternalExceptionHandler.handle(this, ex);
             return false;
         }
 

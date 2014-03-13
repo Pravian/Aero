@@ -88,7 +88,7 @@ public class ChatUtils {
      */
     public static void messagePlayers(String message, String permission, Collection<Player> players) {
         for (Player player : players) {
-            if (permission.equals("") || player.hasPermission(permission)) {
+            if (permission.isEmpty() || player.hasPermission(permission)) {
                 player.sendMessage(message);
             }
         }
