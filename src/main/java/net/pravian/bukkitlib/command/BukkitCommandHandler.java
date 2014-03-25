@@ -19,7 +19,7 @@ public class BukkitCommandHandler<T extends Plugin> {
 
     private final T plugin;
     private final BukkitLogger logger;
-    private final Map<String, BukkitCommand<?>> commandCache;
+    private final Map<String, BukkitCommand<T>> commandCache;
     private boolean commandCaching;
     private String superPermission;
     private String onlyFromGameMessage;
@@ -47,7 +47,7 @@ public class BukkitCommandHandler<T extends Plugin> {
     public BukkitCommandHandler(T plugin, BukkitLogger logger) {
         this.plugin = plugin;
         this.logger = logger;
-        this.commandCache = new HashMap<String, BukkitCommand<?>>();
+        this.commandCache = new HashMap<String, BukkitCommand<T>>();
         this.commandCaching = false;
         this.superPermission = plugin.getName().toLowerCase() + ".*";
         this.onlyFromGameMessage = ChatColor.YELLOW + "Only players may execute that command.";
@@ -238,10 +238,24 @@ public class BukkitCommandHandler<T extends Plugin> {
      */
     public void clearCommandCache() {
         if (!commandCaching) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Command caching is not enabled!");
         }
 
         commandCache.clear();
+    }
+
+    /**
+     * Returns a cached command.
+     *
+     * @param command Command to retrieve.
+     * @return The cached command / null if it hasn't been cached yet.
+     */
+    public BukkitCommand<?> getCachedCommand(Command command) {
+        if (!commandCaching) {
+            throw new IllegalStateException("Command caching is not enabled!");
+        }
+
+        return commandCache.get(command.getName());
     }
 
     /**
@@ -254,22 +268,33 @@ public class BukkitCommandHandler<T extends Plugin> {
      * @return true/false depending if the command executed successfully.
      * @see BukkitCommand#run(CommandSender, Command, String, String[])
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     public boolean handleCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
 
         final BukkitCommand<T> dispatcher;
 
-        try {
-            dispatcher = (BukkitCommand) BukkitCommandHandler.class.getClassLoader().loadClass(
-                    String.format("%s.%s%s", commandPath, commandPrefix, command.getName().toLowerCase())).newInstance();
+        if (!commandCaching || !commandCache.containsKey(command.getName())) {
+            try {
+                dispatcher = (BukkitCommand<T>) BukkitCommandHandler.class.getClassLoader().loadClass(
+                        String.format("%s.%s%s", commandPath, commandPrefix, command.getName().toLowerCase())).newInstance();
 
-            dispatcher.setup(this, plugin, logger, sender, command, commandLabel, args, (Class<? extends BukkitCommand<T>>) dispatcher.getClass());
+                dispatcher.setup(this, plugin, logger, sender, command, commandLabel, args, (Class<? extends BukkitCommand<T>>) dispatcher.getClass());
 
-        } catch (Exception ex) {
-            InternalExceptionHandler.handle(plugin, "Command not loaded: " + command.getName());
-            InternalExceptionHandler.handle(plugin, ex);
-            sender.sendMessage(ChatColor.RED + "Command Error: Command  " + command.getName() + " not loaded!");
-            return true;
+            } catch (Exception ex) {
+                InternalExceptionHandler.handle(plugin, "Command not loaded: " + command.getName());
+                InternalExceptionHandler.handle(plugin, ex);
+                sender.sendMessage(ChatColor.RED + "Command Error: Command  " + command.getName() + " not loaded!");
+                return true;
+            }
+
+        } else { // CommandCaching is enabled and there's a stored command
+            dispatcher = commandCache.get(command.getName());
+            dispatcher.setup(this, plugin, logger, sender, command, commandLabel, args, (Class<? extends BukkitCommand<T>>) dispatcher.getCommandClass());
+        }
+
+        // Store the command if caching is enabled.
+        if (commandCaching && !commandCache.containsKey(command.getName())) {
+            commandCache.put(command.getName(), dispatcher);
         }
 
         try {

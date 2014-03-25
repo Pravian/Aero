@@ -30,11 +30,8 @@ public abstract class BukkitCommand<T extends Plugin> {
      * Represents the player sending the command.
      *
      * <p><b>Warning</b>: Might be null if the console is sending the command.</p>
-     *
-     * @deprecated Getting rid of duplicate values.
      */
-    @Deprecated
-    protected Player commandSenderPlayer;
+    protected Player playerSender;
     /**
      * Represents the PLuginLogger used.
      */
@@ -91,7 +88,7 @@ public abstract class BukkitCommand<T extends Plugin> {
         this.commandClass = commandClass;
 
         if (sender instanceof Player) {
-            this.commandSenderPlayer = (Player) sender;
+            this.playerSender = (Player) sender;
         }
     }
 
@@ -113,7 +110,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      *
      * <p><b>In normal conditions, this should never be ran.</b></p>
      */
-    public void reset() {
+    protected void reset() {
     }
 
     /**
@@ -202,12 +199,16 @@ public abstract class BukkitCommand<T extends Plugin> {
         return true;
     }
 
+    protected Class<? extends BukkitCommand<T>> getCommandClass() {
+        return commandClass;
+    }
+
     /**
      * Validates if the sender of the command is not a player.
      *
      * @return true if the CommandSender is not a Player.
      */
-    public boolean isConsole() {
+    protected boolean isConsole() {
         return !(commandSender instanceof Player);
     }
 
@@ -238,7 +239,7 @@ public abstract class BukkitCommand<T extends Plugin> {
      * @return true
      */
     protected boolean showUsage() {
-        if (usage.equals("")) {
+        if (usage.isEmpty()) {
             return false;
         }
         msg(usage.replaceAll("<command>", command.getLabel()));
