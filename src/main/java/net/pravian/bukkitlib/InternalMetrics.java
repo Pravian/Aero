@@ -397,7 +397,7 @@ final class InternalMetrics {
 
     public static void appendJSONPair(StringBuilder json, String key, String value) throws UnsupportedEncodingException {
         boolean isValueNumeric = false;
-
+        
         try {
             if (value.equals("0") || !value.endsWith("0")) {
                 Double.parseDouble(value);

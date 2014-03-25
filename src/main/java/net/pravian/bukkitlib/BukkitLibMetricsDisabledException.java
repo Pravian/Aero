@@ -1,10 +1,10 @@
 package net.pravian.bukkitlib;
 
-public final class MetricsDisabledException extends IllegalStateException {
+public final class BukkitLibMetricsDisabledException extends IllegalStateException {
 
     private static final long serialVersionUID = 1L;
 
-    public MetricsDisabledException() {
+    public BukkitLibMetricsDisabledException() {
         super("Metrics are disabled in BukkitLib");
     }
 }

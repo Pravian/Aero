@@ -47,7 +47,7 @@ import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
 import net.pravian.bukkitlib.BukkitLib;
 import net.pravian.bukkitlib.InternalExceptionHandler;
-import net.pravian.bukkitlib.MetricsDisabledException;
+import net.pravian.bukkitlib.BukkitLibMetricsDisabledException;
 import net.pravian.bukkitlib.util.LoggerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -118,7 +118,7 @@ public final class Metrics {
         }
 
         if (BukkitLib.isExplicitMetricsDisabled(plugin)) {
-            throw new MetricsDisabledException();
+            throw new BukkitLibMetricsDisabledException();
         }
 
         this.plugin = plugin;

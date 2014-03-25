@@ -1,5 +1,7 @@
 package net.pravian.bukkitlib.command;
 
+import java.util.HashMap;
+import java.util.Map;
 import net.pravian.bukkitlib.InternalExceptionHandler;
 import net.pravian.bukkitlib.implementation.BukkitLogger;
 import net.pravian.bukkitlib.util.LoggerUtils;
@@ -17,13 +19,15 @@ public class BukkitCommandHandler<T extends Plugin> {
 
     private final T plugin;
     private final BukkitLogger logger;
-    private String commandPath;
+    private final Map<String, BukkitCommand<?>> commandCache;
+    private boolean commandCaching;
     private String superPermission;
-    private BukkitPermissionHolder permissionHolder;
-    private String commandPrefix;
-    private String permissionMessage;
-    private String onlyFromConsoleMessage;
     private String onlyFromGameMessage;
+    private String onlyFromConsoleMessage;
+    private String permissionMessage;
+    private String commandPrefix;
+    private BukkitPermissionHolder permissionHolder;
+    private String commandPath;
 
     /**
      * Creates a new instance of BukkitCommandHandler with the specified plugin.
@@ -41,14 +45,17 @@ public class BukkitCommandHandler<T extends Plugin> {
      * @param logger The logger to send error messages to.
      */
     public BukkitCommandHandler(T plugin, BukkitLogger logger) {
+        this.plugin = plugin;
+        this.logger = logger;
+        this.commandCache = new HashMap<String, BukkitCommand<?>>();
+        this.commandCaching = false;
+        this.superPermission = plugin.getName().toLowerCase() + ".*";
         this.onlyFromGameMessage = ChatColor.YELLOW + "Only players may execute that command.";
         this.onlyFromConsoleMessage = ChatColor.YELLOW + "That command can only be executed from console.";
         this.permissionMessage = ChatColor.RED + "You don't have permission to use that command.";
         this.commandPrefix = "Command_";
         this.permissionHolder = null;
-        this.plugin = plugin;
-        this.logger = logger;
-        this.superPermission = plugin.getName().toLowerCase() + ".*";
+        this.commandPath = null;
     }
 
     /**
@@ -182,6 +189,11 @@ public class BukkitCommandHandler<T extends Plugin> {
         }
     }
 
+    /**
+     * Returns the current set permission holder.
+     *
+     * @return The PermissionHolder / null.
+     */
     public BukkitPermissionHolder getPermissionHolder() {
         return permissionHolder;
     }
@@ -189,7 +201,7 @@ public class BukkitCommandHandler<T extends Plugin> {
     /**
      * Returns the plugin associated with this handler.
      *
-     * @return The Plugin
+     * @return The Plugin.
      */
     public T getPlugin() {
         return plugin;
@@ -198,10 +210,38 @@ public class BukkitCommandHandler<T extends Plugin> {
     /**
      * Returns the BukkitLogger associated with this handler.
      *
-     * @return The Logger
+     * @return The Logger.
      */
     public BukkitLogger getLogger() {
         return logger;
+    }
+
+    /**
+     * Enables command caching for this handler..
+     *
+     * <p>When command caching is enabled, commands will only be instantiated once. After instantiation, the command will be cached and the
+     * {@link BukkitCommand#run(Command, String, String[])} will be called consecutively for each execution. After each instantiation, commands can reset to their original state by
+     * overriding {@link BukkitCommand#reset()}.</p>
+     *
+     * <p><b>Note</b></p>: Commands will only be instantiated when their first execution is called.
+     *
+     * <p><b>Note</b></p>: The cache may be cleared by using {@link #clearCommandCache()}
+     */
+    public void enableCommandCaching() {
+        this.commandCaching = true;
+    }
+
+    /**
+     * Clears the command cache.
+     *
+     * @see #enableCommandCaching()
+     */
+    public void clearCommandCache() {
+        if (!commandCaching) {
+            throw new IllegalStateException();
+        }
+
+        commandCache.clear();
     }
 
     /**
@@ -240,6 +280,8 @@ public class BukkitCommandHandler<T extends Plugin> {
             InternalExceptionHandler.handle(plugin, "Command Error: " + commandLabel);
             InternalExceptionHandler.handle(plugin, ex);
             sender.sendMessage(ChatColor.RED + "Command Error:  " + command.getName());
+        } finally { // Will always run before the return.
+            dispatcher.reset();
         }
         return true;
     }

@@ -5,12 +5,12 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import net.pravian.bukkitlib.metrics.Graph;
 import net.pravian.bukkitlib.metrics.FixedDonutPlotter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginBase;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 /**
  * Represents BukkitLib; a commons library for Bukkit.
@@ -34,10 +34,12 @@ public final class BukkitLib {
     //
     private static final Set<String> noMetrics;
     private static boolean init;
+    private static boolean debug;
 
     static {
         noMetrics = new HashSet<String>();
         init = false;
+        debug = false;
     }
 
     /**
@@ -49,11 +51,16 @@ public final class BukkitLib {
      */
     public static void init(PluginBase plugin) {
         if (plugin == null) {
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
+        }
+
+        final PluginDescriptionFile pdf = plugin.getDescription();
+        if (pdf.getVersion() == null
+                || pdf.getVersion().isEmpty()) {
+            throw new BukkitLibIncompletePluginException(plugin);
         }
 
         init = true;
-
         loadBuildInformation();
 
         if (noMetrics.contains(plugin.getName())) {
@@ -71,7 +78,9 @@ public final class BukkitLib {
 
             metrics.start();
         } catch (IOException ex) {
-            Bukkit.getLogger().warning("[BukkitLib] Failed to submit metrics");
+            if (BukkitLib.debug) {
+                Bukkit.getLogger().warning("[BukkitLib] Failed to submit metrics for plugin: " + plugin.getName());
+            }
         }
     }
 
@@ -166,6 +175,24 @@ public final class BukkitLib {
     }
 
     /**
+     * Sets if BukkitLib-related error messages should be printed.
+     *
+     * @param debug The debugging state.
+     */
+    public static void setDebugMode(boolean debug) {
+        BukkitLib.debug = debug;
+    }
+
+    /**
+     * Validates if debug-mode is enabled.
+     *
+     * @return True if debug-mode is enabled.
+     */
+    public static boolean getDebugMode() {
+        return BukkitLib.debug;
+    }
+
+    /**
      * Validates if metrics are disabled for a plugin.
      *
      * @param plugin The plugin.
@@ -191,7 +218,9 @@ public final class BukkitLib {
             buildNumber = build.getProperty("app.buildnumber");
             buildDate = build.getProperty("app.builddate");
         } catch (Exception ex) {
-            Bukkit.getLogger().warning("[BukkitLib] Could not load build information!");
+            if (BukkitLib.debug) {
+                Bukkit.getLogger().warning("[BukkitLib] Could not load build information!");
+            }
         }
     }
 }

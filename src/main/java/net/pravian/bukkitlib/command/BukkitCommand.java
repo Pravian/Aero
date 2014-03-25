@@ -109,6 +109,14 @@ public abstract class BukkitCommand<T extends Plugin> {
     abstract protected boolean run(final CommandSender sender, final Command command, final String commandLabel, final String[] args);
 
     /**
+     * Executed when the command finishes execution.
+     *
+     * <p><b>In normal conditions, this should never be ran.</b></p>
+     */
+    public void reset() {
+    }
+
+    /**
      * Executes the command.
      *
      * <p><b>In normal conditions, this should never be ran.</b></p>
