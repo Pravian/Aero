@@ -22,6 +22,7 @@ import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
@@ -38,6 +39,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.util.Vector;
 
 /**
  * Represents a proxy for a player.
@@ -982,5 +984,90 @@ public class PlayerProxy extends EntityProxy<Player> implements Player {
     @Override
     public Set<String> getListeningPluginChannels() {
         return base.getListeningPluginChannels();
+    }
+
+    @Override
+    public void removeAchievement(Achievement a) {
+        base.removeAchievement(a);
+    }
+
+    @Override
+    public boolean hasAchievement(Achievement a) {
+        return false;
+    }
+
+    @Override
+    public void decrementStatistic(Statistic ststc) throws IllegalArgumentException {
+        base.decrementStatistic(ststc);
+    }
+
+    @Override
+    public void decrementStatistic(Statistic ststc, int i) throws IllegalArgumentException {
+        base.decrementStatistic(ststc, i);
+    }
+
+    @Override
+    public void setStatistic(Statistic ststc, int i) throws IllegalArgumentException {
+        base.setStatistic(ststc, i);
+    }
+
+    @Override
+    public int getStatistic(Statistic ststc) throws IllegalArgumentException {
+        return base.getStatistic(ststc);
+    }
+
+    @Override
+    public void decrementStatistic(Statistic ststc, Material mtrl) throws IllegalArgumentException {
+        base.decrementStatistic(ststc, mtrl);
+    }
+
+    @Override
+    public int getStatistic(Statistic ststc, Material mtrl) throws IllegalArgumentException {
+        return base.getStatistic(ststc, mtrl);
+    }
+
+    @Override
+    public void decrementStatistic(Statistic ststc, Material mtrl, int i) throws IllegalArgumentException {
+        base.decrementStatistic(ststc, mtrl, i);
+    }
+
+    @Override
+    public void setStatistic(Statistic ststc, Material mtrl, int i) throws IllegalArgumentException {
+        base.setStatistic(ststc, mtrl, i);
+    }
+
+    @Override
+    public void incrementStatistic(Statistic ststc, EntityType et) throws IllegalArgumentException {
+        base.incrementStatistic(ststc, et);
+    }
+
+    @Override
+    public void decrementStatistic(Statistic ststc, EntityType et) throws IllegalArgumentException {
+        base.decrementStatistic(ststc, et);
+    }
+
+    @Override
+    public int getStatistic(Statistic ststc, EntityType et) throws IllegalArgumentException {
+        return base.getStatistic(ststc, et);
+    }
+
+    @Override
+    public void incrementStatistic(Statistic ststc, EntityType et, int i) throws IllegalArgumentException {
+        base.incrementStatistic(ststc, et, i);
+    }
+
+    @Override
+    public void decrementStatistic(Statistic ststc, EntityType et, int i) {
+        base.decrementStatistic(ststc, et, i);
+    }
+
+    @Override
+    public void setStatistic(Statistic ststc, EntityType et, int i) {
+        base.setStatistic(ststc, et, i);
+    }
+
+    @Override
+    public <T extends Projectile> T launchProjectile(Class<? extends T> type, Vector vector) {
+        return base.launchProjectile(type, vector);
     }
 }
