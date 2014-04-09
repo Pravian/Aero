@@ -993,7 +993,7 @@ public class PlayerProxy extends EntityProxy<Player> implements Player {
 
     @Override
     public boolean hasAchievement(Achievement a) {
-        return false;
+        return base.hasAchievement(a);
     }
 
     @Override
