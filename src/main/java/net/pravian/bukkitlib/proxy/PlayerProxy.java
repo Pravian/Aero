@@ -1070,4 +1070,9 @@ public class PlayerProxy extends EntityProxy<Player> implements Player {
     public <T extends Projectile> T launchProjectile(Class<? extends T> type, Vector vector) {
         return base.launchProjectile(type, vector);
     }
+
+    @Override
+    public void sendSignChange(Location lctn, String[] strings) throws IllegalArgumentException {
+        base.sendSignChange(lctn, strings);
+    }
 }

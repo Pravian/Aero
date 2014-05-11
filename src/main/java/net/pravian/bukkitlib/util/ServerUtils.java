@@ -3,10 +3,10 @@ package net.pravian.bukkitlib.util;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
-import net.minecraft.server.v1_7_R1.BanEntry;
-import net.minecraft.server.v1_7_R1.BanList;
-import net.minecraft.server.v1_7_R1.MinecraftServer;
-import net.minecraft.server.v1_7_R1.PropertyManager;
+import net.minecraft.server.v1_7_R2.BanEntry;
+import net.minecraft.server.v1_7_R2.BanList;
+import net.minecraft.server.v1_7_R2.MinecraftServer;
+import net.minecraft.server.v1_7_R2.PropertyManager;
 
 /**
  * Represents all Server-related utilities.
