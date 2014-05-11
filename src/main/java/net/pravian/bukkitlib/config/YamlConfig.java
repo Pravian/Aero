@@ -83,6 +83,15 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
     }
 
     /**
+     * Verifies if the config file exists.
+     *
+     * @return True if the config exists.
+     */
+    public boolean exists() {
+        return CONFIG_FILE.exists();
+    }
+
+    /**
      * @see #set(java.lang.String, java.lang.Object)
      */
     @Override
@@ -390,21 +399,6 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
     }
 
     /**
-     * Saves the configuration to the predefined file.
-     *
-     * @see #YamlConfig(Plugin, String, boolean)
-     */
-    @Override
-    public void save() {
-        try {
-            super.save(CONFIG_FILE);
-        } catch (Exception ex) {
-            InternalExceptionHandler.handle(PLUGIN, "Could not save configuration file: " + CONFIG_FILE.getName());
-            InternalExceptionHandler.handle(PLUGIN, ex);
-        }
-    }
-
-    /**
      * Loads the configuration from the predefined file.
      *
      * <p>Optionally, if loadDefaults has been set to true, the file will be copied over from the default inside the jar-file of the owning plugin.</p>
@@ -415,7 +409,7 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
     public void load() {
         try {
             if (COPY_DEFAULTS) {
-                if (!CONFIG_FILE.exists()) {
+                if (!exists()) {
                     CONFIG_FILE.getParentFile().mkdirs();
                     try {
                         FileUtils.copy(PLUGIN.getResource(CONFIG_FILE.getName()), CONFIG_FILE);
@@ -433,6 +427,39 @@ public class YamlConfig extends YamlConfiguration implements BukkitConfig<YamlCo
         } catch (Exception ex) {
             InternalExceptionHandler.handle(PLUGIN, "Could not load configuration file: " + CONFIG_FILE.getName());
             InternalExceptionHandler.handle(PLUGIN, ex);
+        }
+    }
+
+    /**
+     * Saves the configuration to the predefined file.
+     *
+     * @see #YamlConfig(Plugin, String, boolean)
+     */
+    @Override
+    public void save() {
+        try {
+            super.save(CONFIG_FILE);
+        } catch (Exception ex) {
+            InternalExceptionHandler.handle(PLUGIN, "Could not save configuration file: " + CONFIG_FILE.getName());
+            InternalExceptionHandler.handle(PLUGIN, ex);
+        }
+    }
+
+    /**
+     * Deletes all the values in the config.
+     */
+    public void clear() {
+        for (String key : super.getKeys(false)) {
+            super.set(key, null);
+        }
+    }
+
+    /**
+     * Deletes the config if it exists.
+     */
+    public void delete() {
+        if (exists()) {
+            CONFIG_FILE.delete();
         }
     }
 
