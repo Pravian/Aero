@@ -10,4 +10,4 @@ This library was designed to aid in developing plugins by providing a variety of
 For more information, check out the [wiki](https://github.com/Pravian/BukkitLib/wiki).
 
 ## Contributing
-To get started, <a href="https://www.clahub.com/agreements/Pravian/BukkitLib">sign the Contributor License Agreement</a>.
+View [the contributing guidelines](https://github.com/Pravian/BukkitLib/blob/master/CONTRIBUTING.md) to get started.
