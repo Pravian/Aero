@@ -11,3 +11,4 @@ For more information, check out the [wiki](https://github.com/Pravian/BukkitLib/
 
 ## Contributing
 To get started, <a href="https://www.clahub.com/agreements/Pravian/BukkitLib">sign the Contributor License Agreement</a>.
+.
