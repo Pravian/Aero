@@ -4,6 +4,7 @@ BukkitLib is opensource, meaning that anyone willing, may modify and share the s
 For those who wish to contribute, we encourage you to fork the repository and submit pull requests. Below you will find guidelines that will explain this process in further detail.
 
 ## Getting Started
+* To get started, sign the [Contributor License Agreement](https://www.clahub.com/agreements/Pravian/BukkitLib)
 * Make sure you have a [GitHub account](https://github.com/signup/free).
 * If the issue is a bug, submit a ticket for it.
   * Clearly describe the issue including steps to reproduce it.
