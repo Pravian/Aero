@@ -11,6 +11,34 @@
     <url>http://pravian.net/</url>
     <description>A commons library for Bukkit.</description>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Jerom van der Sar</name>
+            <email>jerom@pravian.net</email>
+            <organization>Pravian Systems</organization>
+            <organizationUrl>http://pravian.net</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:Pravian/BukkitLib.git</connection>
+        <developerConnection>scm:git:git@github.com:Pravian/BukkitLib.git</developerConnection>
+        <url>git@github.com:Pravian/BukkitLib.git</url>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <app.buildversion>${project.version}</app.buildversion>
@@ -25,14 +53,6 @@
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
     </repositories>
-
-    <!-- Dummy SCM -->
-    <scm>
-        <connection>scm:svn:http://127.0.0.1/svn/my-project</connection>
-        <developerConnection>scm:svn:https://127.0.0.1/svn/my-project</developerConnection>
-        <tag>HEAD</tag>
-        <url>http://127.0.0.1/websvn/my-project</url>
-    </scm>
 
     <dependencies>
         <dependency>
@@ -49,18 +69,75 @@
         </dependency>
     </dependencies>
 
-
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>projects-ftp</id>
-            <url>ftp://projects.pravian.net/var/www/html/repo/</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- GPG sign plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
 
+                    <!-- Javadoc plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Source plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
+            <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -73,6 +150,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Buildnumber plugin -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
@@ -96,6 +174,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Jar plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -106,17 +185,6 @@
                     </archive>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <configuration>
-                    <links>
-                        <link>http://jd.bukkit.org/dev/apidocs/</link>
-                    </links>
-                </configuration>
-            </plugin>
         </plugins>
 
         <resources>
@@ -125,13 +193,5 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>1.0-beta-6</version>
-            </extension>
-        </extensions>
     </build>
 </project>
