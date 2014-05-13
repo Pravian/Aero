@@ -47,17 +47,6 @@ public abstract class BukkitPermissionHolder {
     }
 
     /**
-     * Adds a permission required for a command.
-     *
-     * @param command The command for which the permission must be set.
-     * @param permission The permission required to execute the command.
-     * @deprecated Moved to [addPermission()]{@link #addPermission(java.lang.Class, java.lang.String)}
-     */
-    protected void setPermission(Class<? extends BukkitCommand<?>> command, String permission) {
-        addPermission(command, permission);
-    }
-
-    /**
      * Adds a permission to the accepted permissions for a command.
      *
      * @param command The command for which the permission must be set.
