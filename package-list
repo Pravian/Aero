@@ -1,0 +1,9 @@
+net.pravian.bukkitlib
+net.pravian.bukkitlib.command
+net.pravian.bukkitlib.concurrent
+net.pravian.bukkitlib.config
+net.pravian.bukkitlib.implementation
+net.pravian.bukkitlib.metrics
+net.pravian.bukkitlib.proxy
+net.pravian.bukkitlib.serializable
+net.pravian.bukkitlib.util
