@@ -1,15 +1,15 @@
 # Netbeans excludes
-/nbproject/private/
-/dist/
-/build/
+/nbproject/private
+/dist
+/build
 manifest.mf
 nb-configuration.xml
 
 # Eclipse excludes
 .project
 .classpath
-/bin/
-/.settings/
+/bin
+/.settings
 
 # IntelliJ excludes
 *.iml
