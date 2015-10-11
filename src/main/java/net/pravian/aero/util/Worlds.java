@@ -1,5 +1,7 @@
 package net.pravian.aero.util;
 
+import java.util.UUID;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 /**
@@ -8,6 +10,39 @@ import org.bukkit.World;
 public class Worlds {
 
     private Worlds() {
+    }
+
+    public static World getWorld(String name) {
+        name = name.toLowerCase();
+        World world = Bukkit.getWorld(name);
+
+        if (world == null) {
+            try {
+                UUID uuid = UUID.fromString(name);
+                world = Bukkit.getWorld(uuid);
+            } catch (Exception ignored) {
+            }
+        }
+
+        if (world == null) {
+            for (World loopWorld : Bukkit.getWorlds()) {
+                if (loopWorld.getName().toLowerCase().equalsIgnoreCase(name)) {
+                    world = loopWorld;
+                    break;
+                }
+            }
+        }
+
+        if (world == null) {
+            for (World loopWorld : Bukkit.getWorlds()) {
+                if (loopWorld.getName().toLowerCase().startsWith(name)) {
+                    world = loopWorld;
+                    break;
+                }
+            }
+        }
+
+        return world;
     }
 
     /**

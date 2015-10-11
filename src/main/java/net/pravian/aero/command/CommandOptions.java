@@ -16,19 +16,28 @@
 package net.pravian.aero.command;
 
 import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 // TODO docs
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD})
 public @interface CommandOptions {
 
-    public String name() default "";
-
-    public String params();
+    public String usage() default "";
 
     public SourceType source() default SourceType.ANY;
+
+    public SourceType[] sources() default {};
+
+    public String permission() default "";
+
+    public String description() default "";
+
+    public String aliases() default "";
 
     /**
      * The sub permission which is required to use this command.
@@ -39,5 +48,5 @@ public @interface CommandOptions {
      * @return The subPermission which is required for this command.
      * @see BukkitCommandHandler#setPermissionHandler(BukkitPermissionHandler)
      */
-    String subPermission() default "";
+    public String subPermission() default "";
 }

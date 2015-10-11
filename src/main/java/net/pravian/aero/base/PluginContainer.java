@@ -13,16 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.component.service;
+package net.pravian.aero.base;
 
-public interface Service {
+import net.pravian.aero.plugin.AeroPlugin;
 
-    public void start();
+public interface PluginContainer<T extends AeroPlugin<T>> {
 
-    public void stop();
-
-    public boolean isStarted();
-
-    public String getServiceId();
+    public T getPlugin();
 
 }

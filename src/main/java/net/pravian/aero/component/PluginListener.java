@@ -15,7 +15,8 @@
  */
 package net.pravian.aero.component;
 
-import net.pravian.aero.command.base.Registrable;
+import net.pravian.aero.base.Registrable;
+import net.pravian.aero.plugin.AeroLogger;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -30,6 +31,10 @@ public class PluginListener<T extends AeroPlugin<T>> extends PluginComponent<T> 
 
     public PluginListener(T plugin) {
         super(plugin);
+    }
+
+    public PluginListener(T plugin, AeroLogger logger) {
+        super(plugin, logger);
     }
 
     @Override

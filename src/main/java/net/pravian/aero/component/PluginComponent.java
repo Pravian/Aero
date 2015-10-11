@@ -20,7 +20,7 @@ import java.lang.reflect.ParameterizedType;
 import net.pravian.aero.Aero;
 import net.pravian.aero.AeroException;
 import net.pravian.aero.RegisteredPlugin;
-import net.pravian.aero.command.base.PluginContainer;
+import net.pravian.aero.base.PluginContainer;
 import net.pravian.aero.plugin.AeroLogger;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.Server;
@@ -74,7 +74,7 @@ public abstract class PluginComponent<T extends AeroPlugin<T>> implements Plugin
         return plugin;
     }
 
-    public AeroLogger getPluginLogger() {
+    public AeroLogger getLogger() {
         return logger;
     }
 

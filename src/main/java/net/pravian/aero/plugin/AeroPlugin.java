@@ -20,10 +20,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import net.pravian.aero.Aero;
 import net.pravian.aero.RegisteredPlugin;
+import net.pravian.aero.base.PluginContainer;
 import net.pravian.aero.component.PluginListener;
 import net.pravian.aero.config.YamlConfig;
 import net.pravian.aero.exception.ExceptionHandler;
-import net.pravian.aero.command.base.PluginContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.event.HandlerList;
@@ -34,12 +34,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin implements ExceptionHandler, PluginContainer<T>, Listener {
 
     protected final T plugin;
-    protected final Aero aero;
     protected final Server server;
     //
     public final YamlConfig config;
     public final AeroLogger logger;
     //
+    protected Aero aero;
     protected RegisteredPlugin options;
     protected ExceptionHandler exceptionHandler;
 
@@ -52,11 +52,10 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
             throw new RuntimeException(ex);
         }
 
-        this.aero = Aero.getInstance();
         this.server = plugin.getServer();
-        this.config = new YamlConfig(plugin, "config.yml");
         this.logger = new AeroLogger(plugin);
         this.exceptionHandler = logger;
+        this.config = new YamlConfig(plugin, "config.yml"); // Requires logger to be present
     }
 
     public final Aero getAero() {
@@ -75,6 +74,7 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
 
     @Override
     public final void onEnable() {
+        this.aero = Aero.getInstance();
         this.options = aero.register(plugin);
 
         setup(options);
@@ -182,7 +182,7 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
     /**
      * Registers an event listener.
      *
-     * TODO: Better docs for this, multiple usage, etx
+     * TODO: Better docs for this, multiple usage, etc.
      *
      * @param <T>
      * @param listener class to register
@@ -247,6 +247,6 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
             throw new RuntimeException(ex);
         }
 
-        exceptionHandler.handleException(msg);
+        exceptionHandler.handleException(msg, ex);
     }
 }

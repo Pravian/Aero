@@ -13,16 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.component.service;
+package net.pravian.aero.command.permission;
 
-public interface Service {
+public interface PermissionContainer {
 
-    public void start();
-
-    public void stop();
-
-    public boolean isStarted();
-
-    public String getServiceId();
+    // TODO docs docs docs!
+    public String getPermission();
 
 }

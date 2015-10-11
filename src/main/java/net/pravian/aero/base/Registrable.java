@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.component.service;
+package net.pravian.aero.base;
 
-public interface Service {
+public interface Registrable {
 
-    public void start();
+    public void register();
 
-    public void stop();
+    public void unregister();
 
-    public boolean isStarted();
-
-    public String getServiceId();
+    public boolean isRegistered();
 
 }

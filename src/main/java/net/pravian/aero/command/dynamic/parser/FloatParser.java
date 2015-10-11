@@ -13,16 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.component.service;
+package net.pravian.aero.command.dynamic.parser;
 
-public interface Service {
+import java.util.List;
 
-    public void start();
+public class FloatParser implements Parser<Float> {
 
-    public void stop();
-
-    public boolean isStarted();
-
-    public String getServiceId();
+    @Override
+    public int parse(List<? super Float> result, String[] args, int offset) throws Exception {
+        try {
+            result.add(Float.parseFloat(args[offset]));
+        } catch (NumberFormatException nex) {
+            throw new ParseException("Could not parse float: " + args[offset], nex);
+        }
+        return offset + 1;
+    }
 
 }

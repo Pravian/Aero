@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.component.service;
+package net.pravian.aero.command.dynamic;
 
-public interface Service {
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-    public void start();
-
-    public void stop();
-
-    public boolean isStarted();
-
-    public String getServiceId();
+// TODO docs
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Optional {
 
 }

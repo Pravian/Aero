@@ -2,20 +2,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Identifying information -->
     <groupId>net.pravian</groupId>
-    <artifactId>Aero</artifactId>
+    <artifactId>aero</artifactId>
     <version>2.0</version>
     <packaging>jar</packaging>
 
+    <!-- Metadata -->
     <name>Aero</name>
     <url>http://github.com/Pravian/Aero</url>
     <description>A commons library for minecraft plugins.</description>
-
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
-    </parent>
 
     <licenses>
         <license>
@@ -24,12 +20,17 @@
         </license>
     </licenses>
 
+    <organization>
+        <name>Pravian Systems</name>
+        <url>https://pravian.net</url>
+    </organization>
+
     <developers>
         <developer>
             <name>Jerom van der Sar</name>
             <email>jerom@pravian.net</email>
             <organization>Pravian Systems</organization>
-            <organizationUrl>http://pravian.net</organizationUrl>
+            <organizationUrl>https://pravian.net</organizationUrl>
         </developer>
     </developers>
 
@@ -39,6 +40,18 @@
         <url>git@github.com:Pravian/Aero.git</url>
     </scm>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- Project build information -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
@@ -63,17 +76,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <profiles>
         <profile>

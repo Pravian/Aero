@@ -110,12 +110,12 @@ public class Aero {
 
         if (pdf.getVersion() == null
                 || pdf.getVersion().isEmpty()) {
-            throw new AeroException("Incomplete plugin description file: Missing version number");
+            throw new AeroException("Incomplete plugin description file: Missing version number!");
         }
 
         if (pdf.getAuthors() == null
                 || pdf.getAuthors().isEmpty()) {
-            throw new AeroException("Incomplete plugin description file: Missing author");
+            throw new AeroException("Incomplete plugin description file: Missing author!");
         }
 
         final RegisteredPlugin options = new RegisteredPlugin(plugin);
@@ -253,7 +253,7 @@ public class Aero {
             final Aero aero = ((AeroContainer) plugin).getAero();
 
             if (aero == null) {
-                throw new AeroUninitializedException("aero is null!");
+                throw new AeroUninitializedException("Aero is null!");
             }
 
             if (!aero.isInitialized()) {

@@ -57,7 +57,7 @@ public class Players {
      * @param name The partial name to match.
      * @return The player. If the player could not be found, null.
      */
-    public static Player getPlayer(String name) {
+    public static Player getPlayer(String name) { // TODO: UUIDs, IPs
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getName().equalsIgnoreCase(name)) {
                 return player;

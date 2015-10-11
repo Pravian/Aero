@@ -20,21 +20,23 @@ import net.pravian.aero.plugin.AeroPlugin;
 
 public abstract class AbstractService<T extends AeroPlugin<T>> extends PluginListener<T> implements Service {
 
-    protected final String id;
+    private final String serviceId;
     //
-    protected boolean started;
+    private boolean started = false;
 
-    protected AbstractService(T plugin, String id) {
+    public AbstractService(T plugin) {
+        this(plugin, null);
+    }
+
+    public AbstractService(T plugin, String id) {
         super(plugin);
-        this.id = id;
-        //
-        this.started = false;
+        this.serviceId = id == null ? getClass().getSimpleName() : id;
     }
 
     @Override
     public void start() {
         if (started) {
-            plugin.handleException("Tried to start service '" + id + "' whilst already started!");
+            plugin.handleException("Tried to start service '" + serviceId + "' whilst already started!");
             return;
         }
         started = true;
@@ -42,7 +44,7 @@ public abstract class AbstractService<T extends AeroPlugin<T>> extends PluginLis
         try {
             onStart();
         } catch (Exception ex) {
-            plugin.handleException("Unhandled exception whilst starting service '" + id + "'!", ex);
+            plugin.handleException("Unhandled exception whilst starting service '" + serviceId + "'!", ex);
         }
         register();
     }
@@ -50,21 +52,48 @@ public abstract class AbstractService<T extends AeroPlugin<T>> extends PluginLis
     @Override
     public void stop() {
         if (!started) {
-            plugin.handleException("Tried to stop service '" + id + "' whilst already started!");
+            plugin.handleException("Tried to stop service '" + serviceId + "' whilst already stopped!");
             return;
         }
         started = false;
+        unregister();
         try {
             onStop();
         } catch (Exception ex) {
-            plugin.handleException("Unhandled exception whilst stopping service '" + id + "'!", ex);
+            plugin.handleException("Unhandled exception whilst stopping service '" + serviceId + "'!", ex);
         }
-        unregister();
     }
 
     @Override
     public boolean isStarted() {
         return started;
+    }
+
+    @Override
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + (this.serviceId != null ? this.serviceId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AbstractService<?> other = (AbstractService<?>) obj;
+        if ((this.serviceId == null) ? (other.serviceId != null) : !this.serviceId.equals(other.serviceId)) {
+            return false;
+        }
+        return true;
     }
 
     protected abstract void onStart();

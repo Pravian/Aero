@@ -15,21 +15,91 @@
  */
 package net.pravian.aero.command;
 
+import org.apache.commons.lang.Validate;
+import org.bukkit.command.BlockCommandSender;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.RemoteConsoleCommandSender;
+import org.bukkit.entity.Player;
+
 /**
  * Represents the different sources a command execution might originate from.
  */
 public enum SourceType {
 
-    /**
-     * Represents a Player as a source for command executions.
-     */
+    // Generic source types
+    ANY,
+    NON_PLAYER,
+    //
+    // Non generic source types
     PLAYER,
-    /**
-     * Represents the Console, Rcon or any other console-like source for command executions.
-     */
     CONSOLE,
-    /**
-     * Represents any type of sender as a source for command executions.
-     */
-    ANY;
+    BLOCK,
+    RCON;
+
+    public boolean isPlayer() {
+        return this == PLAYER;
+    }
+
+    public boolean isPrivileged() {
+        return this != PLAYER;
+    }
+
+    public boolean isGeneric() {
+        return this == NON_PLAYER || this == ANY;
+    }
+
+    public boolean matches(CommandSender sender) {
+        Validate.notNull(sender, "Sender may not be null");
+
+        if (this == ANY) {
+            return true;
+        }
+
+        // Filter out players first
+        if (sender instanceof Player) {
+            return this == PLAYER;
+        }
+
+        // All non-player below here
+        if (this == NON_PLAYER) {
+            return true;
+        }
+
+        if (sender instanceof RemoteConsoleCommandSender) {
+            return this == RCON;
+        }
+
+        if (sender instanceof BlockCommandSender) {
+            return this == BLOCK;
+        }
+
+        if (sender instanceof ConsoleCommandSender) {
+            return this == CONSOLE;
+        }
+
+        // Unknown sender type
+        return true;
+    }
+
+    public static SourceType fromSender(CommandSender sender) {
+        if (sender instanceof Player) {
+            return PLAYER;
+        }
+
+        if (sender instanceof RemoteConsoleCommandSender) {
+            return RCON;
+        }
+
+        if (sender instanceof BlockCommandSender) {
+            return BLOCK;
+        }
+
+        if (sender instanceof ConsoleCommandSender) {
+            return CONSOLE;
+        }
+
+        return null;
+    }
+
 }
