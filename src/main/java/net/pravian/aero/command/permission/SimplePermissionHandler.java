@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.command;
+package net.pravian.aero.command.permission;
 
-import java.util.HashMap;
+import com.google.common.collect.Maps;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import net.pravian.aero.command.AeroCommandBase;
 
 /**
  * Represents a class which stores information about command permissions.
  */
-public abstract class PluginPermissionContainer {
+public abstract class SimplePermissionHandler implements AeroPermissionHandler {
 
-    private final Map<Class<? extends PluginCommand<?>>, Set<String>> permissions;
-
-    /**
-     * Creates a new BukkitPermissionHolder instance
-     */
-    protected PluginPermissionContainer() {
-        this.permissions = new HashMap<Class<? extends PluginCommand<?>>, Set<String>>();
-    }
+    private final Map<Class<? extends AeroCommandBase<?>>, Set<String>> permissions = Maps.newHashMap();
 
     /**
      * Returns the permission-set required to execute a command or null if the command has no permission attached.
@@ -43,8 +37,14 @@ public abstract class PluginPermissionContainer {
      * @param command The command to which the permission is required
      * @return The permissions / null
      */
-    protected Set<String> getPermissions(Class<? extends PluginCommand<?>> command) {
+    @Override
+    public Set<String> getPermissions(Class<? extends AeroCommandBase<?>> command) {
         return permissions.get(command);
+    }
+
+    @Override
+    public boolean containsPermissions(Class<? extends AeroCommandBase<?>> command) {
+        return permissions.containsKey(command);
     }
 
     /**
@@ -54,8 +54,9 @@ public abstract class PluginPermissionContainer {
      * @param permission The permission to validate.
      * @return True if the command has the said permission attached to it.
      */
-    protected boolean containsPermission(Class<? extends PluginCommand<?>> command, String permission) {
-        if (!permissions.containsKey(command)) {
+    @Override
+    public boolean containsPermission(Class<? extends AeroCommandBase<?>> command, String permission) {
+        if (!containsPermissions(command)) {
             return false;
         }
 
@@ -68,7 +69,8 @@ public abstract class PluginPermissionContainer {
      * @param command The command for which the permission must be set.
      * @param permission The permission required to execute the command.
      */
-    protected void addPermission(Class<? extends PluginCommand<?>> command, String permission) {
+    @Override
+    public void addPermission(Class<? extends AeroCommandBase<?>> command, String permission) {
 
         Set<String> requires = permissions.get(command);
 
@@ -83,7 +85,8 @@ public abstract class PluginPermissionContainer {
     /**
      * Clears all the permissions stored.
      */
-    protected void clearPermissions() {
+    @Override
+    public void clearPermissions() {
         permissions.clear();
     }
 
@@ -92,19 +95,9 @@ public abstract class PluginPermissionContainer {
      *
      * @param command The command from which the permissions must be cleared.
      */
-    protected void clearPermissions(Class<? extends PluginCommand<?>> command) {
-        if (permissions.containsKey(command)) {
-            return;
-        }
-
-        permissions.put(command, null);
+    @Override
+    public void clearPermissions(Class<? extends AeroCommandBase<?>> command) {
+        permissions.remove(command);
     }
 
-    /**
-     * Should initialize all permissions.
-     *
-     * <p>
-     * <b>In normal conditions, this should never be ran.</b></p>
-     */
-    protected abstract void initPermissions();
 }

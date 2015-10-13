@@ -46,7 +46,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
 import net.pravian.aero.Aero;
-import net.pravian.aero.MetricsDisabledException;
+import net.pravian.aero.AeroMetricsDisabledException;
 import net.pravian.aero.PluginNotRegisteredException;
 import net.pravian.aero.RegisteredPlugin;
 import net.pravian.aero.util.Loggers;
@@ -125,7 +125,7 @@ public final class Metrics {
             throw new PluginNotRegisteredException(plugin);
         }
         if (!options.metricsEnabled()) {
-            throw new MetricsDisabledException(plugin);
+            throw new AeroMetricsDisabledException(plugin);
         }
         // lib end
 

@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.command.base;
+package net.pravian.aero.command.permission;
 
-import net.pravian.aero.plugin.AeroPlugin;
+public interface AeroPermissionContainer {
 
-public interface PluginContainer<T extends AeroPlugin<T>> {
-
-    public T getPlugin();
+    // TODO docs docs docs!
+    public String getPermission();
 
 }

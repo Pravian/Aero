@@ -19,11 +19,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import net.pravian.aero.command.AeroCommandHandler;
+import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.CommandOptions;
+import net.pravian.aero.command.SimpleCommand;
 import net.pravian.aero.command.dynamic.parser.ParseException;
 import net.pravian.aero.command.dynamic.parser.Parser;
-import net.pravian.aero.command.simple.AeroCommand;
+import net.pravian.aero.command.handler.AeroCommandHandler;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,13 +34,13 @@ import org.bukkit.command.CommandSender;
 // TODO: docs
 class ParsingMethodDelegate<T extends AeroPlugin<T>> implements CommandExecutor {
 
-    private final AeroCommand<T> aeroCommand;
+    private final AeroCommandBase<T> aeroCommand;
     private final AeroCommandHandler<T> handler;
     private final CommandOptions options;
     private final Method method;
     private final List<Parser<?>> parsers = new ArrayList<Parser<?>>();
 
-    ParsingMethodDelegate(AeroCommand<T> command, CommandOptions options, Method method, List<Parser<?>> parsers) {
+    ParsingMethodDelegate(SimpleCommand<T> command, CommandOptions options, Method method, List<Parser<?>> parsers) {
         this.aeroCommand = command;
         this.handler = command.getHandler();
         this.options = options;
@@ -56,12 +57,13 @@ class ParsingMethodDelegate<T extends AeroPlugin<T>> implements CommandExecutor 
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) throws ParseException, ExecutionException {
 
         // Parse arguments
         final List<Object> pArgs = new ArrayList<Object>();
         int offset = 0;
-        for (Parser parser : parsers) {
+        for (Parser<?> parser : parsers) {
             if (pArgs.size() >= parsers.size() // Too many arguments parsed
                     || offset >= args.length) { // Too many parsers for arguments
                 return false; // TODO: Allow parsers to parse multiple arguments?

@@ -1,13 +1,7 @@
 package net.pravian.aero.command.smart;
 
 import net.pravian.aero.command.AbstractCommandBase;
-import net.pravian.aero.command.CommandBase;
-import net.pravian.aero.command.CommandOptions;
-import net.pravian.aero.command.simple.AeroCommand;
 import net.pravian.aero.plugin.AeroPlugin;
-import net.pravian.aero.util.Players;
-import net.pravian.aero.util.Plugins;
-import net.pravian.aero.util.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -17,9 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public abstract class SmartAeroCommand<T extends AeroPlugin<T>> extends AbstractCommandBase<T> implements CommandExecutor {
+public abstract class SmartCommand<T extends AeroPlugin<T>> extends AbstractCommandBase<T> implements CommandExecutor {
 
-    protected SmartAeroCommand() {
+    protected SmartCommand() {
     }
 
     @Override

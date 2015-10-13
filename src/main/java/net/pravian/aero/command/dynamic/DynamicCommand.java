@@ -15,18 +15,20 @@
  */
 package net.pravian.aero.command.dynamic;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.pravian.aero.command.AeroCommandHandler;
+import net.pravian.aero.command.handler.SimpleCommandHandler;
+import net.pravian.aero.command.CommandRegistrationException;
 import net.pravian.aero.command.CommandOptions;
 import net.pravian.aero.command.dynamic.parser.CustomParser;
 import net.pravian.aero.command.dynamic.parser.DefaultParser;
 import net.pravian.aero.command.dynamic.parser.ParseException;
 import net.pravian.aero.command.dynamic.parser.Parser;
-import net.pravian.aero.command.simple.AeroCommand;
+import net.pravian.aero.command.SimpleCommand;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -39,13 +41,13 @@ import org.bukkit.command.CommandSender;
  * @param <T> Optional: Type safety for {@link #plugin}
  */
 @Deprecated
-public abstract class DynamicAeroCommand<T extends AeroPlugin<T>> extends AeroCommand<T> implements CommandExecutor {
+public abstract class DynamicCommand<T extends AeroPlugin<T>> extends SimpleCommand<T> implements CommandExecutor {
 
-    private final List<ParsingMethodDelegate> delegates = new ArrayList<ParsingMethodDelegate>();
-    private final Map<Class<?>, Parser<?>> argumentParsers = new HashMap<Class<?>, Parser<?>>();
+    private final List<ParsingMethodDelegate<?>> delegates = Lists.newArrayList();
+    private final Map<Class<?>, Parser<?>> argumentParsers = Maps.newHashMap();
     //
 
-    protected DynamicAeroCommand() {
+    protected DynamicCommand() {
     }
 
     /**
@@ -64,7 +66,7 @@ public abstract class DynamicAeroCommand<T extends AeroPlugin<T>> extends AeroCo
     public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 
         // Tricky loops and exceptions 8D
-        for (ParsingMethodDelegate<T> delegate : delegates) {
+        for (ParsingMethodDelegate<?> delegate : delegates) {
             try {
                 return delegate.onCommand(sender, command, label, args);
             } catch (ParseException ignored) { // TODO: Something something
@@ -91,7 +93,7 @@ public abstract class DynamicAeroCommand<T extends AeroPlugin<T>> extends AeroCo
 
     // Should load command stuff
     @Override
-    public void register(AeroCommandHandler<T> handler) {
+    public void register(SimpleCommandHandler<T> handler) throws CommandRegistrationException {
         super.register(handler);
 
         // Find command methods

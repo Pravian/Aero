@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.command.simple;
+package net.pravian.aero.command;
 
 import net.pravian.aero.command.AbstractCommandBase;
 import net.pravian.aero.plugin.AeroPlugin;
@@ -23,13 +23,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 /**
- * Represents a plugin command.
+ * Represents a simple plugin command.
  *
  * @param <T> Optional: Type safety for {@link #plugin}
  */
-public abstract class AeroCommand<T extends AeroPlugin<T>> extends AbstractCommandBase<T> implements CommandExecutor {
+public abstract class SimpleCommand<T extends AeroPlugin<T>> extends AbstractCommandBase<T> implements CommandExecutor {
 
-    protected AeroCommand() {
+    protected SimpleCommand() {
     }
 
     @Override

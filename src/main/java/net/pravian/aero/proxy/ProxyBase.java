@@ -33,8 +33,9 @@ public class ProxyBase<T> {
     }
 
     @Override
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(Object object) {
-        return object instanceof ProxyBase && base.equals(unwrap(object));
+        return base.equals(unwrap(object));
     }
 
     /**

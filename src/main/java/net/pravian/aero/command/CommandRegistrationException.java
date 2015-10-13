@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Jerom van der Sar.
+ * Copyright 2015 Pravian Systems.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.command.base;
 
-public interface Registrable {
+package net.pravian.aero.command;
 
-    public void register();
+public class CommandRegistrationException extends Exception {
+    private static final long serialVersionUID = 414466722462399L;
 
-    public void unregister();
-
-    public boolean isRegistered();
+    public CommandRegistrationException(String message) {
+        super(message);
+    }
 
 }

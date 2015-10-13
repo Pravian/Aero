@@ -2,6 +2,8 @@ package net.pravian.aero.command;
 
 import java.util.List;
 import net.pravian.aero.base.PluginMessage;
+import net.pravian.aero.command.handler.AeroCommandHandler;
+import net.pravian.aero.command.handler.SimpleCommandHandler;
 import net.pravian.aero.component.PluginComponent;
 import net.pravian.aero.plugin.AeroPlugin;
 import net.pravian.aero.util.Players;
@@ -15,7 +17,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends PluginComponent<T> implements CommandBase<T> {
+public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends PluginComponent<T> implements AeroCommandBase<T> {
 
     // Default arguments
     protected CommandSender sender;
@@ -37,14 +39,14 @@ public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends Plugi
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends CommandBase<T>> getCommandClass() {
-        return (Class<? extends CommandBase<T>>) getClass();
+    public Class<? extends AeroCommandBase<T>> getCommandClass() {
+        return (Class<? extends AeroCommandBase<T>>) getClass();
     }
 
     @Override
-    public void register(AeroCommandHandler<T> handler) throws RegistrationException {
+    public void register(SimpleCommandHandler<T> handler) throws CommandRegistrationException {
         if (this.handler != null) {
-            throw new RegistrationException("Command already registered to a handler!");
+            throw new CommandRegistrationException("Command already registered to a handler!");
         }
 
         this.handler = handler;

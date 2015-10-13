@@ -13,33 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.command;
+package net.pravian.aero.command.executor;
 
 import java.util.List;
-import net.pravian.aero.command.permission.PermissionHandler;
+import net.pravian.aero.command.AeroCommandBase;
+import net.pravian.aero.command.CommandOptions;
+import net.pravian.aero.command.handler.SimpleCommandHandler;
+import net.pravian.aero.command.SourceType;
+import net.pravian.aero.command.permission.AeroPermissionHandler;
 import net.pravian.aero.plugin.AeroPlugin;
 import net.pravian.aero.util.Players;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 
-public class AeroCommandExecutor<T extends AeroPlugin<T>> implements TabExecutor {
+public class SimpleCommandExecutor<T extends AeroPlugin<T>> extends AbstractCommandExecutor<T> {
 
-    private final T plugin;
-    private final AeroCommandHandler<T> handler;
-    private final CommandBase<T> commandBase;
+    private final SimpleCommandHandler<T> handler;
     private final CommandOptions options;
 
-    public AeroCommandExecutor(AeroCommandHandler<T> handler, String name, CommandBase<T> commandBase) {
-        this.plugin = handler.getPlugin();
+    public SimpleCommandExecutor(SimpleCommandHandler<T> handler, String name, AeroCommandBase<T> command) {
+        super(name, command);
         this.handler = handler;
-        this.commandBase = commandBase;
-        this.options = commandBase.getClass().getAnnotation(CommandOptions.class);
-    }
-
-    public CommandBase<T> getCommand() {
-        return commandBase;
+        this.options = command.getClass().getAnnotation(CommandOptions.class);
     }
 
     public CommandOptions getOptions() {
@@ -48,10 +44,6 @@ public class AeroCommandExecutor<T extends AeroPlugin<T>> implements TabExecutor
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!plugin.isEnabled()) {
-            return false;
-        }
-
         if (!hasPermission(sender, true)) {
             return true;
         }
@@ -71,15 +63,8 @@ public class AeroCommandExecutor<T extends AeroPlugin<T>> implements TabExecutor
         return commandBase.tabComplete(sender, command, alias, args);
     }
 
-    public boolean hasPermission(CommandSender sender) {
-        return hasPermission(sender, false);
-    }
-
+    @Override
     public boolean hasPermission(CommandSender sender, boolean sendMsg) {
-        if (options == null) {
-            return true;
-        }
-
         if (sendMsg) {
             if (hasPermission(sender, false)) {
                 return true;
@@ -89,20 +74,21 @@ public class AeroCommandExecutor<T extends AeroPlugin<T>> implements TabExecutor
         }
 
         // Match source type
-        final SourceType[] sources = options.sources().length == 0 ? new SourceType[]{options.source()} : options.sources();
-        boolean matches = false;
-        for (SourceType type : sources) {
-            if (type.matches(sender)) {
-                matches = true;
-                break;
+        if (options != null) {
+            final SourceType[] sources = options.sources().length == 0 ? new SourceType[]{options.source()} : options.sources();
+            boolean matches = false;
+            for (SourceType type : sources) {
+                if (type.matches(sender)) {
+                    matches = true;
+                    break;
+                }
             }
-        }
-
-        if (!matches) {
-            if (sendMsg) {
-                sender.sendMessage(Players.is(sender) ? handler.getOnlyConsoleMessage() : handler.getOnlyPlayerMessage()); // TODO: Better messages
+            if (!matches) {
+                if (sendMsg) {
+                    sender.sendMessage(Players.is(sender) ? handler.getOnlyConsoleMessage() : handler.getOnlyPlayerMessage()); // TODO: Better messages
+                }
+                return false;
             }
-            return false;
         }
 
         // Superpermission?
@@ -114,13 +100,15 @@ public class AeroCommandExecutor<T extends AeroPlugin<T>> implements TabExecutor
         }
 
         // Annotation?
-        final String permission = options.permission().isEmpty() ? handler.getPlugin().getName().toLowerCase() + "." + options.subPermission() : options.permission();
-        if (!permission.isEmpty()) {
-            return sender.hasPermission(permission);
+        if (options != null) {
+            final String permission = options.permission().isEmpty() ? handler.getPlugin().getName().toLowerCase() + "." + options.subPermission() : options.permission();
+            if (!permission.isEmpty()) {
+                return sender.hasPermission(permission);
+            }
         }
 
-        // PermissionHandler?
-        final PermissionHandler permHandler = handler.getPermissionHandler();
+        // SimplePermissionHandler?
+        final AeroPermissionHandler permHandler = handler.getPermissionHandler();
         if (permHandler != null && permHandler.containsPermissions(commandBase.getCommandClass())) {
             for (String handlerPermission : permHandler.getPermissions(commandBase.getCommandClass())) {
                 if (sender.hasPermission(handlerPermission)) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Jerom van der Sar.
+ * Copyright 2015 Pravian Systems.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pravian.aero.command.parser;
 
-public interface StringJoiner {
+package net.pravian.aero.command.executor;
+
+import net.pravian.aero.command.AeroCommandBase;
+import net.pravian.aero.plugin.AeroPlugin;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
+
+public interface AeroCommandExecutor<T extends AeroPlugin<T>> extends TabExecutor {
+
+    public String getName();
+
+    public AeroCommandBase<T> getCommandBase();
+
+    public boolean hasPermission(CommandSender sender);
+
+    public boolean hasPermission(CommandSender sender, boolean sendMessage);
+
 }
