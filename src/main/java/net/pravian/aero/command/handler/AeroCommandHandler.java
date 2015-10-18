@@ -17,6 +17,7 @@ package net.pravian.aero.command.handler;
 
 import java.util.Collection;
 import java.util.Map;
+import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.executor.AeroCommandExecutor;
 import net.pravian.aero.command.permission.AeroPermissionHandler;
 import net.pravian.aero.plugin.AeroPlugin;
@@ -27,6 +28,14 @@ public interface AeroCommandHandler<T extends AeroPlugin<T>> {
     public void clearCommands();
 
     public void loadFrom(Package pack);
+
+    public void addAll(Iterable<? extends AeroCommandBase<T>> commands);
+
+    public void add(AeroCommandBase<T> command);
+
+    public void add(AeroCommandBase<T> command, String name);
+
+    public void add(AeroCommandExecutor<T> executor);
 
     public boolean registerAll();
 

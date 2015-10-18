@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.pravian.aero.command.handler;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.permission.AeroPermissionHandler;
 import net.pravian.aero.component.PluginComponent;
 import net.pravian.aero.plugin.AeroLogger;
@@ -58,4 +58,17 @@ public abstract class AbstractCommandHandler<T extends AeroPlugin<T>> extends Pl
     public AbstractCommandHandler(T plugin, AeroLogger logger) {
         super(plugin, logger);
     }
+
+    @Override
+    public void addAll(Iterable<? extends AeroCommandBase<T>> commands) {
+        for (AeroCommandBase<T> command : commands) {
+            add(command, null);
+        }
+    }
+
+    @Override
+    public void add(AeroCommandBase<T> command) {
+        add(command, null);
+    }
+
 }

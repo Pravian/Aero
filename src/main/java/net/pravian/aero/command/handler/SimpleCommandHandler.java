@@ -102,6 +102,26 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
     }
 
     @Override
+    public void add(AeroCommandBase<T> command, String name) {
+        if (name == null) {
+            name = command.getClass().getSimpleName();
+            if (!name.startsWith(commandClassPrefix)) {
+                logger.debug("Skipping class in command package: " + name + ". Class does not have required prefix.");
+                return;
+            }
+
+            name = name.substring(commandClassPrefix.length());
+        }
+
+        commands.put(name, new SimpleCommandExecutor<T>(this, name, command));
+    }
+
+    @Override
+    public void add(AeroCommandExecutor<T> executor) {
+        commands.put(executor.getName(), executor);
+    }
+
+    @Override
     public boolean registerAll() {
         return registerAll(plugin.getName());
     }
