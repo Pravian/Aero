@@ -13,26 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package net.pravian.aero.command.executor;
 
 import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.handler.AeroCommandHandler;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.TabExecutor;
 
-public interface AeroCommandExecutor<C extends AeroCommandBase<?>> extends TabExecutor {
+public interface AeroCommandExecutorFactory {
 
-    public String getName();
-
-    public C getCommandBase();
-
-    public AeroCommandHandler<?> getHandler();
-
-    public boolean hasPermission(CommandSender sender);
-
-    public boolean hasPermission(CommandSender sender, boolean sendMessage);
-
-    public void setupCommand(PluginCommand command);
+    public AeroCommandExecutor<? extends AeroCommandBase<?>> newExecutor(AeroCommandHandler<?> handler, String name, AeroCommandBase<?> command);
 
 }

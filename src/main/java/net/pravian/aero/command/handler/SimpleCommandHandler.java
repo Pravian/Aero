@@ -18,14 +18,14 @@ package net.pravian.aero.command.handler;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import lombok.Setter;
 import net.pravian.aero.command.AeroCommandBase;
-import net.pravian.aero.command.CommandOptions;
 import net.pravian.aero.command.CommandReflection;
 import net.pravian.aero.command.executor.AeroCommandExecutor;
+import net.pravian.aero.command.executor.AeroCommandExecutorFactory;
 import net.pravian.aero.command.executor.SimpleCommandExecutor;
 import net.pravian.aero.plugin.AeroLogger;
 import net.pravian.aero.plugin.AeroPlugin;
@@ -39,8 +39,10 @@ import org.bukkit.command.PluginCommand;
  */
 public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractCommandHandler<T> {
 
-    private final Map<String, AeroCommandExecutor<T>> commands = Maps.newHashMap();
+    private final Map<String, AeroCommandExecutor<?>> commands = Maps.newHashMap();
     private final Map<String, PluginCommand> registeredCommands = Maps.newHashMap();
+    @Setter
+    private AeroCommandExecutorFactory executorFactory;
 
     public SimpleCommandHandler(T plugin) {
         this(plugin, plugin.getPluginLogger());
@@ -50,13 +52,20 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
         super(plugin, logger);
     }
 
+    public AeroCommandExecutorFactory getExecutorFactory() {
+        if (executorFactory == null) {
+            executorFactory = new SimpleCommandExecutor.SimpleCommandExecutorFactory();
+        }
+        return executorFactory;
+    }
+
     @Override
     public void clearCommands() {
         commands.clear();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public void loadFrom(Package pack) {
         ClassPath classPath;
         try {
@@ -96,8 +105,7 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
                 continue;
             }
 
-            final SimpleCommandExecutor<T> executor = new SimpleCommandExecutor<T>(this, name, command);
-            commands.put(name, executor);
+            commands.put(name, getExecutorFactory().newExecutor(this, name, command));
         }
     }
 
@@ -113,11 +121,11 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
             name = name.substring(commandClassPrefix.length());
         }
 
-        commands.put(name, new SimpleCommandExecutor<T>(this, name, command));
+        commands.put(name, getExecutorFactory().newExecutor(this, name, command));
     }
 
     @Override
-    public void add(AeroCommandExecutor<T> executor) {
+    public void add(AeroCommandExecutor<? extends AeroCommandBase<T>> executor) {
         commands.put(executor.getName(), executor);
     }
 
@@ -145,20 +153,10 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
                 continue;
             }
 
-            final AeroCommandExecutor<T> executor = commands.get(name);
+            final AeroCommandExecutor<?> executor = commands.get(name);
 
-            // Copy data from executor
-            if (executor instanceof SimpleCommandExecutor) {
-                final SimpleCommandExecutor<T> sce = (SimpleCommandExecutor<T>) executor;
-
-                final CommandOptions options = sce.getOptions();
-
-                if (options != null) {
-                    command.setUsage(options.usage());
-                    command.setDescription(options.description());
-                    command.setAliases(Arrays.asList(options.aliases().split(",")));
-                }
-            }
+            // Allow the executor to set command options: aliases, usage, description
+            executor.setupCommand(command);
 
             // Setup command
             command.setExecutor(executor);
@@ -176,12 +174,12 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
     }
 
     @Override
-    public Map<String, AeroCommandExecutor<T>> getExecutorMap() {
+    public Map<String, AeroCommandExecutor<?>> getExecutorMap() {
         return Collections.unmodifiableMap(commands);
     }
 
     @Override
-    public Collection<AeroCommandExecutor<T>> getExecutors() {
+    public Collection<AeroCommandExecutor<?>> getExecutors() {
         return commands.values();
     }
 

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.pravian.aero.command;
 
 public class CommandRegistrationException extends Exception {
+
     private static final long serialVersionUID = 414466722462399L;
 
     public CommandRegistrationException(String message) {

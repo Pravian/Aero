@@ -15,31 +15,41 @@
  */
 package net.pravian.aero.command.executor;
 
+import java.util.Arrays;
 import java.util.List;
 import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.CommandOptions;
-import net.pravian.aero.command.handler.SimpleCommandHandler;
 import net.pravian.aero.command.SourceType;
+import net.pravian.aero.command.handler.AeroCommandHandler;
 import net.pravian.aero.command.permission.AeroPermissionHandler;
-import net.pravian.aero.plugin.AeroPlugin;
 import net.pravian.aero.util.Players;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 
-public class SimpleCommandExecutor<T extends AeroPlugin<T>> extends AbstractCommandExecutor<T> {
+public class SimpleCommandExecutor<C extends AeroCommandBase<?>> extends AbstractCommandExecutor<C> {
 
-    private final SimpleCommandHandler<T> handler;
-    private final CommandOptions options;
+    protected final CommandOptions options;
 
-    public SimpleCommandExecutor(SimpleCommandHandler<T> handler, String name, AeroCommandBase<T> command) {
-        super(name, command);
-        this.handler = handler;
+    public SimpleCommandExecutor(AeroCommandHandler<?> handler, String name, C command) {
+        super(handler, name, command);
         this.options = command.getClass().getAnnotation(CommandOptions.class);
     }
 
     public CommandOptions getOptions() {
         return options;
+    }
+
+    @Override
+    public void setupCommand(PluginCommand command) {
+        if (options == null) {
+            return;
+        }
+
+        command.setUsage(options.usage());
+        command.setDescription(options.description());
+        command.setAliases(Arrays.asList(options.aliases().split(",")));
     }
 
     @Override
@@ -120,6 +130,16 @@ public class SimpleCommandExecutor<T extends AeroPlugin<T>> extends AbstractComm
 
         // Default to true
         return true;
+    }
+
+    public static class SimpleCommandExecutorFactory implements AeroCommandExecutorFactory {
+
+
+        @Override
+        public AeroCommandExecutor<? extends AeroCommandBase<?>> newExecutor(AeroCommandHandler<?> handler, String name, AeroCommandBase<?> command) {
+            return new SimpleCommandExecutor<AeroCommandBase<?>>(handler, name, command);
+        }
+
     }
 
 }

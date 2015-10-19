@@ -13,24 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.pravian.aero.command.executor;
 
 import java.util.List;
 import lombok.Getter;
 import net.pravian.aero.command.AeroCommandBase;
-import net.pravian.aero.plugin.AeroPlugin;
+import net.pravian.aero.command.handler.AeroCommandHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 
-public abstract class AbstractCommandExecutor<T extends AeroPlugin<T>> implements AeroCommandExecutor<T> {
+public abstract class AbstractCommandExecutor<C extends AeroCommandBase<?>> implements AeroCommandExecutor<C> {
 
     @Getter
-    protected final AeroCommandBase<T> commandBase;
+    protected final C commandBase;
     @Getter
     protected final String name;
+    @Getter
+    protected final AeroCommandHandler<?> handler;
 
-    public AbstractCommandExecutor(String name, AeroCommandBase<T> command) {
+    public AbstractCommandExecutor(AeroCommandHandler<?> handler, String name, C command) {
+        this.handler = handler;
         this.name = name;
         this.commandBase = command;
     }
@@ -42,7 +45,7 @@ public abstract class AbstractCommandExecutor<T extends AeroPlugin<T>> implement
 
     @Override
     public boolean hasPermission(CommandSender sender, boolean sendMessage) {
-        return false;
+        return true;
     }
 
     @Override
@@ -50,5 +53,8 @@ public abstract class AbstractCommandExecutor<T extends AeroPlugin<T>> implement
         return null;
     }
 
+    public void setupCommand(PluginCommand command) {
+
+    }
 
 }

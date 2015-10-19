@@ -23,5 +23,4 @@ public interface AeroCommandBase<T extends AeroPlugin<T>> {
 
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args);
 
-
 }

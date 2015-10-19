@@ -25,6 +25,8 @@ import org.bukkit.command.PluginCommand;
 
 public interface AeroCommandHandler<T extends AeroPlugin<T>> {
 
+    public T getPlugin();
+
     public void clearCommands();
 
     public void loadFrom(Package pack);
@@ -35,15 +37,15 @@ public interface AeroCommandHandler<T extends AeroPlugin<T>> {
 
     public void add(AeroCommandBase<T> command, String name);
 
-    public void add(AeroCommandExecutor<T> executor);
+    public void add(AeroCommandExecutor<? extends AeroCommandBase<T>> executor);
 
     public boolean registerAll();
 
     public boolean registerAll(String fallbackPrefix);
 
-    public Map<String, AeroCommandExecutor<T>> getExecutorMap();
+    public Map<String, AeroCommandExecutor<?>> getExecutorMap();
 
-    public Collection<AeroCommandExecutor<T>> getExecutors();
+    public Collection<AeroCommandExecutor<?>> getExecutors();
 
     public Map<String, PluginCommand> getRegisteredCommandsMap();
 
