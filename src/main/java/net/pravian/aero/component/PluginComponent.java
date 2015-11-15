@@ -36,22 +36,32 @@ public abstract class PluginComponent<T extends AeroPlugin<T>> implements Plugin
     public PluginComponent() {
 
         T foundPlugin = null;
-        try {
-            final Class<T> typeClass = (Class<T>) ((ParameterizedType) getClass()
-                    .getGenericSuperclass())
-                    .getActualTypeArguments()[0];
 
+        Class<?> checkClass = getClass();
+
+        // Try each superclass iteratively
+        do {
+            final Class<T> typeClass;
+            try {
+                // Get parameter class of checkClass extending PluginComponent<SomePlugin>
+                typeClass = (Class<T>) ((ParameterizedType) checkClass
+                        .getGenericSuperclass())
+                        .getActualTypeArguments()[0];
+            } catch (Exception ex) { // Nope, this class doesn't directly extend PluginComponent<SomePlugin>
+                continue;
+            }
+
+            // Find `SomePlugin` instance
             for (RegisteredPlugin registeredPlugin : Aero.getInstance().getRegisteredPlugins()) {
-                if (registeredPlugin.getPlugin().getClass().isAssignableFrom(typeClass)) {
+                if (typeClass.isAssignableFrom(registeredPlugin.getPlugin().getClass())) {
                     foundPlugin = (T) registeredPlugin.getPlugin();
                 }
             }
-        } catch (Exception ex) {
-            throw new AeroException("Could not determine plugin class type! (Are you properly extending with generics?)", ex);
-        }
+
+        } while ((checkClass = checkClass.getSuperclass()) != null);
 
         if (foundPlugin == null) {
-            throw new AeroException("Could not find associated plugin instance!");
+            throw new AeroException("Could not determine plugin class type! (Are you properly extending with generics?)");
         }
 
         this.plugin = foundPlugin;

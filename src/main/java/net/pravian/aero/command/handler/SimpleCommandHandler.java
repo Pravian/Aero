@@ -20,6 +20,7 @@ import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import lombok.Setter;
 import net.pravian.aero.command.AeroCommandBase;
@@ -29,6 +30,7 @@ import net.pravian.aero.command.executor.AeroCommandExecutorFactory;
 import net.pravian.aero.command.executor.SimpleCommandExecutor;
 import net.pravian.aero.plugin.AeroLogger;
 import net.pravian.aero.plugin.AeroPlugin;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.PluginCommand;
 
@@ -130,12 +132,7 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
     }
 
     @Override
-    public boolean registerAll() {
-        return registerAll(plugin.getName());
-    }
-
-    @Override
-    public boolean registerAll(String fallbackPrefix) {
+    public boolean registerAll(String fallbackPrefix, boolean force) {
         registeredCommands.clear();
 
         // Get command map
@@ -144,6 +141,9 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
             logger.severe("Could not register commands to command map. Could not find command map!");
             return false;
         }
+
+        // Used to unregister old commands when force-registering
+        Map<String, Command> mapKnownCommands = null;
 
         for (String name : commands.keySet()) {
             final PluginCommand command = CommandReflection.newPluginCommand(name, plugin);
@@ -161,6 +161,25 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
             // Setup command
             command.setExecutor(executor);
             command.setTabCompleter(executor);
+
+            // If we're force-registering the command, remove the previous command
+            final Command prevCommand = map.getCommand(name);
+            if (force && prevCommand != null) {
+                if (mapKnownCommands == null && (mapKnownCommands = CommandReflection.getKnownCommands()) == null) {
+                    logger.warning("Could not remove old command registration: " + prevCommand.getName() + ". Could not determine known commands!");
+                } else {
+                    // Unregister the old command
+                    prevCommand.unregister(map);
+
+                    // Remove any references to the old command
+                    for (String label : new HashSet<String>(mapKnownCommands.keySet())) {
+                        Command loopCommand = mapKnownCommands.get(label);
+                        if (prevCommand.equals(loopCommand)) {
+                            mapKnownCommands.remove(label);
+                        }
+                    }
+                }
+            }
 
             // Register command
             if (!map.register(fallbackPrefix, command)) {

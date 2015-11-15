@@ -11,10 +11,10 @@ import org.bukkit.scheduler.BukkitTask;
 
 class InternalMetricsSubmitter {
 
-    private final AeroBukkit aeroPlugin;
+    private final AeroContainer aeroPlugin;
     private BukkitTask submitTask;
 
-    InternalMetricsSubmitter(AeroBukkit aero) {
+    InternalMetricsSubmitter(AeroContainer aero) {
         this.aeroPlugin = aero;
     }
 

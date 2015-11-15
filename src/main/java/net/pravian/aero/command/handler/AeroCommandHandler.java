@@ -41,7 +41,7 @@ public interface AeroCommandHandler<T extends AeroPlugin<T>> {
 
     public boolean registerAll();
 
-    public boolean registerAll(String fallbackPrefix);
+    public boolean registerAll(String fallbackPrefix, boolean force);
 
     public Map<String, AeroCommandExecutor<?>> getExecutorMap();
 

@@ -134,7 +134,6 @@ public class SimpleCommandExecutor<C extends AeroCommandBase<?>> extends Abstrac
 
     public static class SimpleCommandExecutorFactory implements AeroCommandExecutorFactory {
 
-
         @Override
         public AeroCommandExecutor<? extends AeroCommandBase<?>> newExecutor(AeroCommandHandler<?> handler, String name, AeroCommandBase<?> command) {
             return new SimpleCommandExecutor<AeroCommandBase<?>>(handler, name, command);

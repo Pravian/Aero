@@ -71,4 +71,9 @@ public abstract class AbstractCommandHandler<T extends AeroPlugin<T>> extends Pl
         add(command, null);
     }
 
+    @Override
+    public boolean registerAll() {
+        return registerAll(plugin.getName(), false);
+    }
+
 }

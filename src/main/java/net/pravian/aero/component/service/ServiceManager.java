@@ -72,6 +72,7 @@ public class ServiceManager<T extends AeroPlugin<T>> extends AbstractService<T> 
         } catch (Exception ex) {
             logger.severe("Could not register service class: " + serviceClass.getSimpleName());
             logger.severe(ex);
+            return null;
         }
 
         if (service == null) {

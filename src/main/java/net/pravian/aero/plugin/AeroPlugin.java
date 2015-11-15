@@ -96,7 +96,8 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
     protected void setup(RegisteredPlugin options) {
     }
 
-    protected abstract void load();
+    protected void load() {
+    }
 
     protected abstract void enable();
 

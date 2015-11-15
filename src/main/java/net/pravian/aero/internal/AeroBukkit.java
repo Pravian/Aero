@@ -5,6 +5,7 @@ import java.util.Properties;
 import net.pravian.aero.Aero;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AeroBukkit extends JavaPlugin implements AeroContainer {
@@ -24,6 +25,7 @@ public class AeroBukkit extends JavaPlugin implements AeroContainer {
 
     @Override
     public void onLoad() {
+        Bukkit.getServicesManager().register(AeroContainer.class, this, plugin, ServicePriority.Normal);
         loadBuildInformation();
     }
 
@@ -31,7 +33,6 @@ public class AeroBukkit extends JavaPlugin implements AeroContainer {
     @SuppressWarnings("deprecation")
     public void onEnable() {
         aero.init();
-
         new InternalMetricsSubmitter(plugin).submit();
     }
 

@@ -20,12 +20,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-import net.pravian.aero.internal.AeroBukkit;
 import net.pravian.aero.internal.AeroContainer;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 /**
  * Represents the Aero framework.
@@ -41,13 +41,14 @@ public class Aero {
      */
     public static final String AUTHOR = "Prozza";
 
-    private final AeroBukkit plugin;
+    private final AeroContainer plugin;
     private final Logger logger;
     private final Map<String, RegisteredPlugin> plugins;
+    //
     private boolean debug = false;
     private boolean init = false;
 
-    public Aero(AeroBukkit plugin) {
+    public Aero(AeroContainer plugin) {
         // Note: created at constructor time, plugin is not complete yet
         this.plugin = plugin;
         this.logger = plugin.getLogger();
@@ -56,10 +57,7 @@ public class Aero {
 
     /**
      * Initializes this framework.
-     *
-     * @deprecated This method should never be called.
      */
-    @Deprecated
     public void init() {
         if (init) {
             throw new AeroException("Framework already initialized!");
@@ -69,11 +67,12 @@ public class Aero {
         logger.info(NAME + " v" + getFullVersion() + " by " + AUTHOR + " initialized");
     }
 
-    @Deprecated
     public void deinit() {
         if (!init) {
             throw new AeroException("Framework not initialized!");
         }
+
+        plugins.clear();
 
         this.init = false;
     }
@@ -97,7 +96,7 @@ public class Aero {
         verifyInitialized();
 
         if (plugin == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Plugin is null.");
         }
 
         final String key = getPluginKey(plugin);
@@ -241,28 +240,18 @@ public class Aero {
      * @throws AeroException If this method is called before the framework has been initialized.
      */
     public static Aero getInstance() {
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            if (!plugin.getName().equals(NAME)) {
-                continue;
-            }
+        RegisteredServiceProvider<AeroContainer> container = Bukkit.getServicesManager().getRegistration(AeroContainer.class);
 
-            if (!(plugin instanceof AeroContainer)) {
-                throw new AeroException(NAME + " container does not implement AeroContainer!");
-            }
-
-            final Aero aero = ((AeroContainer) plugin).getAero();
-
-            if (aero == null) {
-                throw new AeroUninitializedException("Aero is null!");
-            }
-
-            if (!aero.isInitialized()) {
-                throw new AeroUninitializedException();
-            }
-
-            return aero;
+        if (container == null) {
+            throw new AeroException("Could not find " + NAME + "!");
         }
 
-        throw new AeroException("Could not find " + NAME + ", are you registering your plugin in onEnable?");
+        final Aero aero = container.getProvider().getAero();
+
+        if (aero == null) {
+            throw new AeroUninitializedException("Aero is null!");
+        }
+
+        return aero;
     }
 }
