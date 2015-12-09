@@ -13,6 +13,8 @@ public interface AeroCommandBase<T extends AeroPlugin<T>> {
 
     public void unregister();
 
+    public boolean isRegistered();
+
     public void onInit();
 
     public AeroCommandHandler<T> getHandler();

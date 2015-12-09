@@ -49,6 +49,10 @@ public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends Plugi
             throw new CommandRegistrationException("Command already registered to a handler!");
         }
 
+        if (handler == null) {
+            throw new CommandRegistrationException("Cannot register to null handler!");
+        }
+
         this.handler = handler;
     }
 
@@ -58,11 +62,19 @@ public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends Plugi
     }
 
     @Override
+    public boolean isRegistered() {
+        return handler != null;
+    }
+
+    @Override
     public AeroCommandHandler<T> getHandler() {
         return handler;
     }
 
     protected void setVariables(final CommandSender sender, final Command command, final String label, final String[] args) {
+        if (!isRegistered()) {
+            throw new CommandException("Could not set variables for unregistered command!");
+        }
         this.sender = sender;
         this.command = command;
         this.label = label;
@@ -82,141 +94,6 @@ public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends Plugi
     @Override
     public List<String> tabComplete(CommandSender sender, Command command, String alias, String[] args) {
         return null;
-    }
-
-    /**
-     * Validates if the sender of the command is not a player.
-     *
-     * @return true if the CommandSender is not a Player.
-     */
-    protected boolean isConsole() {
-        return !(sender instanceof Player);
-    }
-
-    /**
-     * Sends the sender of the command a no-permissions message.
-     *
-     * <p>
-     * <b>This method uses the quick-return syntax for ease of use.</b></p>
-     * <p>
-     * Example:
-     * <pre>
-     * if (target.hasPermission("plugin.kickexempt")) {
-     *     return noPerms();
-     * }
-     * </pre></p>
-     *
-     * @return true
-     */
-    protected boolean noPerms() {
-        msg(handler.getPermissionMessage());
-        return true;
-    }
-
-    /**
-     * Sends the sender the usage of this command.
-     *
-     * <p>
-     * <b>This method uses the quick-return syntax for ease of use.</b></p>
-     *
-     * @see #noPerms()
-     * @return true
-     */
-    protected boolean showUsage() {
-        msg(command.getUsage().replaceAll("<command>", command.getLabel()));
-        return true;
-    }
-
-    /**
-     * Sends the sender of this command a message (in Gray).
-     *
-     * @param message The message to send.
-     * @see #msg(CommandSender, String, ChatColor)
-     */
-    protected void msg(final PluginMessage message) {
-        msg(message.getMessage());
-    }
-
-    /**
-     * Sends the sender of this command a message (in Gray).
-     *
-     * @param message The message to send.
-     * @see #msg(CommandSender, String, ChatColor)
-     */
-    protected void msg(final String message) {
-        msg(sender, message);
-    }
-
-    /**
-     * Sends a message to a sender (in Gray).
-     *
-     * @param receiver The CommandSender to whom the message must be sent.
-     * @param message The message to send.
-     * @see #msg(CommandSender, String, ChatColor)
-     */
-    protected void msg(final CommandSender receiver, final String message) {
-        msg(receiver, message, ChatColor.GRAY);
-    }
-
-    /**
-     * Sends the sender of this command a message.
-     *
-     * @param message The message to send.
-     * @param color The color in which the message must be sent.
-     * @see #msg(CommandSender, String, ChatColor)
-     */
-    protected void msg(final String message, final ChatColor color) {
-        msg(sender, message, color);
-    }
-
-    /**
-     * Sends a message to a CommandSender.
-     *
-     * @param receiver The CommandSender to which the message must be sent.
-     * @param message The message to send.
-     * @param color The color in which the message must be sent.
-     */
-    protected void msg(final CommandSender receiver, final String message, final ChatColor color) {
-        if (receiver == null) {
-            return;
-        }
-        receiver.sendMessage(color + message);
-    }
-
-    /**
-     * Searches and returns an online player by (partial)name.
-     *
-     * <p>
-     * Uses {@link PlayerUtils#getPlayer(String)}.</p>
-     *
-     * @param name
-     * @return The player that has been found (<b>Or null if the player could not be found!</b>)
-     * @see PlayerUtils#getPlayer(String)
-     */
-    protected Player getPlayer(final String name) {
-        return Players.getPlayer(name);
-    }
-
-    /**
-     * Searches and returns an offline or online player by (partial)name.
-     *
-     * <p>
-     * Uses {@link net.pravian.bukkitlib.util.PlayerUtils#getOfflinePlayer(String)}.</p>
-     *
-     * @param name
-     * @return The OfflinePlayer that has been found (<b>Or null if the player could not be found!</b>)
-     * @see PlayerUtils#getOfflinePlayer(String)
-     */
-    protected OfflinePlayer getOfflinePlayer(final String name) {
-        return Players.getOfflinePlayer(name);
-    }
-
-    protected World getWorld(final String world) {
-        return Worlds.getWorld(world);
-    }
-
-    protected Plugin getPlugin(final String plugin) {
-        return Plugins.getPlugin(plugin);
     }
 
 }

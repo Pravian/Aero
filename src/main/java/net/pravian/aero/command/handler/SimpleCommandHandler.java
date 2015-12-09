@@ -107,6 +107,13 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
                 continue;
             }
 
+            try {
+                command.register(this);
+            } catch (Exception ex) {
+                plugin.handleException("Could not register command: " + name, ex);
+                return;
+            }
+
             commands.put(name, getExecutorFactory().newExecutor(this, name, command));
         }
     }
@@ -123,11 +130,25 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
             name = name.substring(commandClassPrefix.length());
         }
 
+        try {
+            command.register(this);
+        } catch (Exception ex) {
+            plugin.handleException("Could not register command: " + name, ex);
+            return;
+        }
+
         commands.put(name, getExecutorFactory().newExecutor(this, name, command));
     }
 
     @Override
     public void add(AeroCommandExecutor<? extends AeroCommandBase<T>> executor) {
+        try {
+            executor.getCommandBase().register(this);
+        } catch (Exception ex) {
+            plugin.handleException("Could not register command: " + executor.getName(), ex);
+            return;
+        }
+
         commands.put(executor.getName(), executor);
     }
 
