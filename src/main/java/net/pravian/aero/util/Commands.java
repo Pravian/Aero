@@ -2,7 +2,6 @@ package net.pravian.aero.util;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import net.pravian.aero.old.InternalExceptionHandler;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -167,11 +166,10 @@ public class Commands {
                 field.setAccessible(true);
                 return (T) field.get(from);
             } catch (NoSuchFieldException ex) {
-                InternalExceptionHandler.handle(ex);
+                return null;
             } catch (IllegalAccessException ex) {
-                InternalExceptionHandler.handle(ex);
+                return null;
             }
         } while (checkClass.getSuperclass() != Object.class && ((checkClass = checkClass.getSuperclass()) != null));
-        return null;
     }
 }

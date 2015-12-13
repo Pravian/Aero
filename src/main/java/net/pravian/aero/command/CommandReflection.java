@@ -17,7 +17,7 @@ package net.pravian.aero.command;
 
 import java.lang.reflect.Constructor;
 import java.util.Map;
-import net.pravian.aero.util.Reflection;
+import net.pravian.aero.reflection.Reflection;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
