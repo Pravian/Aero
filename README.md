@@ -11,3 +11,4 @@ For more information, check out the [wiki](https://github.com/Pravian/BukkitLib/
 
 ## Contributing
 View [the contributing guidelines](https://github.com/Pravian/BukkitLib/blob/master/CONTRIBUTING.md) to get started.
+
