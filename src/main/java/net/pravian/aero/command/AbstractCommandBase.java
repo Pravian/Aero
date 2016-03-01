@@ -34,9 +34,6 @@ public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends Plugi
     //
     private AeroCommandHandler<T> handler = null;
 
-    protected AbstractCommandBase() {
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public Class<? extends AeroCommandBase<T>> getCommandClass() {

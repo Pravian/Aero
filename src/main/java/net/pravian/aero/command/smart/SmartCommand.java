@@ -1,6 +1,6 @@
 package net.pravian.aero.command.smart;
 
-import net.pravian.aero.command.AbstractCommandBase;
+import net.pravian.aero.command.TooledCommandBase;
 import net.pravian.aero.plugin.AeroPlugin;
 import net.pravian.aero.util.Players;
 import net.pravian.aero.util.Plugins;
@@ -15,7 +15,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public abstract class SmartCommand<T extends AeroPlugin<T>> extends AbstractCommandBase<T> implements CommandExecutor {
+public abstract class SmartCommand<T extends AeroPlugin<T>> extends TooledCommandBase<T> implements CommandExecutor {
 
     protected SmartCommand() {
     }
