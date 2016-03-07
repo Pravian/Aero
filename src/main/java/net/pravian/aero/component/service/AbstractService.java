@@ -90,10 +90,7 @@ public abstract class AbstractService<T extends AeroPlugin<T>> extends PluginLis
             return false;
         }
         final AbstractService<?> other = (AbstractService<?>) obj;
-        if ((this.serviceId == null) ? (other.serviceId != null) : !this.serviceId.equals(other.serviceId)) {
-            return false;
-        }
-        return true;
+        return !((this.serviceId == null) ? (other.serviceId != null) : !this.serviceId.equals(other.serviceId));
     }
 
     protected abstract void onStart();

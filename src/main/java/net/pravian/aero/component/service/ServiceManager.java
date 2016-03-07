@@ -59,7 +59,7 @@ public class ServiceManager<T extends AeroPlugin<T>> extends AbstractService<T> 
                 if (args.length == 2
                         && Plugin.class.isAssignableFrom(args[0])
                         && String.class.equals(args[1])) {
-                    service = serviceClass.cast(cons.newInstance(plugin, null));
+                    service = serviceClass.cast(cons.newInstance(plugin, serviceClass.getSimpleName()));
                     break;
                 }
 
@@ -70,6 +70,10 @@ public class ServiceManager<T extends AeroPlugin<T>> extends AbstractService<T> 
                 }
             }
         } catch (Exception ex) {
+            logger.severe("Could not register service class: " + serviceClass.getSimpleName());
+            logger.severe(ex);
+            return null;
+        } catch (NoClassDefFoundError ex) {
             logger.severe("Could not register service class: " + serviceClass.getSimpleName());
             logger.severe(ex);
             return null;
