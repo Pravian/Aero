@@ -3,6 +3,7 @@ package net.pravian.aero.proxy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import org.bukkit.Location;
 
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -201,5 +202,20 @@ public class InventoryProxy extends ProxyBase<Inventory> implements Inventory {
     @Override
     public void setMaxStackSize(int size) {
         base.setMaxStackSize(size);
+    }
+
+    @Override
+    public ItemStack[] getStorageContents() {
+        return base.getStorageContents();
+    }
+
+    @Override
+    public void setStorageContents(ItemStack[] iss) throws IllegalArgumentException {
+        base.setStorageContents(iss);
+    }
+
+    @Override
+    public Location getLocation() {
+        return base.getLocation();
     }
 }
