@@ -17,6 +17,7 @@ package net.pravian.aero.reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,6 +26,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+@SuppressWarnings("unchecked")
 public class Reflection {
 
     public static String VERSION = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
@@ -144,9 +146,9 @@ public class Reflection {
                     } else if (clazz.getSuperclass() != null && clazz.getSuperclass() != Object.class) {
                         return getConstructor(clazz.getSuperclass(), parameterTypes);
                     }
-                } catch (Exception ignored) {
+                } catch (NoSuchMethodException | SecurityException ignored) {
                 }
-            } catch (Exception ignore) {
+            } catch (SecurityException ignore) {
             }
         }
         return null;
@@ -156,6 +158,7 @@ public class Reflection {
      * Get all the declared fields in a class.
      *
      * @param clazz - The class.
+     * @param superClass
      * @return The list of the declared fields.
      */
     public static List<FieldAccess> getDeclaredFields(Class clazz, boolean superClass) {
@@ -225,9 +228,9 @@ public class Reflection {
                         if (field != null) {
                             return new FieldAccess(field);
                         }
-                    } catch (Exception ignored2) {
+                    } catch (NoSuchFieldException | SecurityException ignored2) {
                     }
-                } catch (Exception ignored) {
+                } catch (SecurityException ignored) {
                 }
             } while (clazz.getSuperclass() != Object.class && ((clazz = clazz.getSuperclass()) != null));
         }
@@ -249,7 +252,7 @@ public class Reflection {
                 Field field = checkClass.getDeclaredField(fieldName);
                 field.setAccessible(true);
                 return (T) field.get(instance);
-            } catch (Exception e) {
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
             }
         } while (checkClass.getSuperclass() != Object.class && ((checkClass = checkClass.getSuperclass()) != null));
         return null;
@@ -304,6 +307,7 @@ public class Reflection {
      *
      * @param clazz - The class.
      * @param methodName - The name of the method.
+     * @param parameterTypes
      * @return The method from a class.
      */
     @SuppressWarnings("unchecked")
@@ -316,9 +320,10 @@ public class Reflection {
      *
      * @param clazz - The class.
      * @param methodName - The name of the method.
+     * @param superClasses
+     * @param parameterTypes
      * @return The method from a class.
      */
-    @SuppressWarnings("unchecked")
     public static MethodInvoker getMethod(Class clazz, String methodName, boolean superClasses, Class... parameterTypes) {
         if (clazz != null && methodName != null) {
             try {
@@ -339,9 +344,9 @@ public class Reflection {
                     } else if (superClasses && clazz.getSuperclass() != null && clazz.getSuperclass() != Object.class) {
                         return getMethod(clazz.getSuperclass(), methodName, parameterTypes);
                     }
-                } catch (Exception ignore2) {
+                } catch (NoSuchMethodException | SecurityException ignore2) {
                 }
-            } catch (Exception ignore) {
+            } catch (SecurityException ignore) {
             }
         }
         return null;
@@ -437,7 +442,7 @@ public class Reflection {
         try {
             Method method = entity.getClass().getDeclaredMethod("getHandle");
             return method.invoke(entity);
-        } catch (Exception ex) {
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
         return null;
@@ -448,7 +453,7 @@ public class Reflection {
             Method method = entity.getClass().getMethod("getHandle");
 
             return method.invoke(entity);
-        } catch (Exception ex) {
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
         return null;
@@ -462,7 +467,7 @@ public class Reflection {
             Object initiatedConnection = player_connection.get(entity_player);
             Method sendPacket = initiatedConnection.getClass().getMethod("sendPacket", getPacketClass());
             sendPacket.invoke(initiatedConnection, packet);
-        } catch (Exception ex) {
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
     }

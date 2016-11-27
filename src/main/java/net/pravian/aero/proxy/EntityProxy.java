@@ -334,4 +334,69 @@ public class EntityProxy<T extends Entity> extends ProxyBase<T> implements Entit
     public void setOp(boolean value) {
         base.setOp(value);
     }
+
+    @Override
+    public void setGlowing(boolean bln) {
+        base.setGlowing(bln);
+    }
+
+    @Override
+    public boolean isGlowing() {
+        return base.isGlowing();
+    }
+
+    @Override
+    public void setInvulnerable(boolean bln) {
+        base.setInvulnerable(bln);
+    }
+
+    @Override
+    public boolean isInvulnerable() {
+        return base.isInvulnerable();
+    }
+
+    @Override
+    public boolean isSilent() {
+        return base.isSilent();
+    }
+
+    @Override
+    public void setSilent(boolean bln) {
+        base.setSilent(bln);
+    }
+
+    @Override
+    public boolean hasGravity() {
+        return base.hasGravity();
+    }
+
+    @Override
+    public void setGravity(boolean bln) {
+        base.setGravity(bln);
+    }
+
+    @Override
+    public int getPortalCooldown() {
+        return base.getPortalCooldown();
+    }
+
+    @Override
+    public void setPortalCooldown(int i) {
+        base.setPortalCooldown(i);
+    }
+
+    @Override
+    public Set<String> getScoreboardTags() {
+        return base.getScoreboardTags();
+    }
+
+    @Override
+    public boolean addScoreboardTag(String string) {
+        return base.addScoreboardTag(string);
+    }
+
+    @Override
+    public boolean removeScoreboardTag(String string) {
+        return base.removeScoreboardTag(string);
+    }
 }
