@@ -1,3 +1,6 @@
+# Aero excludes
+buildnumber.properties
+
 # Netbeans excludes
 /nbproject/private
 /dist
