@@ -1,7 +1,6 @@
-#BukkitLib
+# Aero
 
-<!--[![Build Status](https://travis-ci.org/Pravian/BukkitLib.png?branch=master)](https://travis-ci.org/Pravian/BukkitLib)-->
-[![Build Status](https://drone.io/github.com/Pravian/BukkitLib/status.png)](https://drone.io/github.com/Pravian/BukkitLib/latest)
+[![Travis](https://img.shields.io/travis/Pravian/Aero.svg)](https://travis-ci.org/Pravian/Aero)
 
 A commons library for Bukkit.
 
