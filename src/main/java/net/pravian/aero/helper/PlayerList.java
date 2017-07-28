@@ -52,6 +52,7 @@ public class PlayerList implements Iterable<Player> {
             }
         };
     }
+
     public void add(Player member) {
         uuids.add(member.getUniqueId());
     }
@@ -98,6 +99,5 @@ public class PlayerList implements Iterable<Player> {
             }
         }
     }
-
 
 }

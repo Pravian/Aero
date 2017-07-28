@@ -3,14 +3,13 @@ package net.pravian.aero.plugin;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import net.pravian.aero.exception.ExceptionHandler;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.plugin.Plugin;
 
 /*
  * Represents a Plugin-specific Logger . <p><b>Note</b>: The methods in this class also accept all instances of {@link java.lang.Throwable} and will print the attached StackTrace.
  */
-public class AeroLogger extends Logger implements ExceptionHandler {
+public class AeroLogger extends Logger {
 
     private String pluginName;
     private boolean debugMode;
@@ -101,6 +100,16 @@ public class AeroLogger extends Logger implements ExceptionHandler {
     }
 
     /**
+     * Prints a severe-message to the plugin logger.
+     *
+     * @param message The message to print.
+     * @param exception The exception causing this message.
+     */
+    public void severe(String message, Throwable exception) {
+        super.log(Level.SEVERE, message, exception);
+    }
+
+    /**
      * Prints a severe-message to the raw Bukkit logger.
      *
      * <p>
@@ -180,17 +189,17 @@ public class AeroLogger extends Logger implements ExceptionHandler {
         BUKKIT_LOGGER.log(logRecord);
     }
 
-    @Override
+    @Deprecated
     public void handleException(String msg) {
         handleException(msg, null);
     }
 
-    @Override
+    @Deprecated
     public void handleException(Throwable ex) {
         handleException(null, ex);
     }
 
-    @Override
+    @Deprecated
     public void handleException(String msg, Throwable ex) {
         if (msg != null) {
             severe(msg);

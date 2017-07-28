@@ -29,7 +29,7 @@ public interface AeroCommandHandler<T extends AeroPlugin<T>> {
 
     public void clearCommands();
 
-    public void loadFrom(Package pack);
+    public int loadFrom(Package pack);
 
     public void addAll(Iterable<? extends AeroCommandBase<T>> commands);
 

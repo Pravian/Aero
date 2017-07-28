@@ -19,7 +19,6 @@ import com.google.common.base.Preconditions;
 import java.lang.reflect.ParameterizedType;
 import net.pravian.aero.Aero;
 import net.pravian.aero.AeroException;
-import net.pravian.aero.RegisteredPlugin;
 import net.pravian.aero.base.PluginContainer;
 import net.pravian.aero.plugin.AeroLogger;
 import net.pravian.aero.plugin.AeroPlugin;
@@ -52,7 +51,7 @@ public abstract class PluginComponent<T extends AeroPlugin<T>> implements Plugin
             }
 
             // Find `SomePlugin` instance
-            for (RegisteredPlugin registeredPlugin : Aero.getInstance().getRegisteredPlugins()) {
+            for (AeroPlugin registeredPlugin : Aero.getInstance().getRegisteredPlugins()) {
                 if (typeClass.isAssignableFrom(registeredPlugin.getPlugin().getClass())) {
                     foundPlugin = (T) registeredPlugin.getPlugin();
                 }

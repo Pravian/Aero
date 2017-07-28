@@ -15,6 +15,7 @@
  */
 package net.pravian.aero;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class Aero {
 
     private final AeroContainer plugin;
     private final Logger logger;
-    private final Map<String, RegisteredPlugin> plugins;
+    private final Map<String, AeroPlugin> plugins;
     //
     private boolean debug = false;
     private boolean init = false;
@@ -52,7 +53,7 @@ public class Aero {
         // Note: created at constructor time, plugin is not complete yet
         this.plugin = plugin;
         this.logger = plugin.getLogger();
-        this.plugins = new HashMap<String, RegisteredPlugin>();
+        this.plugins = new HashMap<String, AeroPlugin>();
     }
 
     /**
@@ -92,7 +93,7 @@ public class Aero {
      * @param plugin The plugin to register.
      * @return The options for this plugin.
      */
-    public RegisteredPlugin register(AeroPlugin<?> plugin) {
+    public void register(AeroPlugin<?> plugin) {
         verifyInitialized();
 
         if (plugin == null) {
@@ -117,10 +118,8 @@ public class Aero {
             throw new AeroException("Incomplete plugin description file: Missing author!");
         }
 
-        final RegisteredPlugin options = new RegisteredPlugin(plugin);
-        plugins.put(key, new RegisteredPlugin(plugin));
+        plugins.put(key, plugin);
         logger.info("Registered " + NAME + " plugin: " + plugin.getName());
-        return options;
     }
 
     public void unregister(AeroPlugin<?> plugin) {
@@ -143,7 +142,7 @@ public class Aero {
      * @param plugin The plugin for which to obtain the registered plugin.
      * @return The registered plugin.
      */
-    public RegisteredPlugin getRegisteredPlugin(Plugin plugin) {
+    public AeroPlugin getRegisteredPlugin(Plugin plugin) {
         verifyInitialized();
         return plugins.get(getPluginKey(plugin));
     }
@@ -153,9 +152,9 @@ public class Aero {
      *
      * @return The set.
      */
-    public Set<RegisteredPlugin> getRegisteredPlugins() {
+    public Set<AeroPlugin> getRegisteredPlugins() {
         verifyInitialized();
-        return new HashSet<RegisteredPlugin>(plugins.values());
+        return Collections.unmodifiableSet(new HashSet<AeroPlugin>(plugins.values()));
     }
 
     /**

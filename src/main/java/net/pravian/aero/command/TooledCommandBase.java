@@ -164,5 +164,4 @@ public abstract class TooledCommandBase<T extends AeroPlugin<T>> extends Abstrac
         return Plugins.getPlugin(plugin);
     }
 
-    
 }

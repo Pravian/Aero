@@ -19,11 +19,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import net.pravian.aero.Aero;
-import net.pravian.aero.RegisteredPlugin;
 import net.pravian.aero.base.PluginContainer;
 import net.pravian.aero.component.PluginListener;
 import net.pravian.aero.config.YamlConfig;
-import net.pravian.aero.exception.ExceptionHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.event.HandlerList;
@@ -31,7 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin implements ExceptionHandler, PluginContainer<T>, Listener {
+public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin implements PluginContainer<T>, Listener {
 
     protected final T plugin;
     protected final Server server;
@@ -40,8 +38,6 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
     public final AeroLogger logger;
     //
     protected Aero aero;
-    protected RegisteredPlugin options;
-    protected ExceptionHandler exceptionHandler;
 
     @SuppressWarnings("unchecked")
     public AeroPlugin() {
@@ -54,7 +50,6 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
 
         this.server = plugin.getServer();
         this.logger = new AeroLogger(plugin);
-        this.exceptionHandler = logger;
         this.config = new YamlConfig(plugin, "config.yml"); // Requires logger to be present
     }
 
@@ -75,9 +70,8 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
     @Override
     public final void onEnable() {
         this.aero = Aero.getInstance();
-        this.options = aero.register(plugin);
+        aero.register(plugin);
 
-        setup(options);
         enable();
         server.getPluginManager().registerEvents(this, plugin);
     }
@@ -93,7 +87,7 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
         }
     }
 
-    protected void setup(RegisteredPlugin options) {
+    protected void setup() {
     }
 
     protected void load() {
@@ -123,14 +117,6 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
      */
     public final AeroLogger getPluginLogger() {
         return logger;
-    }
-
-    public ExceptionHandler getExceptionHandler() {
-        return exceptionHandler;
-    }
-
-    public void setExceptionHandler(ExceptionHandler exceptionHandler) {
-        this.exceptionHandler = exceptionHandler;
     }
 
     /**
@@ -213,13 +199,7 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
         final T inst;
         try {
             inst = (foundCon == null ? listener.newInstance() : foundCon.newInstance(this));
-        } catch (InstantiationException ex) {
-            handleException(ex);
-            return false;
-        } catch (IllegalAccessException ex) {
-            handleException(ex);
-            return false;
-        } catch (InvocationTargetException ex) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
             handleException(ex);
             return false;
         }
@@ -229,25 +209,15 @@ public abstract class AeroPlugin<T extends AeroPlugin<T>> extends JavaPlugin imp
         return true;
     }
 
-    @Override
     public final void handleException(String msg) {
         handleException(msg, null);
     }
 
-    @Override
     public final void handleException(Throwable ex) {
         handleException(null, ex);
     }
 
-    @Override
     public final void handleException(String msg, Throwable ex) {
-        if (options.doesThrowExceptions()) {
-            if (ex instanceof RuntimeException) {
-                throw (RuntimeException) ex;
-            }
-            throw new RuntimeException(ex);
-        }
-
-        exceptionHandler.handleException(msg, ex);
+        logger.severe(msg, ex);
     }
 }

@@ -45,10 +45,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
-import net.pravian.aero.Aero;
-import net.pravian.aero.AeroMetricsDisabledException;
-import net.pravian.aero.PluginNotRegisteredException;
-import net.pravian.aero.RegisteredPlugin;
 import net.pravian.aero.util.Loggers;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
@@ -62,7 +58,9 @@ import org.bukkit.scheduler.BukkitTask;
  * Represents Metrics; mcstats.org
  *
  * @author Tyler Blair
+ * @deprecated mcstats.org is down. The project seems to have been abandoned.
  */
+@Deprecated
 public final class Metrics {
 
     /**
@@ -119,16 +117,6 @@ public final class Metrics {
             throw new IllegalArgumentException("Plugin cannot be null");
         }
 
-        // lib start
-        final RegisteredPlugin options = Aero.getInstance().getRegisteredPlugin(plugin);
-        if (options == null) {
-            throw new PluginNotRegisteredException(plugin);
-        }
-        if (!options.metricsEnabled()) {
-            throw new AeroMetricsDisabledException(plugin);
-        }
-        // lib end
-
         this.plugin = plugin;
 
         // load the config
@@ -182,8 +170,8 @@ public final class Metrics {
     }
 
     /**
-     * Start measuring statistics. This will immediately create an async repeating task as the plugin and send the initial data to the metrics backend, and then after that it will post in
-     * increments of PING_INTERVAL * 1200 ticks.
+     * Start measuring statistics. This will immediately create an async repeating task as the plugin and send the initial data to the metrics backend, and then after that it will post in increments
+     * of PING_INTERVAL * 1200 ticks.
      *
      * @return True if statistics measuring is running, otherwise false.
      */

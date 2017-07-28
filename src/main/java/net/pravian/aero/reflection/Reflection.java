@@ -124,6 +124,7 @@ public class Reflection {
      * @param parameterTypes - The parameter types (classes).
      * @return The constructor from a class.
      */
+    @SuppressWarnings("unchecked") // Reflection
     public static ConstructorInvoker getConstructor(Class clazz, Class... parameterTypes) {
         if (clazz != null) {
             try {

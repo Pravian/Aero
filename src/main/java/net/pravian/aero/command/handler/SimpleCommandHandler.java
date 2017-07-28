@@ -18,10 +18,18 @@ package net.pravian.aero.command.handler;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
+import java.io.IOException;
+import java.security.CodeSource;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import lombok.Setter;
 import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.CommandReflection;
@@ -66,36 +74,85 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
         commands.clear();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public void loadFrom(Package pack) {
-        ClassPath classPath;
-        try {
-            classPath = ClassPath.from(plugin.getClass().getClassLoader());
-        } catch (Exception ex) {
-            plugin.logger.severe("Could not load commands from package: " + pack.getName());
-            plugin.logger.severe(ex);
-            return;
+    private List<Class<?>> loadClasses(Package pack) {
+        List<Class<?>> classes = new ArrayList<>();
+
+        String prefix = pack.getName().replace('.', '/');
+
+        CodeSource codeSource = plugin.getClass().getProtectionDomain().getCodeSource();
+        if (codeSource == null) {
+            logger.severe("Could not load commands from package: " + pack.getName() + "! Could not get CodeSource.");
+            return null;
         }
 
-        for (ClassInfo info : classPath.getTopLevelClasses(pack.getName())) {
+        ZipInputStream zip;
+        try {
+            zip = new ZipInputStream(codeSource.getLocation().openStream());
+        } catch (IOException ex) {
+            logger.severe("Could not load commands from package: " + pack.getName() + "! Could not open CodeSource stream.");
+            return null;
+        }
 
-            if (!info.getSimpleName().startsWith(commandClassPrefix)) {
-                logger.debug("Skipping class in command package: " + info.getSimpleName() + ". Class does not have required prefix.");
+        // No failure (null return) beyond this point
+        while (true) {
+            ZipEntry zipEntry;
+            try {
+                zipEntry = zip.getNextEntry();
+            } catch (IOException ex) {
+                logger.severe("Could not load commands from package: " + pack.getName() + "! Could not get ZIP entry");
+                logger.severe(ex);
+                break;
+            }
+
+            if (zipEntry == null) {
+                break;
+            }
+
+            String name = zipEntry.getName();
+
+            if (!name.startsWith(prefix)) {
                 continue;
             }
 
-            final String name = info.getSimpleName().substring(commandClassPrefix.length()).toLowerCase();
-
-            if (commands.containsKey(name)) {
-                logger.warning("Skipping class in command package: " + info.getSimpleName() + ". Command name conflict!");
+            if (!name.endsWith(".class")) {
                 continue;
             }
 
-            final Class<?> clazz = info.load();
+            String loadName = name.substring(0, name.length() - 6).replace('/', '.');
 
-            if (!AeroCommandBase.class.isAssignableFrom(clazz)) {
-                logger.debug("Skipping class in command package: " + info.getSimpleName() + ". Class does can not be assigned to CommandBase.");
+            Class<?> loadClass;
+            try {
+                loadClass = Class.forName(loadName, true, plugin.getClass().getClassLoader());
+            } catch (ClassNotFoundException ex) {
+                logger.severe("Could not load command class: " + loadName + "! Class not found.");
+                logger.severe(ex);
+                continue;
+            }
+
+            classes.add(loadClass);
+
+        }
+
+        return classes;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public int loadFrom(Package pack) {
+        List<Class<?>> classes = loadClasses(pack);
+
+        int loaded = 0;
+        for (Class<?> clazz : classes) {
+            String className = clazz.getSimpleName();
+            if (!className.startsWith(commandClassPrefix)) {
+                logger.warning("Skipping command class: " + className + ". Class does not have required prefix!");
+                continue;
+            }
+
+            final String commandName = className.substring(commandClassPrefix.length()).toLowerCase();
+
+            if (commands.containsKey(commandName)) {
+                logger.warning("Skipping command class: " + className + ". Command name conflict!");
                 continue;
             }
 
@@ -103,19 +160,22 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
             try {
                 command = (AeroCommandBase<T>) clazz.newInstance();
             } catch (Exception ex) {
-                plugin.handleException("Could not instantiate command class: " + info.getSimpleName(), ex);
+                plugin.handleException("Could not instantiate command class: " + className, ex);
                 continue;
             }
 
             try {
                 command.register(this);
             } catch (Exception ex) {
-                plugin.handleException("Could not register command: " + name, ex);
-                return;
+                plugin.handleException("Could not register command: " + commandName, ex);
+                continue;
             }
 
-            commands.put(name, getExecutorFactory().newExecutor(this, name, command));
+            commands.put(commandName, getExecutorFactory().newExecutor(this, commandName, command));
+            loaded++;
         }
+
+        return loaded;
     }
 
     @Override
@@ -123,7 +183,7 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
         if (name == null) {
             name = command.getClass().getSimpleName();
             if (!name.startsWith(commandClassPrefix)) {
-                logger.debug("Skipping class in command package: " + name + ". Class does not have required prefix.");
+                logger.warning("Skipping class in command package: " + name + ". Class does not have required prefix.");
                 return;
             }
 
@@ -193,7 +253,7 @@ public class SimpleCommandHandler<T extends AeroPlugin<T>> extends AbstractComma
                     prevCommand.unregister(map);
 
                     // Remove any references to the old command
-                    for (String label : new HashSet<String>(mapKnownCommands.keySet())) {
+                    for (String label : new HashSet<>(mapKnownCommands.keySet())) {
                         Command loopCommand = mapKnownCommands.get(label);
                         if (prevCommand.equals(loopCommand)) {
                             mapKnownCommands.remove(label);

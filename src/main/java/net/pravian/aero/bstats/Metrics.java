@@ -1,4 +1,4 @@
-package net.pravian.aero.internal;
+package net.pravian.aero.bstats;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -18,12 +18,12 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
 import javax.net.ssl.HttpsURLConnection;
-import net.pravian.aero.Aero;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -33,7 +33,7 @@ import org.json.simple.JSONObject;
  * Check out https://bStats.org/ to learn more about bStats!
  */
 @SuppressWarnings("unchecked") // Aero - third-party
-public class InternalMetrics {
+public class Metrics {
 
     // The version of this bStats class
     public static final int B_STATS_VERSION = 1;
@@ -48,7 +48,7 @@ public class InternalMetrics {
     private static String serverUUID;
 
     // The plugin
-    private final AeroContainer plugin;
+    private final JavaPlugin plugin;
 
     // A list with all custom charts
     private final List<CustomChart> charts = new ArrayList<>();
@@ -58,7 +58,7 @@ public class InternalMetrics {
      *
      * @param plugin The plugin which stats should be submitted.
      */
-    InternalMetrics(AeroContainer plugin) { // Aero public -> package private, JavaPlugin -> AeroContainer
+    public Metrics(JavaPlugin plugin) {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null!");
         }
@@ -107,7 +107,7 @@ public class InternalMetrics {
                 }
             }
             // Register our service
-            Bukkit.getServicesManager().register(InternalMetrics.class, this, plugin, ServicePriority.Normal);
+            Bukkit.getServicesManager().register(Metrics.class, this, plugin, ServicePriority.Normal);
             if (!found) {
                 // We are the first!
                 startSubmitting();
@@ -162,8 +162,8 @@ public class InternalMetrics {
     public JSONObject getPluginData() {
         JSONObject data = new JSONObject();
 
-        String pluginName = Aero.NAME;
-        String pluginVersion = plugin.getBuildVersion();
+        String pluginName = plugin.getDescription().getName();
+        String pluginVersion = plugin.getDescription().getVersion();
 
         data.put("pluginName", pluginName); // Append the name of the plugin
         data.put("pluginVersion", pluginVersion); // Append the version of the plugin

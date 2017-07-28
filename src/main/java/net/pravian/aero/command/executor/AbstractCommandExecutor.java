@@ -53,8 +53,8 @@ public abstract class AbstractCommandExecutor<C extends AeroCommandBase<?>> impl
         return null;
     }
 
+    @Override
     public void setupCommand(PluginCommand command) {
-
     }
 
 }
