@@ -15,8 +15,6 @@
  */
 package net.pravian.aero.command;
 
-import java.lang.reflect.Constructor;
-import java.util.Map;
 import net.pravian.aero.reflection.Reflection;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -24,41 +22,57 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 
-public class CommandReflection {
+import java.lang.reflect.Constructor;
+import java.util.Map;
+
+public class CommandReflection
+{
 
     private static final Constructor<PluginCommand> PLUGINCOMMAND_CONSTRUCTOR;
 
-    static {
+    static
+    {
         Constructor<PluginCommand> temp = null;
-        try {
+        try
+        {
             temp = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
             temp.setAccessible(true);
-        } catch (Exception ignored) {
+        }
+        catch (Exception ignored)
+        {
         }
         PLUGINCOMMAND_CONSTRUCTOR = temp;
     }
 
-    private CommandReflection() {
+    private CommandReflection()
+    {
         throw new AssertionError();
     }
 
     @SuppressWarnings("unchecked")
-    public static CommandMap getCommandMap() {
-        try {
+    public static CommandMap getCommandMap()
+    {
+        try
+        {
             final Object commandMap = Reflection.getField(Bukkit.getPluginManager(), "commandMap");
             return commandMap instanceof CommandMap ? (CommandMap) commandMap : null;
-        } catch (Exception ignored) {
+        }
+        catch (Exception ignored)
+        {
             return null;
         }
     }
 
-    public static Map<String, Command> getKnownCommands() {
+    public static Map<String, Command> getKnownCommands()
+    {
         return getKnownCommands(getCommandMap());
     }
 
     @SuppressWarnings("unchecked")
-    public static Map<String, Command> getKnownCommands(CommandMap map) {
-        if (map == null) {
+    public static Map<String, Command> getKnownCommands(CommandMap map)
+    {
+        if (map == null)
+        {
             return null;
         }
 
@@ -66,12 +80,15 @@ public class CommandReflection {
         return (Map<String, Command>) (commands instanceof Map ? commands : null);
     }
 
-    public static PluginCommand newPluginCommand(String name, Plugin plugin) {
-        try {
+    public static PluginCommand newPluginCommand(String name, Plugin plugin)
+    {
+        try
+        {
             return PLUGINCOMMAND_CONSTRUCTOR.newInstance(name, plugin);
-        } catch (Exception ignored) {
+        }
+        catch (Exception ignored)
+        {
             return null;
         }
     }
-
 }

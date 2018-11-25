@@ -15,39 +15,51 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public abstract class SmartCommand<T extends AeroPlugin<T>> extends TooledCommandBase<T> implements CommandExecutor {
+public abstract class SmartCommand<T extends AeroPlugin<T>> extends TooledCommandBase<T> implements CommandExecutor
+{
 
-    protected SmartCommand() {
+    protected SmartCommand()
+    {
     }
 
     @Override
-    public final boolean runCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
+    public final boolean runCommand(final CommandSender sender, final Command command, final String label, final String[] args)
+    {
         setVariables(sender, command, label, args);
 
-        try {
+        try
+        {
             return onCommand(sender, command, label, args);
-        } catch (ArgumentException ex) {
+        }
+        catch (ArgumentException ex)
+        {
             boolean value = true;
-            if (ex instanceof ReturnException) {
+            if (ex instanceof ReturnException)
+            {
                 value = ((ReturnException) ex).isReturnValue();
             }
 
             String message = ex.getMessage();
-            if (message != null) {
+            if (message != null)
+            {
                 sender.sendMessage(ChatColor.RED + message);
             }
 
             return value;
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             plugin.handleException("Uncaught exception executing command: " + command.getName(), ex);
             sender.sendMessage(ChatColor.RED + "Command error: " + (ex.getMessage() == null ? "Unknown cause" : ex.getMessage()));
             return true;
         }
     }
 
-    protected Player toPlayer(final String name) {
+    protected Player toPlayer(final String name)
+    {
         Player player = Players.getPlayer(name);
-        if (player == null) {
+        if (player == null)
+        {
             throw new ArgumentException("Could not find player: " + name);
         }
         return player;
@@ -55,7 +67,7 @@ public abstract class SmartCommand<T extends AeroPlugin<T>> extends TooledComman
 
     /**
      * Searches and returns an offline or online toPlayer by (partial)name.
-     *
+     * <p>
      * <p>
      * Uses {@link net.pravian.bukkitlib.util.PlayerUtils#getOfflinePlayer(String)}.</p>
      *
@@ -63,74 +75,96 @@ public abstract class SmartCommand<T extends AeroPlugin<T>> extends TooledComman
      * @return The OfflinePlayer that has been found (<b>Or null if the toPlayer could not be found!</b>)
      * @see PlayerUtils#getOfflinePlayer(String)
      */
-    protected OfflinePlayer toOfflinePlayer(final String name) {
+    protected OfflinePlayer toOfflinePlayer(final String name)
+    {
         OfflinePlayer player = Players.getOfflinePlayer(name);
-        if (player == null) {
+        if (player == null)
+        {
             throw new ArgumentException("Could not find offline player: " + name);
         }
         return player;
     }
 
-    protected World toWorld(final String name) {
+    protected World toWorld(final String name)
+    {
         World world = Worlds.getWorld(name);
-        if (world == null) {
+        if (world == null)
+        {
             throw new ArgumentException("Could not world: " + name);
         }
         return world;
     }
 
-    protected Plugin toPlugin(final String name) {
+    protected Plugin toPlugin(final String name)
+    {
         Plugin findPlugin = Plugins.getPlugin(name);
-        if (findPlugin == null) {
+        if (findPlugin == null)
+        {
             throw new ArgumentException("Could not find plugin: " + name);
         }
         return findPlugin;
     }
 
-    protected int toInt(String arg) {
-        try {
+    protected int toInt(String arg)
+    {
+        try
+        {
             return Integer.parseInt(arg);
-        } catch (NumberFormatException ex) {
+        }
+        catch (NumberFormatException ex)
+        {
             throw new ArgumentException("Invalid number: " + arg);
         }
     }
 
-    protected double toDouble(String arg) {
-        try {
+    protected double toDouble(String arg)
+    {
+        try
+        {
             return Double.parseDouble(arg);
-        } catch (NumberFormatException ex) {
+        }
+        catch (NumberFormatException ex)
+        {
             throw new ArgumentException("Invalid number: " + arg);
         }
     }
 
-    protected void length(int length) {
-        if (length != args.length) {
+    protected void length(int length)
+    {
+        if (length != args.length)
+        {
             throw new ReturnException(false);
         }
     }
 
-    protected void minLength(int length) {
-        if (length > args.length) {
+    protected void minLength(int length)
+    {
+        if (length > args.length)
+        {
             throw new ReturnException(false);
         }
     }
 
-    protected void maxLength(int length) {
-        if (args.length > length) {
+    protected void maxLength(int length)
+    {
+        if (args.length > length)
+        {
             throw new ReturnException(false);
         }
     }
 
-    protected String concat(String[] params) {
+    protected String concat(String[] params)
+    {
         return StringUtils.join(args, " ");
     }
 
-    protected String concat(String[] params, int begin) {
+    protected String concat(String[] params, int begin)
+    {
         return StringUtils.join(args, " ", begin, params.length);
     }
 
-    protected String concat(String[] params, int begin, int end) {
+    protected String concat(String[] params, int begin, int end)
+    {
         return StringUtils.join(args, " ", begin, end);
     }
-
 }

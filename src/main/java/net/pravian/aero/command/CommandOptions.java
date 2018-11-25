@@ -15,17 +15,14 @@
  */
 package net.pravian.aero.command;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 // TODO docs
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface CommandOptions {
+public @interface CommandOptions
+{
 
     public String usage() default "";
 
@@ -41,7 +38,7 @@ public @interface CommandOptions {
 
     /**
      * The sub permission which is required to use this command.
-     *
+     * <p>
      * <p>
      * Ignored if a custom BukkitPermissionHolder has been set.</p>
      *

@@ -16,7 +16,6 @@
 package net.pravian.aero.component;
 
 import com.google.common.base.Preconditions;
-import java.lang.reflect.ParameterizedType;
 import net.pravian.aero.Aero;
 import net.pravian.aero.AeroException;
 import net.pravian.aero.base.PluginContainer;
@@ -24,7 +23,10 @@ import net.pravian.aero.plugin.AeroLogger;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.Server;
 
-public abstract class PluginComponent<T extends AeroPlugin<T>> implements PluginContainer<T> {
+import java.lang.reflect.ParameterizedType;
+
+public abstract class PluginComponent<T extends AeroPlugin<T>> implements PluginContainer<T>
+{
 
     protected final T plugin;
     protected final AeroLogger logger;
@@ -32,34 +34,43 @@ public abstract class PluginComponent<T extends AeroPlugin<T>> implements Plugin
 
     // TODO: Describe awesomeness
     @SuppressWarnings("unchecked")
-    public PluginComponent() {
+    public PluginComponent()
+    {
 
         T foundPlugin = null;
 
         Class<?> checkClass = getClass();
 
         // Try each superclass iteratively
-        do {
+        do
+        {
             final Class<T> typeClass;
-            try {
+            try
+            {
                 // Get parameter class of checkClass extending PluginComponent<SomePlugin>
                 typeClass = (Class<T>) ((ParameterizedType) checkClass
                         .getGenericSuperclass())
                         .getActualTypeArguments()[0];
-            } catch (Exception ex) { // Nope, this class doesn't directly extend PluginComponent<SomePlugin>
+            }
+            catch (Exception ex)
+            { // Nope, this class doesn't directly extend PluginComponent<SomePlugin>
                 continue;
             }
 
             // Find `SomePlugin` instance
-            for (AeroPlugin registeredPlugin : Aero.getInstance().getRegisteredPlugins()) {
-                if (typeClass.isAssignableFrom(registeredPlugin.getPlugin().getClass())) {
+            for (AeroPlugin registeredPlugin : Aero.getInstance().getRegisteredPlugins())
+            {
+                if (typeClass.isAssignableFrom(registeredPlugin.getPlugin().getClass()))
+                {
                     foundPlugin = (T) registeredPlugin.getPlugin();
                 }
             }
 
-        } while ((checkClass = checkClass.getSuperclass()) != null);
+        }
+        while ((checkClass = checkClass.getSuperclass()) != null);
 
-        if (foundPlugin == null) {
+        if (foundPlugin == null)
+        {
             throw new AeroException("Could not determine plugin class type! (Are you properly extending with generics?)");
         }
 
@@ -68,23 +79,26 @@ public abstract class PluginComponent<T extends AeroPlugin<T>> implements Plugin
         this.server = plugin.getServer();
     }
 
-    public PluginComponent(T plugin) {
+    public PluginComponent(T plugin)
+    {
         this(Preconditions.checkNotNull(plugin, "Plugin may not be null!"), plugin.getPluginLogger());
     }
 
-    public PluginComponent(T plugin, AeroLogger logger) {
+    public PluginComponent(T plugin, AeroLogger logger)
+    {
         this.plugin = Preconditions.checkNotNull(plugin, "Plugin may not be null!");
         this.logger = Preconditions.checkNotNull(logger, "Logger may not be null!");
         this.server = plugin.getServer();
     }
 
     @Override
-    public T getPlugin() {
+    public T getPlugin()
+    {
         return plugin;
     }
 
-    public AeroLogger getLogger() {
+    public AeroLogger getLogger()
+    {
         return logger;
     }
-
 }

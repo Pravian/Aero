@@ -17,20 +17,22 @@ package net.pravian.aero.command.smart;
 
 import lombok.Getter;
 
-public class ReturnException extends ArgumentException {
+public class ReturnException extends ArgumentException
+{
 
     private static final long serialVersionUID = -29222346432700134L;
 
     @Getter
     private final boolean returnValue;
 
-    public ReturnException(boolean returnValue) {
+    public ReturnException(boolean returnValue)
+    {
         this(null, returnValue);
     }
 
-    public ReturnException(String message, boolean returnValue) {
+    public ReturnException(String message, boolean returnValue)
+    {
         super(message);
         this.returnValue = returnValue;
     }
-
 }

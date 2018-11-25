@@ -1,70 +1,77 @@
 package net.pravian.aero.util;
 
-import java.util.HashSet;
-import java.util.Set;
 import org.bukkit.Material;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @SuppressWarnings("deprecation")
-public class Materials {
+public class Materials
+{
 
     /**
      * <p>
      * Author: Essentials Team</p>
      */
-    protected static final HashSet<Byte> TRANSPARENT_MATERIALS = new HashSet<Byte>();
+    protected static final HashSet<String> TRANSPARENT_MATERIALS = new HashSet<String>();
 
-    static {
-        final HashSet<Integer> MATERIALS = new HashSet<Integer>();
-        MATERIALS.add(Material.AIR.getId());
-        MATERIALS.add(Material.SAPLING.getId());
-        MATERIALS.add(Material.POWERED_RAIL.getId());
-        MATERIALS.add(Material.DETECTOR_RAIL.getId());
-        MATERIALS.add(Material.LONG_GRASS.getId());
-        MATERIALS.add(Material.DEAD_BUSH.getId());
-        MATERIALS.add(Material.YELLOW_FLOWER.getId());
-        MATERIALS.add(Material.RED_ROSE.getId());
-        MATERIALS.add(Material.BROWN_MUSHROOM.getId());
-        MATERIALS.add(Material.RED_MUSHROOM.getId());
-        MATERIALS.add(Material.TORCH.getId());
-        MATERIALS.add(Material.REDSTONE_WIRE.getId());
-        MATERIALS.add(Material.SEEDS.getId());
-        MATERIALS.add(Material.SIGN_POST.getId());
-        MATERIALS.add(Material.WOODEN_DOOR.getId());
-        MATERIALS.add(Material.LADDER.getId());
-        MATERIALS.add(Material.RAILS.getId());
-        MATERIALS.add(Material.WALL_SIGN.getId());
-        MATERIALS.add(Material.LEVER.getId());
-        MATERIALS.add(Material.STONE_PLATE.getId());
-        MATERIALS.add(Material.IRON_DOOR_BLOCK.getId());
-        MATERIALS.add(Material.WOOD_PLATE.getId());
-        MATERIALS.add(Material.REDSTONE_TORCH_OFF.getId());
-        MATERIALS.add(Material.REDSTONE_TORCH_ON.getId());
-        MATERIALS.add(Material.STONE_BUTTON.getId());
-        MATERIALS.add(Material.SNOW.getId());
-        MATERIALS.add(Material.SUGAR_CANE_BLOCK.getId());
-        MATERIALS.add(Material.DIODE_BLOCK_OFF.getId());
-        MATERIALS.add(Material.DIODE_BLOCK_ON.getId());
-        MATERIALS.add(Material.PUMPKIN_STEM.getId());
-        MATERIALS.add(Material.MELON_STEM.getId());
-        MATERIALS.add(Material.VINE.getId());
-        MATERIALS.add(Material.FENCE_GATE.getId());
-        MATERIALS.add(Material.WATER_LILY.getId());
-        MATERIALS.add(Material.NETHER_WARTS.getId());
-        MATERIALS.add(Material.WATER.getId());
-        MATERIALS.add(Material.LAVA.getId());
+    static
+    {
+        final HashSet<String> MATERIALS = new HashSet<>();
+        MATERIALS.add(Material.AIR.toString());
+        MATERIALS.add(Material.LEGACY_SAPLING.toString());
+        MATERIALS.add(Material.POWERED_RAIL.toString());
+        MATERIALS.add(Material.DETECTOR_RAIL.toString());
+        MATERIALS.add(Material.LEGACY_LONG_GRASS.toString());
+        MATERIALS.add(Material.DEAD_BUSH.toString());
+        MATERIALS.add(Material.LEGACY_YELLOW_FLOWER.toString());
+        MATERIALS.add(Material.LEGACY_RED_ROSE.toString());
+        MATERIALS.add(Material.BROWN_MUSHROOM.toString());
+        MATERIALS.add(Material.RED_MUSHROOM.toString());
+        MATERIALS.add(Material.TORCH.toString());
+        MATERIALS.add(Material.REDSTONE_WIRE.toString());
+        MATERIALS.add(Material.LEGACY_SEEDS.toString());
+        MATERIALS.add(Material.LEGACY_SIGN_POST.toString());
+        MATERIALS.add(Material.LEGACY_WOODEN_DOOR.toString());
+        MATERIALS.add(Material.LADDER.toString());
+        MATERIALS.add(Material.LEGACY_RAILS.toString());
+        MATERIALS.add(Material.WALL_SIGN.toString());
+        MATERIALS.add(Material.LEVER.toString());
+        MATERIALS.add(Material.LEGACY_STONE_PLATE.toString());
+        MATERIALS.add(Material.LEGACY_IRON_DOOR_BLOCK.toString());
+        MATERIALS.add(Material.LEGACY_WOOD_PLATE.toString());
+        MATERIALS.add(Material.LEGACY_REDSTONE_TORCH_OFF.toString());
+        MATERIALS.add(Material.LEGACY_REDSTONE_TORCH_ON.toString());
+        MATERIALS.add(Material.STONE_BUTTON.toString());
+        MATERIALS.add(Material.SNOW.toString());
+        MATERIALS.add(Material.LEGACY_SUGAR_CANE_BLOCK.toString());
+        MATERIALS.add(Material.LEGACY_DIODE_BLOCK_OFF.toString());
+        MATERIALS.add(Material.LEGACY_DIODE_BLOCK_ON.toString());
+        MATERIALS.add(Material.PUMPKIN_STEM.toString());
+        MATERIALS.add(Material.MELON_STEM.toString());
+        MATERIALS.add(Material.VINE.toString());
+        MATERIALS.add(Material.LEGACY_FENCE_GATE.toString());
+        MATERIALS.add(Material.LEGACY_WATER_LILY.toString());
+        MATERIALS.add(Material.LEGACY_NETHER_WARTS.toString());
+        MATERIALS.add(Material.WATER.toString());
+        MATERIALS.add(Material.LAVA.toString());
 
         try // 1.6 update
         {
-            MATERIALS.add(Material.CARPET.getId());
-        } catch (NoSuchFieldError e) {
+            MATERIALS.add(Material.LEGACY_CARPET.toString());
+        }
+        catch (NoSuchFieldError e)
+        {
         }
 
-        for (Integer integer : MATERIALS) {
-            TRANSPARENT_MATERIALS.add(integer.byteValue());
+        for (String string : MATERIALS)
+        {
+            TRANSPARENT_MATERIALS.add(string);
         }
     }
 
-    private Materials() {
+    private Materials()
+    {
     }
 
     /**
@@ -72,10 +79,12 @@ public class Materials {
      *
      * @return the materials
      */
-    public static Set<Material> getTransparentMaterials() {
+    public static Set<Material> getTransparentMaterials()
+    {
         final Set<Material> materials = new HashSet<Material>();
 
-        for (Byte material : TRANSPARENT_MATERIALS) {
+        for (String material : TRANSPARENT_MATERIALS)
+        {
             materials.add(Material.getMaterial(material));
         }
 

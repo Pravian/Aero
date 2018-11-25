@@ -17,8 +17,8 @@ package net.pravian.aero.base;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-public interface ConfigSavable {
+public interface ConfigSavable
+{
 
     public void saveTo(ConfigurationSection section);
-
 }

@@ -10,7 +10,8 @@ import org.bukkit.block.Block;
  *
  * @see SerializableObject
  */
-public class SerializableBlockLocation extends SerializableObject<Location> {
+public class SerializableBlockLocation extends SerializableObject<Location>
+{
 
     private final int x;
     private final int y;
@@ -22,7 +23,8 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
      *
      * @param location The Location to be serialized.
      */
-    public SerializableBlockLocation(Location location) {
+    public SerializableBlockLocation(Location location)
+    {
         this.x = location.getBlockX();
         this.y = location.getBlockY();
         this.z = location.getBlockZ();
@@ -34,8 +36,10 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
      *
      * @param location The String to serialize from.
      */
-    public SerializableBlockLocation(String location) {
-        if (location == null || location.isEmpty() || location.split(":").length != 4) {
+    public SerializableBlockLocation(String location)
+    {
+        if (location == null || location.isEmpty() || location.split(":").length != 4)
+        {
             this.worldName = null;
             this.x = 0;
             this.y = 0;
@@ -54,9 +58,11 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
      *
      * @return The block.
      */
-    public Block getBlock() {
+    public Block getBlock()
+    {
         World world = Bukkit.getWorld(worldName);
-        if (world == null) {
+        if (world == null)
+        {
             return null;
         }
 
@@ -64,15 +70,20 @@ public class SerializableBlockLocation extends SerializableObject<Location> {
     }
 
     @Override
-    public String serialize() {
+    public String serialize()
+    {
         return worldName + ":" + x + ":" + y + ":" + z;
     }
 
     @Override
-    public Location deserialize() {
-        try {
+    public Location deserialize()
+    {
+        try
+        {
             return getBlock().getLocation();
-        } catch (NullPointerException ex) {
+        }
+        catch (NullPointerException ex)
+        {
             return null;
         }
     }

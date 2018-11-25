@@ -19,59 +19,81 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 @SuppressWarnings("unchecked")
-public class FieldAccess implements ReflectionAccess {
+public class FieldAccess implements ReflectionAccess
+{
 
     private Field field = null;
     private boolean wasAccessible = false;
 
-    public FieldAccess(Field method) {
+    public FieldAccess(Field method)
+    {
         this(method, method.isAccessible());
     }
 
-    public FieldAccess(Field method, boolean wasAccessible) {
+    public FieldAccess(Field method, boolean wasAccessible)
+    {
         this.field = method;
         this.wasAccessible = wasAccessible;
     }
 
-    public <T> T get(Class<T> unused) throws Exception {
+    public <T> T get(Class<T> unused) throws Exception
+    {
         return unused == String.class ? (T) this.getObject(null).toString() : (unused == Integer.class ? (T) new Integer(Integer.parseInt(this.getObject(null).toString())) : unused == Boolean.class ? (T) new Boolean(Boolean.parseBoolean(this.getObject(null).toString())) : (T) this.getObject(null));
     }
 
-    public <T> T get(Class<T> unused, Object instance) throws Exception {
+    public <T> T get(Class<T> unused, Object instance) throws Exception
+    {
         return unused == String.class ? (T) this.getObject(instance).toString() : (unused == Integer.class ? (T) new Integer(Integer.parseInt(this.getObject(instance).toString())) : unused == Boolean.class ? (T) new Boolean(Boolean.parseBoolean(this.getObject(instance).toString())) : (T) this.getObject(instance));
     }
 
-    public Object getObject(Object instance) throws Exception {
+    public Object getObject(Object instance) throws Exception
+    {
         this.field.setAccessible(true);
-        try {
+        try
+        {
             Object value = this.field.get(instance);
             this.field.setAccessible(this.wasAccessible());
             return value;
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             this.field.setAccessible(this.wasAccessible());
             throw ex;
         }
     }
 
-    public Field getField() {
+    public Field getField()
+    {
         return this.field;
     }
 
     @Override
-    public boolean isAccessible() {
+    public boolean isAccessible()
+    {
         return this.field.isAccessible();
     }
 
-    public boolean isStatic() {
+    @Override
+    public FieldAccess setAccessible(boolean flag)
+    {
+        this.field.setAccessible(flag);
+        return this;
+    }
+
+    public boolean isStatic()
+    {
         return Modifier.isStatic(this.field.getModifiers());
     }
 
-    public void set(Object value) throws Exception {
+    public void set(Object value) throws Exception
+    {
         this.set(null, value);
     }
 
-    public void set(Object instance, Object value) throws Exception {
-        if (Modifier.isFinal(this.field.getModifiers())) {
+    public void set(Object instance, Object value) throws Exception
+    {
+        if (Modifier.isFinal(this.field.getModifiers()))
+        {
             this.field.setAccessible(true);
 
             FieldAccess modifiersFieldAccess = Reflection.getField(Field.class, "modifiers");
@@ -87,28 +109,27 @@ public class FieldAccess implements ReflectionAccess {
             modifiersField.setAccessible(modifiersFieldAccess.wasAccessible());
 
             this.field.setAccessible(this.wasAccessible());
-        } else {
+        }
+        else
+        {
             this.field.setAccessible(true);
             this.field.set(instance, value);
-            if (!this.wasAccessible()) {
+            if (!this.wasAccessible())
+            {
                 this.field.setAccessible(false);
             }
         }
     }
 
     @Override
-    public FieldAccess setAccessible() {
+    public FieldAccess setAccessible()
+    {
         return this.setAccessible(this.wasAccessible);
     }
 
     @Override
-    public FieldAccess setAccessible(boolean flag) {
-        this.field.setAccessible(flag);
-        return this;
-    }
-
-    @Override
-    public boolean wasAccessible() {
+    public boolean wasAccessible()
+    {
         return this.wasAccessible;
     }
 }

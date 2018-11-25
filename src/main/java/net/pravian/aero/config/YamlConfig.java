@@ -1,13 +1,6 @@
 package net.pravian.aero.config;
 
 import com.google.common.base.Preconditions;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import net.pravian.aero.plugin.AeroLogger;
 import net.pravian.aero.plugin.AeroPlugin;
 import net.pravian.aero.serializable.SerializableObject;
@@ -20,12 +13,21 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Represents a definable YAML configuration.
  *
  * @see YamlConfiguration
  */
-public class YamlConfig extends YamlConfiguration implements ConfigurationContainer<YamlConfig> {
+public class YamlConfig extends YamlConfiguration implements ConfigurationContainer<YamlConfig>
+{
 
     private final AeroPlugin<?> plugin;
     private final AeroLogger logger;
@@ -34,7 +36,7 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
 
     /**
      * Creates a new YamlConfig instance.
-     *
+     * <p>
      * <p>
      * Example:
      * <pre>
@@ -45,16 +47,17 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * <p>
      * Note: This will automatically attempt to load the config from the the plugin archive.</p>
      *
-     * @param plugin The plugin to which the config belongs.
+     * @param plugin   The plugin to which the config belongs.
      * @param fileName The filename of the config file.
      */
-    public YamlConfig(AeroPlugin<?> plugin, String fileName) {
+    public YamlConfig(AeroPlugin<?> plugin, String fileName)
+    {
         this(plugin, fileName, true);
     }
 
     /**
      * Creates a new YamlConfig instance.
-     *
+     * <p>
      * <p>
      * Example:
      * <pre>
@@ -62,17 +65,18 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * config.load();
      * </pre></p>
      *
-     * @param plugin The plugin to which the config belongs.
-     * @param fileName The filename of the config file.
+     * @param plugin       The plugin to which the config belongs.
+     * @param fileName     The filename of the config file.
      * @param copyDefaults If the defaults should be copied and/loaded from a config in the plugin jar-file.
      */
-    public YamlConfig(AeroPlugin<?> plugin, String fileName, boolean copyDefaults) {
+    public YamlConfig(AeroPlugin<?> plugin, String fileName, boolean copyDefaults)
+    {
         this(plugin, Plugins.getPluginFile(plugin, fileName), copyDefaults);
     }
 
     /**
      * Creates a new YamlConfig instance.
-     *
+     * <p>
      * <p>
      * Example:
      * <pre>
@@ -80,17 +84,18 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * config.load();
      * </pre></p>
      *
-     * @param plugin The plugin to which the config belongs.
-     * @param file The file of the config file.
+     * @param plugin       The plugin to which the config belongs.
+     * @param file         The file of the config file.
      * @param copyDefaults If the defaults should be copied and/loaded from a config in the plugin jar-file.
      */
-    public YamlConfig(AeroPlugin<?> plugin, File file, boolean copyDefaults) {
+    public YamlConfig(AeroPlugin<?> plugin, File file, boolean copyDefaults)
+    {
         this(Preconditions.checkNotNull(plugin, "Plugin may not be null!"), plugin.getPluginLogger(), file, copyDefaults);
     }
 
     /**
      * Creates a new YamlConfig instance.
-     *
+     * <p>
      * <p>
      * Example:
      * <pre>
@@ -98,12 +103,13 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * config.load();
      * </pre></p>
      *
-     * @param plugin The plugin to which the config belongs.
-     * @param logger The logger to use.
-     * @param file The file of the config file.
+     * @param plugin       The plugin to which the config belongs.
+     * @param logger       The logger to use.
+     * @param file         The file of the config file.
      * @param copyDefaults If the defaults should be copied and/loaded from a config in the plugin jar-file.
      */
-    public YamlConfig(AeroPlugin<?> plugin, AeroLogger logger, File file, boolean copyDefaults) {
+    public YamlConfig(AeroPlugin<?> plugin, AeroLogger logger, File file, boolean copyDefaults)
+    {
         this.plugin = Preconditions.checkNotNull(plugin, "Plugin may not be null!");
         this.logger = Preconditions.checkNotNull(logger, "Logger may not be null!");
         this.configFile = Preconditions.checkNotNull(file, "File may not be null!");
@@ -115,27 +121,35 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      *
      * @return True if the config exists.
      */
-    public boolean exists() {
+    public boolean exists()
+    {
         return configFile.exists();
     }
 
     /**
      * Loads the configuration from the predefined file.
-     *
+     * <p>
      * <p>
      * Optionally, if loadDefaults has been set to true, the file will be copied over from the default inside the jar-file of the owning plugin.</p>
      *
      * @see #YamlConfig(Plugin, String, boolean)
      */
     @Override
-    public void load() {
-        try {
-            if (copyDefaults) {
-                if (!exists()) {
+    public void load()
+    {
+        try
+        {
+            if (copyDefaults)
+            {
+                if (!exists())
+                {
                     configFile.getParentFile().mkdirs();
-                    try {
+                    try
+                    {
                         Plugins.copy(plugin.getResource(configFile.getName()), configFile);
-                    } catch (IOException ex) {
+                    }
+                    catch (IOException ex)
+                    {
                         plugin.handleException("Could not write default configuration file: " + configFile.getName(), ex);
                     }
                     logger.info("Installed default configuration " + configFile.getName());
@@ -144,10 +158,13 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
                 super.addDefaults(getDefaultConfig());
             }
 
-            if (configFile.exists()) {
+            if (configFile.exists())
+            {
                 super.load(configFile);
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             plugin.handleException("Could not load configuration file: " + configFile.getName(), ex);
         }
     }
@@ -158,10 +175,14 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #YamlConfig(Plugin, String, boolean)
      */
     @Override
-    public void save() {
-        try {
+    public void save()
+    {
+        try
+        {
             super.save(configFile);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             plugin.handleException("Could not save configuration file: " + configFile.getName(), ex);
         }
     }
@@ -169,8 +190,10 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
     /**
      * Deletes all the values in the config.
      */
-    public void clear() {
-        for (String key : super.getKeys(false)) {
+    public void clear()
+    {
+        for (String key : super.getKeys(false))
+        {
             super.set(key, null);
         }
     }
@@ -178,8 +201,10 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
     /**
      * Deletes the config if it exists.
      */
-    public void delete() {
-        if (exists()) {
+    public void delete()
+    {
+        if (exists())
+        {
             configFile.delete();
         }
     }
@@ -191,7 +216,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see YamlConfiguration
      */
     @Override
-    public YamlConfig getConfig() {
+    public YamlConfig getConfig()
+    {
         return this;
     }
 
@@ -200,11 +226,15 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      *
      * @return The default configuration.
      */
-    public YamlConfiguration getDefaultConfig() {
+    public YamlConfiguration getDefaultConfig()
+    {
         final YamlConfiguration DEFAULT_CONFIG = new YamlConfiguration();
-        try {
+        try
+        {
             DEFAULT_CONFIG.load(new InputStreamReader(plugin.getResource(configFile.getName())));
-        } catch (Throwable ex) {
+        }
+        catch (Throwable ex)
+        {
             plugin.handleException("Could not load default configuration: " + configFile.getName(), ex);
             return null;
         }
@@ -215,7 +245,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #set(java.lang.String, java.lang.Object)
      */
     @Override
-    public void set(PathContainer path, Object value) {
+    public void set(PathContainer path, Object value)
+    {
         super.set(path.getPath(), value);
     }
 
@@ -223,7 +254,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getString(java.lang.String)
      */
     @Override
-    public String getString(PathContainer path) {
+    public String getString(PathContainer path)
+    {
         return super.getString(path.getPath());
     }
 
@@ -231,7 +263,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getBoolean(java.lang.String)
      */
     @Override
-    public boolean getBoolean(PathContainer path) {
+    public boolean getBoolean(PathContainer path)
+    {
         return super.getBoolean(path.getPath());
     }
 
@@ -239,7 +272,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getInt(java.lang.String)
      */
     @Override
-    public int getInt(PathContainer path) {
+    public int getInt(PathContainer path)
+    {
         return super.getInt(path.getPath());
     }
 
@@ -247,7 +281,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getDouble(java.lang.String)
      */
     @Override
-    public double getDouble(PathContainer path) {
+    public double getDouble(PathContainer path)
+    {
         return super.getDouble(path.getPath());
     }
 
@@ -255,7 +290,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getLong(java.lang.String)
      */
     @Override
-    public long getLong(PathContainer path) {
+    public long getLong(PathContainer path)
+    {
         return super.getLong(path.getPath());
     }
 
@@ -263,7 +299,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getColor(java.lang.String)
      */
     @Override
-    public Color getColor(PathContainer path) {
+    public Color getColor(PathContainer path)
+    {
         return super.getColor(path.getPath());
     }
 
@@ -271,7 +308,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getItemStack(java.lang.String)
      */
     @Override
-    public ItemStack getItemStack(PathContainer path) {
+    public ItemStack getItemStack(PathContainer path)
+    {
         return super.getItemStack(path.getPath());
     }
 
@@ -279,7 +317,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getOfflinePlayer(java.lang.String)
      */
     @Override
-    public OfflinePlayer getOfflinePlayer(PathContainer path) {
+    public OfflinePlayer getOfflinePlayer(PathContainer path)
+    {
         return super.getOfflinePlayer(path.getPath());
     }
 
@@ -287,7 +326,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getVector(java.lang.String)
      */
     @Override
-    public Vector getVector(PathContainer path) {
+    public Vector getVector(PathContainer path)
+    {
         return super.getVector(path.getPath());
     }
 
@@ -295,7 +335,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getStringList(java.lang.String)
      */
     @Override
-    public List<String> getStringList(PathContainer path) {
+    public List<String> getStringList(PathContainer path)
+    {
         return super.getStringList(path.getPath());
     }
 
@@ -303,7 +344,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getIntegerList(java.lang.String)
      */
     @Override
-    public List<Integer> getIntegerList(PathContainer path) {
+    public List<Integer> getIntegerList(PathContainer path)
+    {
         return super.getIntegerList(path.getPath());
     }
 
@@ -311,7 +353,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getCharacterList(java.lang.String)
      */
     @Override
-    public List<Character> getCharacterList(PathContainer path) {
+    public List<Character> getCharacterList(PathContainer path)
+    {
         return super.getCharacterList(path.getPath());
     }
 
@@ -319,7 +362,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getBooleanList(java.lang.String)
      */
     @Override
-    public List<Boolean> getBooleanList(PathContainer path) {
+    public List<Boolean> getBooleanList(PathContainer path)
+    {
         return super.getBooleanList(path.getPath());
     }
 
@@ -327,7 +371,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getByteList(java.lang.String)
      */
     @Override
-    public List<Byte> getByteList(PathContainer path) {
+    public List<Byte> getByteList(PathContainer path)
+    {
         return super.getByteList(path.getPath());
     }
 
@@ -335,7 +380,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getDoubleList(java.lang.String)
      */
     @Override
-    public List<Double> getDoubleList(PathContainer path) {
+    public List<Double> getDoubleList(PathContainer path)
+    {
         return super.getDoubleList(path.getPath());
     }
 
@@ -343,7 +389,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getFloatList(java.lang.String)
      */
     @Override
-    public List<Float> getFloatList(PathContainer path) {
+    public List<Float> getFloatList(PathContainer path)
+    {
         return super.getFloatList(path.getPath());
     }
 
@@ -351,7 +398,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getLongList(java.lang.String)
      */
     @Override
-    public List<Long> getLongList(PathContainer path) {
+    public List<Long> getLongList(PathContainer path)
+    {
         return super.getLongList(path.getPath());
     }
 
@@ -359,7 +407,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getShortList(java.lang.String)
      */
     @Override
-    public List<Short> getShortList(PathContainer path) {
+    public List<Short> getShortList(PathContainer path)
+    {
         return super.getShortList(path.getPath());
     }
 
@@ -367,7 +416,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getList(java.lang.String)
      */
     @Override
-    public List<?> getList(PathContainer path) {
+    public List<?> getList(PathContainer path)
+    {
         return super.getList(path.getPath());
     }
 
@@ -375,26 +425,29 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getMapList(java.lang.String)
      */
     @Override
-    public List<Map<?, ?>> getMapList(PathContainer path) {
+    public List<Map<?, ?>> getMapList(PathContainer path)
+    {
         return super.getMapList(path.getPath());
     }
 
     @Override
-    public Object getDefault(PathContainer path) {
+    public Object getDefault(PathContainer path)
+    {
         return super.getDefault(path.getPath());
     }
 
     /**
-     * @see #setSerializable(java.lang.String, net.pravian.bukkitlib.serializable.SerializableObject)
+     * @see #setSerializable(java.lang.String, net.pravian.aero.serializable.SerializableObject)
      */
     @Override
-    public void setSerializable(PathContainer path, SerializableObject<?> object) {
+    public void setSerializable(PathContainer path, SerializableObject<?> object)
+    {
         setSerializable(path.getPath(), object);
     }
 
     /**
      * Stores an instance of SerializableObject.
-     *
+     * <p>
      * <p>
      * <b>Warning</b>: SerializableObjects should never be stored using {@link #set(String, Object)}
      *
@@ -403,17 +456,19 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see SerializableObject
      */
     @Override
-    public void setSerializable(String path, SerializableObject<?> object) {
+    public void setSerializable(String path, SerializableObject<?> object)
+    {
         super.set(path, object.serialize());
     }
 
     /**
      * @see #getSerializable(java.lang.String, java.lang.Class)
      */
-    @Override
-    public <T extends SerializableObject<?>> T getSerializable(PathContainer path, Class<T> type) {
+    /*@Override
+    public <T extends SerializableObject<T>> T getSerializable(PathContainer path, Class<T> type)
+    {
         return getSerializable(path.getPath(), type);
-    }
+    }*/
 
     /**
      * Retrieves a stored SerializableObject
@@ -422,99 +477,116 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @return The retrieved item / null.
      * @see SerializableObject
      */
-    @Override
-    public <T extends SerializableObject<?>> T getSerializable(String path, Class<T> type) {
+    /*@Override
+    public <T extends SerializableObject<?>> T getSerializable(String path, Class<T> type)
+    {
         final String serialized = super.getString(path);
 
-        if (serialized == null) {
+        if (serialized == null)
+        {
             return null;
         }
 
         final Constructor<T> cons;
-        try {
+        try
+        {
             cons = type.getDeclaredConstructor(String.class);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             plugin.handleException(ex);
             return null;
         }
 
         final T object;
 
-        try {
+        try
+        {
             object = cons.newInstance(serialized);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             plugin.handleException(ex);
             return null;
         }
 
         return object;
-    }
+    }*/
 
     /**
      * Stores a Map of any generic type.
      *
-     * @param <K> The key type to the map.
-     * @param <V> The value type to the map.
+     * @param <K>  The key type to the map.
+     * @param <V>  The value type to the map.
      * @param path The path at which the map should be stored.
-     * @param map The map to store.
+     * @param map  The map to store.
      */
     @Override
-    public <K, V> void setMap(PathContainer path, Map<K, V> map) {
+    public <K, V> void setMap(PathContainer path, Map<K, V> map)
+    {
         setMap(path.getPath(), map);
     }
 
     /**
      * Stores a Map of any generic type.
      *
-     * @param <K> The key type to the map.
-     * @param <V> The value type to the map.
+     * @param <K>  The key type to the map.
+     * @param <V>  The value type to the map.
      * @param path The path at which the map should be stored.
-     * @param map The map to store.
+     * @param map  The map to store.
      */
     @Override
-    public <K, V> void setMap(String path, Map<K, V> map) {
-        for (K key : map.keySet()) {
+    public <K, V> void setMap(String path, Map<K, V> map)
+    {
+        for (K key : map.keySet())
+        {
             super.set(path + "." + key.toString(), map.get(key));
         }
     }
 
     /**
      * Retrieves a Map of any generic type.
-     *
+     * <p>
      * <p>
      * <b>Note</b>: Any objects which couldn't be casted won't be returned in the map.</p>
      *
-     * @param <K> The key type to the map.
-     * @param <V> The value type to the map.
+     * @param <K>  The key type to the map.
+     * @param <V>  The value type to the map.
      * @param path The path where the map is stored.
      * @return The map.
      */
     @Override
-    public <K, V> Map<K, V> getMap(PathContainer path) {
+    public <K, V> Map<K, V> getMap(PathContainer path)
+    {
         return getMap(path.getPath());
     }
 
     /**
      * Retrieves a Map of any generic type.
-     *
+     * <p>
      * <p>
      * <b>Note</b>: Any objects which couldn't be casted won't be returned in the map.</p>
      *
-     * @param <K> The key type to the map.
-     * @param <V> The value type to the map.
+     * @param <K>  The key type to the map.
+     * @param <V>  The value type to the map.
      * @param path The path where the map is stored.
      * @return The map.
      */
     @SuppressWarnings("unchecked")
     @Override
     // TODO fix
-    public <K, V> Map<K, V> getMap(String path) {
+    public <K, V> Map<K, V> getMap(String path)
+    {
         final Map<K, V> keyMap = new HashMap<K, V>();
 
-        for (String item : super.getConfigurationSection(path).getKeys(false)) {
-            try {
+        for (String item : super.getConfigurationSection(path).getKeys(false))
+        {
+            try
+            {
                 keyMap.put((K) item, (V) super.getConfigurationSection(path).get(item));
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 plugin.handleException(ex);
             }
         }
@@ -523,7 +595,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
     }
 
     @Override
-    public ConfigurationSection getConfigurationSection(PathContainer path) {
+    public ConfigurationSection getConfigurationSection(PathContainer path)
+    {
         return super.getConfigurationSection(path.getPath());
     }
 }

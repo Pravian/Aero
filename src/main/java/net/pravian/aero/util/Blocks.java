@@ -7,24 +7,28 @@ import org.bukkit.block.Block;
 /**
  * Represents all Block-related utilities.
  */
-public class Blocks {
+public class Blocks
+{
 
-    private Blocks() {
+    private Blocks()
+    {
     }
 
     /**
      * Gets the chunk a Block Location is in<br>
      * <b>Will load the chunk if it isn't loaded</b>
-     *
+     * <p>
      * <p>
      * Author: bergerkiller</p>
      *
      * @param block to check
      * @return the Chunk, or null if the world this location is in is not loaded
      */
-    public static Chunk getChunk(Block block) {
+    public static Chunk getChunk(Block block)
+    {
         final World world = block.getWorld();
-        if (world == null) {
+        if (world == null)
+        {
             return null;
         }
         return world.getChunkAt(block.getX() >> 4, block.getZ() >> 4);
@@ -32,7 +36,7 @@ public class Blocks {
 
     /**
      * Checks if this Block Location is within the boundaries of a chunk
-     *
+     * <p>
      * <p>
      * Author: bergerkiller</p>
      *
@@ -40,7 +44,8 @@ public class Blocks {
      * @param chunk to check
      * @return true if within, false if not
      */
-    public static boolean isIn(Block block, Chunk chunk) {
+    public static boolean isIn(Block block, Chunk chunk)
+    {
         return (block.getX() >> 4) == chunk.getX() && (block.getZ() >> 4) == chunk.getZ();
     }
 }

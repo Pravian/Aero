@@ -18,75 +18,94 @@ package net.pravian.aero.component.service;
 import net.pravian.aero.component.PluginListener;
 import net.pravian.aero.plugin.AeroPlugin;
 
-public abstract class AbstractService<T extends AeroPlugin<T>> extends PluginListener<T> implements Service {
+public abstract class AbstractService<T extends AeroPlugin<T>> extends PluginListener<T> implements Service
+{
 
     private final String serviceId;
     //
     private boolean started = false;
 
-    public AbstractService(T plugin) {
+    public AbstractService(T plugin)
+    {
         this(plugin, null);
     }
 
-    public AbstractService(T plugin, String id) {
+    public AbstractService(T plugin, String id)
+    {
         super(plugin);
         this.serviceId = id == null ? getClass().getSimpleName() : id;
     }
 
     @Override
-    public void start() {
-        if (started) {
+    public void start()
+    {
+        if (started)
+        {
             plugin.handleException("Tried to start service '" + serviceId + "' whilst already started!");
             return;
         }
         started = true;
 
-        try {
+        try
+        {
             onStart();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             plugin.handleException("Unhandled exception whilst starting service '" + serviceId + "'!", ex);
         }
         register();
     }
 
     @Override
-    public void stop() {
-        if (!started) {
+    public void stop()
+    {
+        if (!started)
+        {
             plugin.handleException("Tried to stop service '" + serviceId + "' whilst already stopped!");
             return;
         }
         started = false;
         unregister();
-        try {
+        try
+        {
             onStop();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             plugin.handleException("Unhandled exception whilst stopping service '" + serviceId + "'!", ex);
         }
     }
 
     @Override
-    public boolean isStarted() {
+    public boolean isStarted()
+    {
         return started;
     }
 
     @Override
-    public String getServiceId() {
+    public String getServiceId()
+    {
         return serviceId;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
         hash = 61 * hash + (this.serviceId != null ? this.serviceId.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
+        {
             return false;
         }
         final AbstractService<?> other = (AbstractService<?>) obj;

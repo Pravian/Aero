@@ -17,51 +17,61 @@ package net.pravian.aero.reflection;
 
 import java.lang.reflect.Constructor;
 
-public class ConstructorInvoker implements ReflectionAccess {
+public class ConstructorInvoker implements ReflectionAccess
+{
 
     private Constructor constructor = null;
     private boolean wasAccessible = false;
 
-    public ConstructorInvoker(Constructor method) {
+    public ConstructorInvoker(Constructor method)
+    {
         this(method, method.isAccessible());
     }
 
-    public ConstructorInvoker(Constructor method, boolean wasAccessible) {
+    public ConstructorInvoker(Constructor method, boolean wasAccessible)
+    {
         this.constructor = method;
         this.wasAccessible = wasAccessible;
     }
 
-    public Constructor getConstructor() {
+    public Constructor getConstructor()
+    {
         return this.constructor;
     }
 
     @Override
-    public boolean isAccessible() {
+    public boolean isAccessible()
+    {
         return this.constructor.isAccessible();
     }
 
-    public Object newInstance(Object... parameters) throws Exception {
+    @Override
+    public ConstructorInvoker setAccessible(boolean flag)
+    {
+        this.constructor.setAccessible(flag);
+        return this;
+    }
+
+    public Object newInstance(Object... parameters) throws Exception
+    {
         this.constructor.setAccessible(true);
         Object newInstance = parameters != null && parameters.length > 0 ? this.constructor.newInstance(parameters) : this.constructor.newInstance();
-        if (!this.wasAccessible()) {
+        if (!this.wasAccessible())
+        {
             this.constructor.setAccessible(false);
         }
         return newInstance;
     }
 
     @Override
-    public ConstructorInvoker setAccessible() {
+    public ConstructorInvoker setAccessible()
+    {
         return this.setAccessible(this.wasAccessible);
     }
 
     @Override
-    public ConstructorInvoker setAccessible(boolean flag) {
-        this.constructor.setAccessible(flag);
-        return this;
-    }
-
-    @Override
-    public boolean wasAccessible() {
+    public boolean wasAccessible()
+    {
         return this.wasAccessible;
     }
 }

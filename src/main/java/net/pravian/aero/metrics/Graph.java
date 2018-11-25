@@ -9,7 +9,8 @@ import java.util.Set;
  *
  * @author Tyler Blair
  */
-public class Graph {
+public class Graph
+{
 
     /**
      * The graph's name, alphanumeric and spaces only :) If it does not comply to the above when submitted, it is rejected
@@ -22,13 +23,14 @@ public class Graph {
 
     /**
      * Creates a raw graph.
-     *
+     * <p>
      * <p>
      * <b>This should never be used.</b></p>
      *
      * @param name Graph name
      */
-    public Graph(final String name) {
+    public Graph(final String name)
+    {
         this.name = name;
     }
 
@@ -37,7 +39,8 @@ public class Graph {
      *
      * @return the Graph's name
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
@@ -46,7 +49,8 @@ public class Graph {
      *
      * @param plotter the plotter to add to the graph
      */
-    public void addPlotter(final Plotter plotter) {
+    public void addPlotter(final Plotter plotter)
+    {
         plotters.add(plotter);
     }
 
@@ -55,7 +59,8 @@ public class Graph {
      *
      * @param plotter the plotter to remove from the graph
      */
-    public void removePlotter(final Plotter plotter) {
+    public void removePlotter(final Plotter plotter)
+    {
         plotters.remove(plotter);
     }
 
@@ -64,18 +69,22 @@ public class Graph {
      *
      * @return an unmodifiable {@link java.util.Set} of the plotter objects
      */
-    public Set<Plotter> getPlotters() {
+    public Set<Plotter> getPlotters()
+    {
         return Collections.unmodifiableSet(plotters);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return name.hashCode();
     }
 
     @Override
-    public boolean equals(final Object object) {
-        if (!(object instanceof Graph)) {
+    public boolean equals(final Object object)
+    {
+        if (!(object instanceof Graph))
+        {
             return false;
         }
 
@@ -86,6 +95,7 @@ public class Graph {
     /**
      * Called when the server owner decides to opt-out of BukkitMetrics while the server is running.
      */
-    protected void onOptOut() {
+    protected void onOptOut()
+    {
     }
 }

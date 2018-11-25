@@ -8,7 +8,8 @@ import org.bukkit.Location;
  *
  * @see SerializableObject
  */
-public class SerializableEntityLocation extends SerializableObject<Location> {
+public class SerializableEntityLocation extends SerializableObject<Location>
+{
 
     private final double x;
     private final double y;
@@ -22,7 +23,8 @@ public class SerializableEntityLocation extends SerializableObject<Location> {
      *
      * @param location The Location to be serialized.
      */
-    public SerializableEntityLocation(Location location) {
+    public SerializableEntityLocation(Location location)
+    {
         this.x = location.getX();
         this.y = location.getY();
         this.z = location.getZ();
@@ -36,8 +38,10 @@ public class SerializableEntityLocation extends SerializableObject<Location> {
      *
      * @param location The String to serialize from.
      */
-    public SerializableEntityLocation(String location) {
-        if (location == null || location.equals("") || location.split(":").length != 6) {
+    public SerializableEntityLocation(String location)
+    {
+        if (location == null || location.equals("") || location.split(":").length != 6)
+        {
             this.worldName = null;
             this.x = 0;
             this.y = 0;
@@ -56,15 +60,20 @@ public class SerializableEntityLocation extends SerializableObject<Location> {
     }
 
     @Override
-    public String serialize() {
+    public String serialize()
+    {
         return worldName + ":" + x + ":" + y + ":" + z + ":" + yaw + ":" + pitch;
     }
 
     @Override
-    public Location deserialize() {
-        try {
+    public Location deserialize()
+    {
+        try
+        {
             return new Location(Bukkit.getWorld(worldName), x, y, z, yaw, pitch);
-        } catch (NullPointerException ex) {
+        }
+        catch (NullPointerException ex)
+        {
             return null;
         }
     }

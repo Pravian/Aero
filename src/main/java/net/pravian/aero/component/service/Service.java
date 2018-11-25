@@ -15,7 +15,8 @@
  */
 package net.pravian.aero.component.service;
 
-public interface Service {
+public interface Service
+{
 
     public void start();
 
@@ -24,5 +25,4 @@ public interface Service {
     public boolean isStarted();
 
     public String getServiceId();
-
 }

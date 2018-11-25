@@ -15,16 +15,12 @@
  */
 package net.pravian.aero.command.dynamic;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 // TODO: Docs docs docs
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface JoinString {
-
+public @interface JoinString
+{
 }

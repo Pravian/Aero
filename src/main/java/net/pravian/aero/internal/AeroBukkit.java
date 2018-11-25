@@ -1,14 +1,16 @@
 package net.pravian.aero.internal;
 
-import java.io.InputStream;
-import java.util.Properties;
 import net.pravian.aero.Aero;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AeroBukkit extends JavaPlugin implements AeroContainer {
+import java.io.InputStream;
+import java.util.Properties;
+
+public class AeroBukkit extends JavaPlugin implements AeroContainer
+{
 
     private final AeroBukkit plugin;
     private final Aero aero;
@@ -18,53 +20,63 @@ public class AeroBukkit extends JavaPlugin implements AeroContainer {
     private String buildDate;
 
     @SuppressWarnings("deprecation")
-    public AeroBukkit() {
+    public AeroBukkit()
+    {
         this.plugin = this;
         this.aero = new Aero(plugin);
     }
 
     @Override
-    public void onLoad() {
+    public void onLoad()
+    {
         Bukkit.getServicesManager().register(AeroContainer.class, this, plugin, ServicePriority.Normal);
         loadBuildInformation();
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void onEnable() {
+    public void onEnable()
+    {
         aero.init();
         new InternalMetricsSubmitter(plugin).submit();
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void onDisable() {
+    public void onDisable()
+    {
         this.aero.deinit();
     }
 
     @Override
-    public Aero getAero() {
+    public Aero getAero()
+    {
         return aero;
     }
 
     @Override
-    public String getBuildVersion() {
+    public String getBuildVersion()
+    {
         return buildVersion;
     }
 
     @Override
-    public String getBuildNumber() {
+    public String getBuildNumber()
+    {
         return buildNumber;
     }
 
     @Override
-    public String getBuildDate() {
+    public String getBuildDate()
+    {
         return buildDate;
     }
 
-    private void loadBuildInformation() {
+    private void loadBuildInformation()
+    {
         // Plugin build-number and build-date
-        try {
+        try
+        {
             final InputStream in = Aero.class
                     .getResourceAsStream("/" + Aero.class
                             .getPackage().getName().replace('.', '/') + "/build.properties");
@@ -76,12 +88,14 @@ public class AeroBukkit extends JavaPlugin implements AeroContainer {
             buildVersion = build.getProperty("app.buildversion", "");
             buildNumber = build.getProperty("app.buildnumber", "");
             buildDate = build.getProperty("app.builddate", "");
-        } catch (Exception ex) {
-            if (aero.isDebugging()) {
+        }
+        catch (Exception ex)
+        {
+            if (aero.isDebugging())
+            {
                 Bukkit.getLogger().severe("[" + Aero.NAME + "] Could not load build information!");
                 Bukkit.getLogger().severe("[" + Aero.NAME + "] " + ExceptionUtils.getFullStackTrace(ex));
             }
         }
     }
-
 }

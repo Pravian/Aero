@@ -24,7 +24,8 @@ import net.pravian.aero.plugin.AeroLogger;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.ChatColor;
 
-public abstract class AbstractCommandHandler<T extends AeroPlugin<T>> extends PluginComponent<T> implements AeroCommandHandler<T> {
+public abstract class AbstractCommandHandler<T extends AeroPlugin<T>> extends PluginComponent<T> implements AeroCommandHandler<T>
+{
 
     @Getter
     @Setter
@@ -51,29 +52,34 @@ public abstract class AbstractCommandHandler<T extends AeroPlugin<T>> extends Pl
     @Setter
     private AeroPermissionHandler permissionHandler = null;
 
-    public AbstractCommandHandler(T plugin) {
+    public AbstractCommandHandler(T plugin)
+    {
         this(plugin, plugin.getPluginLogger());
     }
 
-    public AbstractCommandHandler(T plugin, AeroLogger logger) {
+    public AbstractCommandHandler(T plugin, AeroLogger logger)
+    {
         super(plugin, logger);
     }
 
     @Override
-    public void addAll(Iterable<? extends AeroCommandBase<T>> commands) {
-        for (AeroCommandBase<T> command : commands) {
+    public void addAll(Iterable<? extends AeroCommandBase<T>> commands)
+    {
+        for (AeroCommandBase<T> command : commands)
+        {
             add(command, null);
         }
     }
 
     @Override
-    public void add(AeroCommandBase<T> command) {
+    public void add(AeroCommandBase<T> command)
+    {
         add(command, null);
     }
 
     @Override
-    public boolean registerAll() {
+    public boolean registerAll()
+    {
         return registerAll(plugin.getName(), false);
     }
-
 }

@@ -5,7 +5,8 @@ package net.pravian.aero.metrics;
  *
  * @author Tyler Blair
  */
-public abstract class Plotter {
+public abstract class Plotter
+{
 
     /**
      * The plot's name
@@ -15,7 +16,8 @@ public abstract class Plotter {
     /**
      * Construct a plotter with the default plot name
      */
-    public Plotter() {
+    public Plotter()
+    {
         this("Default");
     }
 
@@ -24,7 +26,8 @@ public abstract class Plotter {
      *
      * @param name the name of the plotter to use, which will show up on the website
      */
-    public Plotter(final String name) {
+    public Plotter(final String name)
+    {
         this.name = name;
     }
 
@@ -41,24 +44,29 @@ public abstract class Plotter {
      *
      * @return the plotted point's column name
      */
-    public String getColumnName() {
+    public String getColumnName()
+    {
         return name;
     }
 
     /**
      * Called after the website graphs have been updated
      */
-    public void reset() {
+    public void reset()
+    {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return getColumnName().hashCode();
     }
 
     @Override
-    public boolean equals(final Object object) {
-        if (!(object instanceof Plotter)) {
+    public boolean equals(final Object object)
+    {
+        if (!(object instanceof Plotter))
+        {
             return false;
         }
 

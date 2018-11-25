@@ -15,7 +15,6 @@
  */
 package net.pravian.aero.command.executor;
 
-import java.util.List;
 import lombok.Getter;
 import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.handler.AeroCommandHandler;
@@ -23,7 +22,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 
-public abstract class AbstractCommandExecutor<C extends AeroCommandBase<?>> implements AeroCommandExecutor<C> {
+import java.util.List;
+
+public abstract class AbstractCommandExecutor<C extends AeroCommandBase<?>> implements AeroCommandExecutor<C>
+{
 
     @Getter
     protected final C commandBase;
@@ -32,29 +34,33 @@ public abstract class AbstractCommandExecutor<C extends AeroCommandBase<?>> impl
     @Getter
     protected final AeroCommandHandler<?> handler;
 
-    public AbstractCommandExecutor(AeroCommandHandler<?> handler, String name, C command) {
+    public AbstractCommandExecutor(AeroCommandHandler<?> handler, String name, C command)
+    {
         this.handler = handler;
         this.name = name;
         this.commandBase = command;
     }
 
     @Override
-    public final boolean hasPermission(CommandSender sender) {
+    public final boolean hasPermission(CommandSender sender)
+    {
         return hasPermission(sender, false);
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender, boolean sendMessage) {
+    public boolean hasPermission(CommandSender sender, boolean sendMessage)
+    {
         return true;
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender cs, Command cmnd, String string, String[] strings) {
+    public List<String> onTabComplete(CommandSender cs, Command cmnd, String string, String[] strings)
+    {
         return null;
     }
 
     @Override
-    public void setupCommand(PluginCommand command) {
+    public void setupCommand(PluginCommand command)
+    {
     }
-
 }

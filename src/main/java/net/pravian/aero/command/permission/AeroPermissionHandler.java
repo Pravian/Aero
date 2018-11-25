@@ -15,10 +15,12 @@
  */
 package net.pravian.aero.command.permission;
 
-import java.util.Set;
 import net.pravian.aero.command.AeroCommandBase;
 
-public interface AeroPermissionHandler {
+import java.util.Set;
+
+public interface AeroPermissionHandler
+{
 
     public Set<String> getPermissions(Class<? extends AeroCommandBase<?>> command);
 
@@ -31,5 +33,4 @@ public interface AeroPermissionHandler {
     public void clearPermissions();
 
     public void clearPermissions(Class<? extends AeroCommandBase<?>> command);
-
 }

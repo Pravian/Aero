@@ -15,15 +15,17 @@
  */
 package net.pravian.aero.command.handler;
 
-import java.util.Collection;
-import java.util.Map;
 import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.executor.AeroCommandExecutor;
 import net.pravian.aero.command.permission.AeroPermissionHandler;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.command.PluginCommand;
 
-public interface AeroCommandHandler<T extends AeroPlugin<T>> {
+import java.util.Collection;
+import java.util.Map;
+
+public interface AeroCommandHandler<T extends AeroPlugin<T>>
+{
 
     public T getPlugin();
 

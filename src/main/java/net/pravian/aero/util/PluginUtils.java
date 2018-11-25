@@ -1,30 +1,34 @@
 package net.pravian.aero.util;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Represents all Plugin-related utilities.
  */
-public class PluginUtils {
+public class PluginUtils
+{
 
-    private PluginUtils() {
+    private PluginUtils()
+    {
     }
 
     /**
      * Disables all plugins.
-     *
+     * <p>
      * <p>
      * <b>Warning</b>: This includes the plugin which called this method.</p>
      *
      * @see #disableAllPlugins(List)
      */
-    public static void disableAllPlugins() {
+    public static void disableAllPlugins()
+    {
         disableAllPlugins(Arrays.asList(new Plugin[]{}));
     }
 
@@ -34,7 +38,8 @@ public class PluginUtils {
      * @param ignore Plugin to ignore.
      * @see #disableAllPlugins(List)
      */
-    public static void disableAllPlugins(Plugin ignore) {
+    public static void disableAllPlugins(Plugin ignore)
+    {
         disableAllPlugins(Arrays.asList(new Plugin[]{ignore}));
     }
 
@@ -43,9 +48,12 @@ public class PluginUtils {
      *
      * @param ignoreList The list of ignored plugins.
      */
-    public static void disableAllPlugins(List<Plugin> ignoreList) {
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            if (!ignoreList.contains(plugin)) {
+    public static void disableAllPlugins(List<Plugin> ignoreList)
+    {
+        for (Plugin plugin : Bukkit.getPluginManager().getPlugins())
+        {
+            if (!ignoreList.contains(plugin))
+            {
                 Bukkit.getPluginManager().disablePlugin(plugin);
             }
         }
@@ -54,8 +62,10 @@ public class PluginUtils {
     /**
      * Enables all plugins.
      */
-    public static void enableAllPlugins() {
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+    public static void enableAllPlugins()
+    {
+        for (Plugin plugin : Bukkit.getPluginManager().getPlugins())
+        {
             Bukkit.getPluginManager().enablePlugin(plugin);
         }
     }
@@ -64,11 +74,12 @@ public class PluginUtils {
      * Loads a plugin from the plugins folder.
      *
      * @param fileName The filename of the plugin to load.
-     * @see #loadPlugin(File)
      * @throws InvalidPluginException
      * @throws InvalidDescriptionException
+     * @see #loadPlugin(File)
      */
-    public static void loadPlugin(String fileName) throws InvalidPluginException, InvalidDescriptionException {
+    public static void loadPlugin(String fileName) throws InvalidPluginException, InvalidDescriptionException
+    {
         loadPlugin(new File(Plugins.getPluginsFolder(), fileName));
     }
 
@@ -79,7 +90,8 @@ public class PluginUtils {
      * @throws InvalidPluginException
      * @throws InvalidDescriptionException
      */
-    public static void loadPlugin(File plugin) throws InvalidPluginException, InvalidDescriptionException {
+    public static void loadPlugin(File plugin) throws InvalidPluginException, InvalidDescriptionException
+    {
         Bukkit.getPluginManager().loadPlugin(plugin);
     }
 
@@ -88,7 +100,8 @@ public class PluginUtils {
      *
      * @param plugin The plugin to reload.
      */
-    public static void reloadPlugin(Plugin plugin) {
+    public static void reloadPlugin(Plugin plugin)
+    {
         Bukkit.getPluginManager().disablePlugin(plugin);
         Bukkit.getPluginManager().enablePlugin(plugin);
     }
