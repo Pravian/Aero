@@ -10,13 +10,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,7 +130,7 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * <p>
      * Optionally, if loadDefaults has been set to true, the file will be copied over from the default inside the jar-file of the owning plugin.</p>
      *
-     * @see #YamlConfig(Plugin, String, boolean)
+     * @see #YamlConfig(AeroPlugin, String, boolean)
      */
     @Override
     public void load()
@@ -172,7 +170,7 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
     /**
      * Saves the configuration to the predefined file.
      *
-     * @see #YamlConfig(Plugin, String, boolean)
+     * @see #YamlConfig(AeroPlugin, String, boolean)
      */
     @Override
     public void save()
