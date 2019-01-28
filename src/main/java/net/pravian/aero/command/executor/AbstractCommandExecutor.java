@@ -56,7 +56,7 @@ public abstract class AbstractCommandExecutor<C extends AeroCommandBase<?>> impl
     @Override
     public List<String> onTabComplete(CommandSender cs, Command cmnd, String string, String[] strings)
     {
-        return null;
+        return commandBase.tabComplete(cs, cmnd, string, strings);
     }
 
     @Override

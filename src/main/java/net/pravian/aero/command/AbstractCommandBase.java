@@ -75,6 +75,7 @@ public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends Plugi
         {
             throw new CommandException("Could not set variables for unregistered command!");
         }
+
         this.sender = sender;
         this.command = command;
         this.label = label;
