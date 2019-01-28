@@ -15,6 +15,8 @@
  */
 package net.pravian.aero.command;
 
+import java.lang.reflect.Constructor;
+import java.util.Map;
 import net.pravian.aero.reflection.Reflection;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -22,73 +24,53 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 
-import java.lang.reflect.Constructor;
-import java.util.Map;
+public class CommandReflection {
 
-public class CommandReflection
-{
+  private static final Constructor<PluginCommand> PLUGINCOMMAND_CONSTRUCTOR;
 
-    private static final Constructor<PluginCommand> PLUGINCOMMAND_CONSTRUCTOR;
+  static {
+    Constructor<PluginCommand> temp = null;
+    try {
+      temp = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
+      temp.setAccessible(true);
+    } catch (Exception ignored) {
+    }
+    PLUGINCOMMAND_CONSTRUCTOR = temp;
+  }
 
-    static
-    {
-        Constructor<PluginCommand> temp = null;
-        try
-        {
-            temp = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
-            temp.setAccessible(true);
-        }
-        catch (Exception ignored)
-        {
-        }
-        PLUGINCOMMAND_CONSTRUCTOR = temp;
+  private CommandReflection() {
+    throw new AssertionError();
+  }
+
+  @SuppressWarnings("unchecked")
+  public static CommandMap getCommandMap() {
+    try {
+      final Object commandMap = Reflection.getField(Bukkit.getPluginManager(), "commandMap");
+      return commandMap instanceof CommandMap ? (CommandMap) commandMap : null;
+    } catch (Exception ignored) {
+      return null;
+    }
+  }
+
+  public static Map<String, Command> getKnownCommands() {
+    return getKnownCommands(getCommandMap());
+  }
+
+  @SuppressWarnings("unchecked")
+  public static Map<String, Command> getKnownCommands(CommandMap map) {
+    if (map == null) {
+      return null;
     }
 
-    private CommandReflection()
-    {
-        throw new AssertionError();
-    }
+    final Object commands = Reflection.getField(map, "knownCommands");
+    return (Map<String, Command>) (commands instanceof Map ? commands : null);
+  }
 
-    @SuppressWarnings("unchecked")
-    public static CommandMap getCommandMap()
-    {
-        try
-        {
-            final Object commandMap = Reflection.getField(Bukkit.getPluginManager(), "commandMap");
-            return commandMap instanceof CommandMap ? (CommandMap) commandMap : null;
-        }
-        catch (Exception ignored)
-        {
-            return null;
-        }
+  public static PluginCommand newPluginCommand(String name, Plugin plugin) {
+    try {
+      return PLUGINCOMMAND_CONSTRUCTOR.newInstance(name, plugin);
+    } catch (Exception ignored) {
+      return null;
     }
-
-    public static Map<String, Command> getKnownCommands()
-    {
-        return getKnownCommands(getCommandMap());
-    }
-
-    @SuppressWarnings("unchecked")
-    public static Map<String, Command> getKnownCommands(CommandMap map)
-    {
-        if (map == null)
-        {
-            return null;
-        }
-
-        final Object commands = Reflection.getField(map, "knownCommands");
-        return (Map<String, Command>) (commands instanceof Map ? commands : null);
-    }
-
-    public static PluginCommand newPluginCommand(String name, Plugin plugin)
-    {
-        try
-        {
-            return PLUGINCOMMAND_CONSTRUCTOR.newInstance(name, plugin);
-        }
-        catch (Exception ignored)
-        {
-            return null;
-        }
-    }
+  }
 }

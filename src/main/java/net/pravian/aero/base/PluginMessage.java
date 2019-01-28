@@ -15,8 +15,7 @@
  */
 package net.pravian.aero.base;
 
-public interface PluginMessage
-{
+public interface PluginMessage {
 
-    public String getMessage();
+  public String getMessage();
 }

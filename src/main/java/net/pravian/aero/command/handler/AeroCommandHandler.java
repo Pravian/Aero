@@ -15,73 +15,71 @@
  */
 package net.pravian.aero.command.handler;
 
+import java.util.Collection;
+import java.util.Map;
 import net.pravian.aero.command.AeroCommandBase;
 import net.pravian.aero.command.executor.AeroCommandExecutor;
 import net.pravian.aero.command.permission.AeroPermissionHandler;
 import net.pravian.aero.plugin.AeroPlugin;
 import org.bukkit.command.PluginCommand;
 
-import java.util.Collection;
-import java.util.Map;
+public interface AeroCommandHandler<T extends AeroPlugin<T>> {
 
-public interface AeroCommandHandler<T extends AeroPlugin<T>>
-{
+  public T getPlugin();
 
-    public T getPlugin();
+  public void clearCommands();
 
-    public void clearCommands();
+  public int loadFrom(Package pack);
 
-    public int loadFrom(Package pack);
+  public void addAll(Iterable<? extends AeroCommandBase<T>> commands);
 
-    public void addAll(Iterable<? extends AeroCommandBase<T>> commands);
+  public void add(AeroCommandBase<T> command);
 
-    public void add(AeroCommandBase<T> command);
+  public void add(AeroCommandBase<T> command, String name);
 
-    public void add(AeroCommandBase<T> command, String name);
+  public void add(AeroCommandExecutor<? extends AeroCommandBase<T>> executor);
 
-    public void add(AeroCommandExecutor<? extends AeroCommandBase<T>> executor);
+  public boolean registerAll();
 
-    public boolean registerAll();
+  public boolean registerAll(String fallbackPrefix, boolean force);
 
-    public boolean registerAll(String fallbackPrefix, boolean force);
+  public Map<String, AeroCommandExecutor<?>> getExecutorMap();
 
-    public Map<String, AeroCommandExecutor<?>> getExecutorMap();
+  public Collection<AeroCommandExecutor<?>> getExecutors();
 
-    public Collection<AeroCommandExecutor<?>> getExecutors();
+  public Map<String, PluginCommand> getRegisteredCommandsMap();
 
-    public Map<String, PluginCommand> getRegisteredCommandsMap();
+  public Collection<PluginCommand> getRegisteredCommands();
 
-    public Collection<PluginCommand> getRegisteredCommands();
+  public AeroPermissionHandler getPermissionHandler();
 
-    public AeroPermissionHandler getPermissionHandler();
+  public void setPermissionHandler(AeroPermissionHandler permissionHandler);
 
-    public void setPermissionHandler(AeroPermissionHandler permissionHandler);
+  public String getSuperPermission();
 
-    public String getSuperPermission();
+  public void setSuperPermission(String permission);
 
-    public void setSuperPermission(String permission);
+  public String getOnlyPlayerMessage();
 
-    public String getOnlyPlayerMessage();
+  public void setOnlyPlayerMessage(String message);
 
-    public void setOnlyPlayerMessage(String message);
+  public String getOnlyConsoleMessage();
 
-    public String getOnlyConsoleMessage();
+  public void setOnlyConsoleMessage(String message);
 
-    public void setOnlyConsoleMessage(String message);
+  public String getInvalidArgumentLengthMessage();
 
-    public String getInvalidArgumentLengthMessage();
+  public void setInvalidArgumentLengthMessage(String message);
 
-    public void setInvalidArgumentLengthMessage(String message);
+  public String getInvalidArgumentMessage();
 
-    public String getInvalidArgumentMessage();
+  public void setInvalidArgumentMessage(String message);
 
-    public void setInvalidArgumentMessage(String message);
+  public String getPermissionMessage();
 
-    public String getPermissionMessage();
+  public void setPermissionMessage(String message);
 
-    public void setPermissionMessage(String message);
+  public String getCommandClassPrefix();
 
-    public String getCommandClassPrefix();
-
-    public void setCommandClassPrefix(String prefix);
+  public void setCommandClassPrefix(String prefix);
 }

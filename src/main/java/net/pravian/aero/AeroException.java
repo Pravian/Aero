@@ -15,18 +15,15 @@
  */
 package net.pravian.aero;
 
-public class AeroException extends IllegalStateException
-{
+public class AeroException extends IllegalStateException {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    public AeroException(String message)
-    {
-        super(message);
-    }
+  public AeroException(String message) {
+    super(message);
+  }
 
-    public AeroException(String message, Exception ex)
-    {
-        super(message, ex);
-    }
+  public AeroException(String message, Exception ex) {
+    super(message, ex);
+  }
 }

@@ -17,20 +17,15 @@ package net.pravian.aero.command.dynamic.parser;
 
 import java.util.List;
 
-public class FloatParser implements Parser<Float>
-{
+public class FloatParser implements Parser<Float> {
 
-    @Override
-    public int parse(List<? super Float> result, String[] args, int offset) throws Exception
-    {
-        try
-        {
-            result.add(Float.parseFloat(args[offset]));
-        }
-        catch (NumberFormatException nex)
-        {
-            throw new ParseException("Could not parse float: " + args[offset], nex);
-        }
-        return offset + 1;
+  @Override
+  public int parse(List<? super Float> result, String[] args, int offset) throws Exception {
+    try {
+      result.add(Float.parseFloat(args[offset]));
+    } catch (NumberFormatException nex) {
+      throw new ParseException("Could not parse float: " + args[offset], nex);
     }
+    return offset + 1;
+  }
 }

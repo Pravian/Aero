@@ -15,14 +15,13 @@
  */
 package net.pravian.aero.reflection;
 
-public interface ReflectionAccess
-{
+public interface ReflectionAccess {
 
-    public boolean isAccessible();
+  public boolean isAccessible();
 
-    public ReflectionAccess setAccessible(boolean flag);
+  public ReflectionAccess setAccessible(boolean flag);
 
-    public ReflectionAccess setAccessible();
+  public ReflectionAccess setAccessible();
 
-    public boolean wasAccessible();
+  public boolean wasAccessible();
 }

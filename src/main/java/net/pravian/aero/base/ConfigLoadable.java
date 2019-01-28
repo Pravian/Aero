@@ -17,8 +17,7 @@ package net.pravian.aero.base;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-public interface ConfigLoadable
-{
+public interface ConfigLoadable {
 
-    public void loadFrom(ConfigurationSection section);
+  public void loadFrom(ConfigurationSection section);
 }

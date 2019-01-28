@@ -15,8 +15,7 @@
  */
 package net.pravian.aero.base;
 
-public interface Validatable
-{
+public interface Validatable {
 
-    public boolean isValid();
+  public boolean isValid();
 }
