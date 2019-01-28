@@ -1,5 +1,6 @@
 package net.pravian.aero.command;
 
+import java.util.Arrays;
 import java.util.List;
 import net.pravian.aero.base.PluginMessage;
 import net.pravian.aero.command.handler.AeroCommandHandler;
@@ -90,7 +91,7 @@ public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends Plugi
 
     @Override
     public List<String> tabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
+        return Arrays.asList(args);
     }
 
 }
