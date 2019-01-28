@@ -17,30 +17,31 @@ package net.pravian.aero.serializable;
  */
 public abstract class SerializableObject<T> {
 
-  /**
-   * Serializes the Object to a String.
-   *
-   * @return The serialized object in String-form.
-   */
-  public abstract String serialize();
+    /**
+     * Serializes the Object to a String.
+     *
+     * @return The serialized object in String-form.
+     */
+    public abstract String serialize();
 
-  /**
-   * De-serializes the String to a SerializableObject
-   *
-   * @return The de-serialized String.
-   */
-  public abstract T deserialize();
+    /**
+     * De-serializes the String to a SerializableObject
+     *
+     * @return The de-serialized String.
+     */
+    public abstract T deserialize();
 
-  /**
-   * Serializes the Object to a String.
-   * <p>
-   * <p>
-   * <b>Warning</b>: The use of this method is not recommended, instead, use {@link #serialize()}.
-   *
-   * @return The serialized object in String-form.
-   */
-  @Override
-  public String toString() {
-    return serialize();
-  }
+    /**
+     * Serializes the Object to a String.
+     * <p>
+     * <p>
+     * <b>Warning</b>: The use of this method is not recommended, instead, use {@link
+     * #serialize()}.
+     *
+     * @return The serialized object in String-form.
+     */
+    @Override
+    public String toString() {
+        return serialize();
+    }
 }

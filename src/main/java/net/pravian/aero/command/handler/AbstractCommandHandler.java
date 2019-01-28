@@ -27,55 +27,56 @@ import org.bukkit.ChatColor;
 public abstract class AbstractCommandHandler<T extends AeroPlugin<T>> extends
     PluginComponent<T> implements AeroCommandHandler<T> {
 
-  @Getter
-  @Setter
-  protected String superPermission = plugin.getName().toLowerCase() + ".*";
-  @Getter
-  @Setter
-  protected String onlyPlayerMessage = ChatColor.YELLOW + "Only players may execute that command.";
-  @Getter
-  @Setter
-  protected String onlyConsoleMessage =
-      ChatColor.YELLOW + "That command can only be executed from console.";
-  @Getter
-  @Setter
-  protected String invalidArgumentLengthMessage = ChatColor.RED + "Invalid argument length!";
-  @Getter
-  @Setter
-  protected String invalidArgumentMessage = ChatColor.RED + "Invalid argument: <arg>";
-  @Getter
-  @Setter
-  protected String permissionMessage =
-      ChatColor.RED + "You don't have permission to use that command.";
-  @Getter
-  @Setter
-  protected String commandClassPrefix = "Command";
-  @Getter
-  @Setter
-  private AeroPermissionHandler permissionHandler = null;
+    @Getter
+    @Setter
+    protected String superPermission = plugin.getName().toLowerCase() + ".*";
+    @Getter
+    @Setter
+    protected String onlyPlayerMessage =
+        ChatColor.YELLOW + "Only players may execute that command.";
+    @Getter
+    @Setter
+    protected String onlyConsoleMessage =
+        ChatColor.YELLOW + "That command can only be executed from console.";
+    @Getter
+    @Setter
+    protected String invalidArgumentLengthMessage = ChatColor.RED + "Invalid argument length!";
+    @Getter
+    @Setter
+    protected String invalidArgumentMessage = ChatColor.RED + "Invalid argument: <arg>";
+    @Getter
+    @Setter
+    protected String permissionMessage =
+        ChatColor.RED + "You don't have permission to use that command.";
+    @Getter
+    @Setter
+    protected String commandClassPrefix = "Command";
+    @Getter
+    @Setter
+    private AeroPermissionHandler permissionHandler = null;
 
-  public AbstractCommandHandler(T plugin) {
-    this(plugin, plugin.getPluginLogger());
-  }
-
-  public AbstractCommandHandler(T plugin, AeroLogger logger) {
-    super(plugin, logger);
-  }
-
-  @Override
-  public void addAll(Iterable<? extends AeroCommandBase<T>> commands) {
-    for (AeroCommandBase<T> command : commands) {
-      add(command, null);
+    public AbstractCommandHandler(T plugin) {
+        this(plugin, plugin.getPluginLogger());
     }
-  }
 
-  @Override
-  public void add(AeroCommandBase<T> command) {
-    add(command, null);
-  }
+    public AbstractCommandHandler(T plugin, AeroLogger logger) {
+        super(plugin, logger);
+    }
 
-  @Override
-  public boolean registerAll() {
-    return registerAll(plugin.getName(), false);
-  }
+    @Override
+    public void addAll(Iterable<? extends AeroCommandBase<T>> commands) {
+        for (AeroCommandBase<T> command : commands) {
+            add(command, null);
+        }
+    }
+
+    @Override
+    public void add(AeroCommandBase<T> command) {
+        add(command, null);
+    }
+
+    @Override
+    public boolean registerAll() {
+        return registerAll(plugin.getName(), false);
+    }
 }

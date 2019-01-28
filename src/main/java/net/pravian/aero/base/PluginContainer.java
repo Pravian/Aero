@@ -19,5 +19,5 @@ import net.pravian.aero.plugin.AeroPlugin;
 
 public interface PluginContainer<T extends AeroPlugin<T>> {
 
-  public T getPlugin();
+    public T getPlugin();
 }

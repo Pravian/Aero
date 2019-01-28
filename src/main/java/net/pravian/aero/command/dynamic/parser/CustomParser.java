@@ -27,5 +27,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 public @interface CustomParser {
 
-  public Class<? extends Parser<?>> value();
+    public Class<? extends Parser<?>> value();
 }

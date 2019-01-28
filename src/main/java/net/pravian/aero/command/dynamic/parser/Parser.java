@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface Parser<T> {
 
-  public int parse(List<? super T> result, String[] args, int offset) throws Exception;
+    public int parse(List<? super T> result, String[] args, int offset) throws Exception;
 }

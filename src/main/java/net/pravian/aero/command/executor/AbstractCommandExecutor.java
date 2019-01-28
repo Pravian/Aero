@@ -26,36 +26,36 @@ import org.bukkit.command.PluginCommand;
 public abstract class AbstractCommandExecutor<C extends AeroCommandBase<?>> implements
     AeroCommandExecutor<C> {
 
-  @Getter
-  protected final C commandBase;
-  @Getter
-  protected final String name;
-  @Getter
-  protected final AeroCommandHandler<?> handler;
+    @Getter
+    protected final C commandBase;
+    @Getter
+    protected final String name;
+    @Getter
+    protected final AeroCommandHandler<?> handler;
 
-  public AbstractCommandExecutor(AeroCommandHandler<?> handler, String name, C command) {
-    this.handler = handler;
-    this.name = name;
-    this.commandBase = command;
-  }
+    public AbstractCommandExecutor(AeroCommandHandler<?> handler, String name, C command) {
+        this.handler = handler;
+        this.name = name;
+        this.commandBase = command;
+    }
 
-  @Override
-  public final boolean hasPermission(CommandSender sender) {
-    return hasPermission(sender, false);
-  }
+    @Override
+    public final boolean hasPermission(CommandSender sender) {
+        return hasPermission(sender, false);
+    }
 
-  @Override
-  public boolean hasPermission(CommandSender sender, boolean sendMessage) {
-    return true;
-  }
+    @Override
+    public boolean hasPermission(CommandSender sender, boolean sendMessage) {
+        return true;
+    }
 
-  @Override
-  public List<String> onTabComplete(CommandSender cs, Command cmnd, String string,
-      String[] strings) {
-    return commandBase.tabComplete(cs, cmnd, string, strings);
-  }
+    @Override
+    public List<String> onTabComplete(CommandSender cs, Command cmnd, String string,
+        String[] strings) {
+        return commandBase.tabComplete(cs, cmnd, string, strings);
+    }
 
-  @Override
-  public void setupCommand(PluginCommand command) {
-  }
+    @Override
+    public void setupCommand(PluginCommand command) {
+    }
 }

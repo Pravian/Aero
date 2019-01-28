@@ -25,34 +25,34 @@ import org.bukkit.event.Listener;
 public class PluginListener<T extends AeroPlugin<T>> extends PluginComponent<T> implements Listener,
     Registrable {
 
-  protected boolean registered = false;
+    protected boolean registered = false;
 
-  public PluginListener() {
-  }
+    public PluginListener() {
+    }
 
-  public PluginListener(T plugin) {
-    super(plugin);
-  }
+    public PluginListener(T plugin) {
+        super(plugin);
+    }
 
-  public PluginListener(T plugin, AeroLogger logger) {
-    super(plugin, logger);
-  }
+    public PluginListener(T plugin, AeroLogger logger) {
+        super(plugin, logger);
+    }
 
-  @Override
-  public final void register() {
-    unregister();
-    Bukkit.getPluginManager().registerEvents(this, plugin);
-    registered = true;
-  }
+    @Override
+    public final void register() {
+        unregister();
+        Bukkit.getPluginManager().registerEvents(this, plugin);
+        registered = true;
+    }
 
-  @Override
-  public final void unregister() {
-    HandlerList.unregisterAll(this);
-    registered = false;
-  }
+    @Override
+    public final void unregister() {
+        HandlerList.unregisterAll(this);
+        registered = false;
+    }
 
-  @Override
-  public boolean isRegistered() {
-    return registered;
-  }
+    @Override
+    public boolean isRegistered() {
+        return registered;
+    }
 }

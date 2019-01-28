@@ -19,48 +19,48 @@ import org.bukkit.entity.Player;
 
 public enum DefaultParser {
 
-  PLAYER(new PlayerParser(), Player.class),
-  INTEGER(new IntegerParser(), int.class, Integer.class),
-  FLOAT(new FloatParser(), float.class, Float.class),
-  DOUBLE(new DoubleParser(), double.class, Double.class);
-  //
-  private final Class<?>[] types;
-  private final Parser parser;
+    PLAYER(new PlayerParser(), Player.class),
+    INTEGER(new IntegerParser(), int.class, Integer.class),
+    FLOAT(new FloatParser(), float.class, Float.class),
+    DOUBLE(new DoubleParser(), double.class, Double.class);
+    //
+    private final Class<?>[] types;
+    private final Parser parser;
 
-  private DefaultParser(Parser parser, Class<?>... types) {
-    this.types = types;
-    this.parser = parser;
-  }
-
-  public static Parser forClass(Class<?> type) {
-    for (DefaultParser defaultParser : DefaultParser.values()) {
-      for (Class<?> loopType : defaultParser.getTypes()) {
-        if (loopType.equals(type)) {
-          return defaultParser.getParser();
-        }
-      }
+    private DefaultParser(Parser parser, Class<?>... types) {
+        this.types = types;
+        this.parser = parser;
     }
 
-    for (DefaultParser defaultParser : DefaultParser.values()) {
-      for (Class<?> loopType : defaultParser.getTypes()) {
-        if (loopType.isAssignableFrom(type)) {
-          return defaultParser.getParser();
+    public static Parser forClass(Class<?> type) {
+        for (DefaultParser defaultParser : DefaultParser.values()) {
+            for (Class<?> loopType : defaultParser.getTypes()) {
+                if (loopType.equals(type)) {
+                    return defaultParser.getParser();
+                }
+            }
         }
-      }
+
+        for (DefaultParser defaultParser : DefaultParser.values()) {
+            for (Class<?> loopType : defaultParser.getTypes()) {
+                if (loopType.isAssignableFrom(type)) {
+                    return defaultParser.getParser();
+                }
+            }
+        }
+
+        return null;
     }
 
-    return null;
-  }
+    public Class<?>[] getTypes() {
+        return types;
+    }
 
-  public Class<?>[] getTypes() {
-    return types;
-  }
+    public Parser getParser() {
+        return parser;
+    }
 
-  public Parser getParser() {
-    return parser;
-  }
-
-  public Class<? extends Parser> getParserClass() {
-    return getParser().getClass();
-  }
+    public Class<? extends Parser> getParserClass() {
+        return getParser().getClass();
+    }
 }

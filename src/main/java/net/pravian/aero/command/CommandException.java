@@ -18,17 +18,17 @@ package net.pravian.aero.command;
 // TODO: Docs docs docs
 public class CommandException extends RuntimeException {
 
-  private static final long serialVersionUID = 192356661323L;
+    private static final long serialVersionUID = 192356661323L;
 
-  public CommandException(String message) {
-    super(message);
-  }
+    public CommandException(String message) {
+        super(message);
+    }
 
-  public CommandException(Throwable ex) {
-    super(ex);
-  }
+    public CommandException(Throwable ex) {
+        super(ex);
+    }
 
-  public CommandException(String message, Throwable ex) {
-    super(message, ex);
-  }
+    public CommandException(String message, Throwable ex) {
+        super(message, ex);
+    }
 }

@@ -12,80 +12,81 @@ import org.bukkit.entity.Player;
 public abstract class AbstractCommandBase<T extends AeroPlugin<T>> extends
     PluginComponent<T> implements AeroCommandBase<T> {
 
-  // Default arguments
-  protected CommandSender sender;
-  protected Command command;
-  protected String label;
-  protected String[] args;
-  /**
-   * Represents the player sending the command.
-   * <p>
-   * <p>
-   * <b>Note</b>: Might be null if the console is sending the command.</p>
-   */
-  protected Player playerSender;
-  //
-  private AeroCommandHandler<T> handler = null;
+    // Default arguments
+    protected CommandSender sender;
+    protected Command command;
+    protected String label;
+    protected String[] args;
+    /**
+     * Represents the player sending the command.
+     * <p>
+     * <p>
+     * <b>Note</b>: Might be null if the console is sending the command.</p>
+     */
+    protected Player playerSender;
+    //
+    private AeroCommandHandler<T> handler = null;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public Class<? extends AeroCommandBase<T>> getCommandClass() {
-    return (Class<? extends AeroCommandBase<T>>) getClass();
-  }
-
-  @Override
-  public void register(SimpleCommandHandler<T> handler) throws CommandRegistrationException {
-    if (this.handler != null) {
-      throw new CommandRegistrationException("Command already registered to a handler!");
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends AeroCommandBase<T>> getCommandClass() {
+        return (Class<? extends AeroCommandBase<T>>) getClass();
     }
 
-    if (handler == null) {
-      throw new CommandRegistrationException("Cannot register to null handler!");
+    @Override
+    public void register(SimpleCommandHandler<T> handler) throws CommandRegistrationException {
+        if (this.handler != null) {
+            throw new CommandRegistrationException("Command already registered to a handler!");
+        }
+
+        if (handler == null) {
+            throw new CommandRegistrationException("Cannot register to null handler!");
+        }
+
+        this.handler = handler;
     }
 
-    this.handler = handler;
-  }
-
-  @Override
-  public void unregister() {
-    handler = null;
-  }
-
-  @Override
-  public boolean isRegistered() {
-    return handler != null;
-  }
-
-  @Override
-  public AeroCommandHandler<T> getHandler() {
-    return handler;
-  }
-
-  protected void setVariables(final CommandSender sender, final Command command, final String label,
-      final String[] args) {
-    if (!isRegistered()) {
-      throw new CommandException("Could not set variables for unregistered command!");
+    @Override
+    public void unregister() {
+        handler = null;
     }
 
-    this.sender = sender;
-    this.command = command;
-    this.label = label;
-    this.args = args;
-
-    if (sender instanceof Player) {
-      this.playerSender = (Player) sender;
-    } else {
-      this.playerSender = null;
+    @Override
+    public boolean isRegistered() {
+        return handler != null;
     }
-  }
 
-  @Override
-  public void onInit() { // Called when the command is initialised
-  }
+    @Override
+    public AeroCommandHandler<T> getHandler() {
+        return handler;
+    }
 
-  @Override
-  public List<String> tabComplete(CommandSender sender, Command command, String alias,
-      String[] args) {
-    return null;
-  }
+    protected void setVariables(final CommandSender sender, final Command command,
+        final String label,
+        final String[] args) {
+        if (!isRegistered()) {
+            throw new CommandException("Could not set variables for unregistered command!");
+        }
+
+        this.sender = sender;
+        this.command = command;
+        this.label = label;
+        this.args = args;
+
+        if (sender instanceof Player) {
+            this.playerSender = (Player) sender;
+        } else {
+            this.playerSender = null;
+        }
+    }
+
+    @Override
+    public void onInit() { // Called when the command is initialised
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, Command command, String alias,
+        String[] args) {
+        return null;
+    }
 }

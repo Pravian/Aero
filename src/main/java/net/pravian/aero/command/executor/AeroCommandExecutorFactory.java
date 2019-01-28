@@ -20,6 +20,6 @@ import net.pravian.aero.command.handler.AeroCommandHandler;
 
 public interface AeroCommandExecutorFactory {
 
-  public AeroCommandExecutor<? extends AeroCommandBase<?>> newExecutor(
-      AeroCommandHandler<?> handler, String name, AeroCommandBase<?> command);
+    public AeroCommandExecutor<? extends AeroCommandBase<?>> newExecutor(
+        AeroCommandHandler<?> handler, String name, AeroCommandBase<?> command);
 }

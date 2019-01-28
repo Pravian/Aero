@@ -19,47 +19,47 @@ import java.lang.reflect.Method;
 
 public class MethodInvoker implements ReflectionAccess {
 
-  private Method method = null;
-  private boolean wasAccessible = false;
+    private Method method = null;
+    private boolean wasAccessible = false;
 
-  public MethodInvoker(Method method) {
-    this(method, method.isAccessible());
-  }
+    public MethodInvoker(Method method) {
+        this(method, method.isAccessible());
+    }
 
-  public MethodInvoker(Method method, boolean wasAccessible) {
-    this.method = method;
-    this.wasAccessible = wasAccessible;
-  }
+    public MethodInvoker(Method method, boolean wasAccessible) {
+        this.method = method;
+        this.wasAccessible = wasAccessible;
+    }
 
-  public Method getMethod() {
-    return this.method;
-  }
+    public Method getMethod() {
+        return this.method;
+    }
 
-  public Object invoke(Object instance, Object... paramValues) throws Exception {
-    this.method.setAccessible(true);
-    Object invoked = this.method.invoke(instance, paramValues);
-    this.method.setAccessible(this.wasAccessible());
-    return invoked;
-  }
+    public Object invoke(Object instance, Object... paramValues) throws Exception {
+        this.method.setAccessible(true);
+        Object invoked = this.method.invoke(instance, paramValues);
+        this.method.setAccessible(this.wasAccessible());
+        return invoked;
+    }
 
-  @Override
-  public boolean isAccessible() {
-    return this.method.isAccessible();
-  }
+    @Override
+    public boolean isAccessible() {
+        return this.method.isAccessible();
+    }
 
-  @Override
-  public MethodInvoker setAccessible(boolean flag) {
-    this.method.setAccessible(flag);
-    return this;
-  }
+    @Override
+    public MethodInvoker setAccessible(boolean flag) {
+        this.method.setAccessible(flag);
+        return this;
+    }
 
-  @Override
-  public MethodInvoker setAccessible() {
-    return this.setAccessible(this.wasAccessible);
-  }
+    @Override
+    public MethodInvoker setAccessible() {
+        return this.setAccessible(this.wasAccessible);
+    }
 
-  @Override
-  public boolean wasAccessible() {
-    return this.wasAccessible;
-  }
+    @Override
+    public boolean wasAccessible() {
+        return this.wasAccessible;
+    }
 }
