@@ -19,14 +19,14 @@ import java.util.List;
 
 public class DoubleParser implements Parser<Double> {
 
-    @Override
-    public int parse(List<? super Double> result, String[] args, int offset) throws Exception {
+  @Override
+  public int parse(List<? super Double> result, String[] args, int offset) throws Exception {
 
-        try {
-            result.add(Double.parseDouble(args[offset]));
-        } catch (NumberFormatException nex) {
-            throw new ParseException("Could not parse double: " + args[offset], nex);
-        }
-        return offset + 1;
+    try {
+      result.add(Double.parseDouble(args[offset]));
+    } catch (NumberFormatException nex) {
+      throw new ParseException("Could not parse double: " + args[offset], nex);
     }
+    return offset + 1;
+  }
 }

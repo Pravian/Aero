@@ -17,11 +17,11 @@ package net.pravian.aero.component.service;
 
 public interface Service {
 
-    public void start();
+  public void start();
 
-    public void stop();
+  public void stop();
 
-    public boolean isStarted();
+  public boolean isStarted();
 
-    public String getServiceId();
+  public String getServiceId();
 }

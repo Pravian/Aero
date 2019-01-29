@@ -26,26 +26,25 @@ import org.bukkit.command.CommandSender;
  *
  * @param <T> Optional: Type safety for {@link #plugin}
  */
-public abstract class SimpleCommand<T extends AeroPlugin<T>> extends TooledCommandBase<T> implements
-    CommandExecutor {
+public abstract class SimpleCommand<T extends AeroPlugin<T>> extends TooledCommandBase<T>
+    implements CommandExecutor {
 
-    protected SimpleCommand() {
+  protected SimpleCommand() {}
+
+  @Override
+  public final boolean runCommand(
+      final CommandSender sender, final Command command, final String label, final String[] args) {
+    setVariables(sender, command, label, args);
+
+    try {
+      return onCommand(sender, command, label, args);
+    } catch (Exception ex) {
+      plugin.handleException("Uncaught exception executing command: " + command.getName(), ex);
+      sender.sendMessage(
+          ChatColor.RED
+              + "Command error: "
+              + (ex.getMessage() == null ? "Unknown cause" : ex.getMessage()));
+      return true;
     }
-
-    @Override
-    public final boolean runCommand(final CommandSender sender, final Command command,
-        final String label, final String[] args) {
-        setVariables(sender, command, label, args);
-
-        try {
-            return onCommand(sender, command, label, args);
-        } catch (Exception ex) {
-            plugin
-                .handleException("Uncaught exception executing command: " + command.getName(), ex);
-            sender.sendMessage(
-                ChatColor.RED + "Command error: " + (ex.getMessage() == null ? "Unknown cause"
-                    : ex.getMessage()));
-            return true;
-        }
-    }
+  }
 }

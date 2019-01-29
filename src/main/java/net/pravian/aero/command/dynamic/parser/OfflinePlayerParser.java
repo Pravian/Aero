@@ -6,14 +6,13 @@ import org.bukkit.OfflinePlayer;
 
 public class OfflinePlayerParser implements Parser<OfflinePlayer> {
 
-    @Override
-    public int parse(List<? super OfflinePlayer> result, String[] args, int offset)
-        throws Exception {
-        OfflinePlayer player = Players.getOfflinePlayer(args[offset]);
-        if (player == null) {
-            throw new ParseException("Could not find player: " + args[offset]);
-        }
-        result.add(player);
-        return offset + 1;
+  @Override
+  public int parse(List<? super OfflinePlayer> result, String[] args, int offset) throws Exception {
+    OfflinePlayer player = Players.getOfflinePlayer(args[offset]);
+    if (player == null) {
+      throw new ParseException("Could not find player: " + args[offset]);
     }
+    result.add(player);
+    return offset + 1;
+  }
 }

@@ -26,67 +26,66 @@ import org.bukkit.Server;
 
 public abstract class PluginComponent<T extends AeroPlugin<T>> implements PluginContainer<T> {
 
-    protected final T plugin;
-    protected final AeroLogger logger;
-    protected final Server server;
+  protected final T plugin;
+  protected final AeroLogger logger;
+  protected final Server server;
 
-    // TODO: Describe awesomeness
-    @SuppressWarnings("unchecked")
-    public PluginComponent() {
+  // TODO: Describe awesomeness
+  @SuppressWarnings("unchecked")
+  public PluginComponent() {
 
-        T foundPlugin = null;
+    T foundPlugin = null;
 
-        Class<?> checkClass = getClass();
+    Class<?> checkClass = getClass();
 
-        // Try each superclass iteratively
-        do {
-            final Class<T> typeClass;
-            try {
-                // Get parameter class of checkClass extending PluginComponent<SomePlugin>
-                typeClass = (Class<T>) ((ParameterizedType) checkClass
-                    .getGenericSuperclass())
-                    .getActualTypeArguments()[0];
-            } catch (Exception ex) { // Nope, this class doesn't directly extend PluginComponent<SomePlugin>
-                continue;
-            }
+    // Try each superclass iteratively
+    do {
+      final Class<T> typeClass;
+      try {
+        // Get parameter class of checkClass extending PluginComponent<SomePlugin>
+        typeClass =
+            (Class<T>)
+                ((ParameterizedType) checkClass.getGenericSuperclass()).getActualTypeArguments()[0];
+      } catch (
+          Exception ex) { // Nope, this class doesn't directly extend PluginComponent<SomePlugin>
+        continue;
+      }
 
-            // Find `SomePlugin` instance
-            for (AeroPlugin registeredPlugin : Aero.getInstance().getRegisteredPlugins()) {
-                if (typeClass.isAssignableFrom(registeredPlugin.getPlugin().getClass())) {
-                    foundPlugin = (T) registeredPlugin.getPlugin();
-                }
-            }
-
+      // Find `SomePlugin` instance
+      for (AeroPlugin registeredPlugin : Aero.getInstance().getRegisteredPlugins()) {
+        if (typeClass.isAssignableFrom(registeredPlugin.getPlugin().getClass())) {
+          foundPlugin = (T) registeredPlugin.getPlugin();
         }
-        while ((checkClass = checkClass.getSuperclass()) != null);
+      }
 
-        if (foundPlugin == null) {
-            throw new AeroException(
-                "Could not determine plugin class type! (Are you properly extending with generics?)");
-        }
+    } while ((checkClass = checkClass.getSuperclass()) != null);
 
-        this.plugin = foundPlugin;
-        this.logger = plugin.getPluginLogger();
-        this.server = plugin.getServer();
+    if (foundPlugin == null) {
+      throw new AeroException(
+          "Could not determine plugin class type! (Are you properly extending with generics?)");
     }
 
-    public PluginComponent(T plugin) {
-        this(Preconditions.checkNotNull(plugin, "Plugin may not be null!"),
-            plugin.getPluginLogger());
-    }
+    this.plugin = foundPlugin;
+    this.logger = plugin.getPluginLogger();
+    this.server = plugin.getServer();
+  }
 
-    public PluginComponent(T plugin, AeroLogger logger) {
-        this.plugin = Preconditions.checkNotNull(plugin, "Plugin may not be null!");
-        this.logger = Preconditions.checkNotNull(logger, "Logger may not be null!");
-        this.server = plugin.getServer();
-    }
+  public PluginComponent(T plugin) {
+    this(Preconditions.checkNotNull(plugin, "Plugin may not be null!"), plugin.getPluginLogger());
+  }
 
-    @Override
-    public T getPlugin() {
-        return plugin;
-    }
+  public PluginComponent(T plugin, AeroLogger logger) {
+    this.plugin = Preconditions.checkNotNull(plugin, "Plugin may not be null!");
+    this.logger = Preconditions.checkNotNull(logger, "Logger may not be null!");
+    this.server = plugin.getServer();
+  }
 
-    public AeroLogger getLogger() {
-        return logger;
-    }
+  @Override
+  public T getPlugin() {
+    return plugin;
+  }
+
+  public AeroLogger getLogger() {
+    return logger;
+  }
 }

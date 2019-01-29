@@ -18,90 +18,87 @@ package net.pravian.aero.component.service;
 import net.pravian.aero.component.PluginListener;
 import net.pravian.aero.plugin.AeroPlugin;
 
-public abstract class AbstractService<T extends AeroPlugin<T>> extends PluginListener<T> implements
-    Service {
+public abstract class AbstractService<T extends AeroPlugin<T>> extends PluginListener<T>
+    implements Service {
 
-    private final String serviceId;
-    //
-    private boolean started = false;
+  private final String serviceId;
+  //
+  private boolean started = false;
 
-    public AbstractService(T plugin) {
-        this(plugin, null);
+  public AbstractService(T plugin) {
+    this(plugin, null);
+  }
+
+  public AbstractService(T plugin, String id) {
+    super(plugin);
+    this.serviceId = id == null ? getClass().getSimpleName() : id;
+  }
+
+  @Override
+  public void start() {
+    if (started) {
+      plugin.handleException("Tried to start service '" + serviceId + "' whilst already started!");
+      return;
     }
+    started = true;
 
-    public AbstractService(T plugin, String id) {
-        super(plugin);
-        this.serviceId = id == null ? getClass().getSimpleName() : id;
+    try {
+      onStart();
+    } catch (Exception ex) {
+      plugin.handleException(
+          "Unhandled exception whilst starting service '" + serviceId + "'!", ex);
     }
+    register();
+  }
 
-    @Override
-    public void start() {
-        if (started) {
-            plugin.handleException(
-                "Tried to start service '" + serviceId + "' whilst already started!");
-            return;
-        }
-        started = true;
-
-        try {
-            onStart();
-        } catch (Exception ex) {
-            plugin
-                .handleException("Unhandled exception whilst starting service '" + serviceId + "'!",
-                    ex);
-        }
-        register();
+  @Override
+  public void stop() {
+    if (!started) {
+      plugin.handleException("Tried to stop service '" + serviceId + "' whilst already stopped!");
+      return;
     }
-
-    @Override
-    public void stop() {
-        if (!started) {
-            plugin.handleException(
-                "Tried to stop service '" + serviceId + "' whilst already stopped!");
-            return;
-        }
-        started = false;
-        unregister();
-        try {
-            onStop();
-        } catch (Exception ex) {
-            plugin
-                .handleException("Unhandled exception whilst stopping service '" + serviceId + "'!",
-                    ex);
-        }
+    started = false;
+    unregister();
+    try {
+      onStop();
+    } catch (Exception ex) {
+      plugin.handleException(
+          "Unhandled exception whilst stopping service '" + serviceId + "'!", ex);
     }
+  }
 
-    @Override
-    public boolean isStarted() {
-        return started;
+  @Override
+  public boolean isStarted() {
+    return started;
+  }
+
+  @Override
+  public String getServiceId() {
+    return serviceId;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 61 * hash + (this.serviceId != null ? this.serviceId.hashCode() : 0);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
     }
-
-    @Override
-    public String getServiceId() {
-        return serviceId;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
+    final AbstractService<?> other = (AbstractService<?>) obj;
+    return !((this.serviceId == null)
+        ? (other.serviceId != null)
+        : !this.serviceId.equals(other.serviceId));
+  }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + (this.serviceId != null ? this.serviceId.hashCode() : 0);
-        return hash;
-    }
+  protected abstract void onStart();
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final AbstractService<?> other = (AbstractService<?>) obj;
-        return !((this.serviceId == null) ? (other.serviceId != null)
-            : !this.serviceId.equals(other.serviceId));
-    }
-
-    protected abstract void onStart();
-
-    protected abstract void onStop();
+  protected abstract void onStop();
 }

@@ -25,78 +25,77 @@ import org.bukkit.entity.Player;
 
 public class PlayerList implements Iterable<Player> {
 
-    private final List<UUID> uuids = new ArrayList<UUID>();
+  private final List<UUID> uuids = new ArrayList<UUID>();
 
-    public PlayerList() {
+  public PlayerList() {}
+
+  @Override
+  public Iterator<Player> iterator() {
+    removeGone();
+    return new Iterator<Player>() {
+      final Iterator<UUID> currentUuids = uuids.iterator();
+
+      @Override
+      public boolean hasNext() {
+        return currentUuids.hasNext();
+      }
+
+      @Override
+      public Player next() {
+        return getPlayer(currentUuids.next());
+      }
+
+      @Override
+      public void remove() {
+        currentUuids.remove();
+      }
+    };
+  }
+
+  public void add(Player member) {
+    uuids.add(member.getUniqueId());
+  }
+
+  public void remove(Player member) {
+    uuids.remove(member.getUniqueId());
+  }
+
+  public List<UUID> getMembers() {
+    removeGone();
+    return Collections.unmodifiableList(uuids);
+  }
+
+  public List<Player> getPlayerMembers() {
+    removeGone();
+    List<Player> playerMembers = new ArrayList<Player>();
+    for (UUID member : uuids) {
+      playerMembers.add(getPlayer(member));
     }
+    return playerMembers;
+  }
 
-    @Override
-    public Iterator<Player> iterator() {
-        removeGone();
-        return new Iterator<Player>() {
-            final Iterator<UUID> currentUuids = uuids.iterator();
-
-            @Override
-            public boolean hasNext() {
-                return currentUuids.hasNext();
-            }
-
-            @Override
-            public Player next() {
-                return getPlayer(currentUuids.next());
-            }
-
-            @Override
-            public void remove() {
-                currentUuids.remove();
-            }
-        };
+  public int size() {
+    int size = 0;
+    for (UUID uuid : uuids) {
+      size += getPlayer(uuid) == null ? 0 : 1;
     }
+    return size;
+  }
 
-    public void add(Player member) {
-        uuids.add(member.getUniqueId());
-    }
+  public void clear() {
+    uuids.clear();
+  }
 
-    public void remove(Player member) {
-        uuids.remove(member.getUniqueId());
-    }
+  private Player getPlayer(UUID uuid) {
+    return Bukkit.getPlayer(uuid);
+  }
 
-    public List<UUID> getMembers() {
-        removeGone();
-        return Collections.unmodifiableList(uuids);
+  private void removeGone() {
+    Iterator<UUID> it = uuids.iterator();
+    while (it.hasNext()) {
+      if (getPlayer(it.next()) == null) {
+        it.remove();
+      }
     }
-
-    public List<Player> getPlayerMembers() {
-        removeGone();
-        List<Player> playerMembers = new ArrayList<Player>();
-        for (UUID member : uuids) {
-            playerMembers.add(getPlayer(member));
-        }
-        return playerMembers;
-    }
-
-    public int size() {
-        int size = 0;
-        for (UUID uuid : uuids) {
-            size += getPlayer(uuid) == null ? 0 : 1;
-        }
-        return size;
-    }
-
-    public void clear() {
-        uuids.clear();
-    }
-
-    private Player getPlayer(UUID uuid) {
-        return Bukkit.getPlayer(uuid);
-    }
-
-    private void removeGone() {
-        Iterator<UUID> it = uuids.iterator();
-        while (it.hasNext()) {
-            if (getPlayer(it.next()) == null) {
-                it.remove();
-            }
-        }
-    }
+  }
 }

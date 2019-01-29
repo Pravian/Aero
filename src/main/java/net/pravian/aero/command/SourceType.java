@@ -22,83 +22,81 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-/**
- * Represents the different sources a command execution might originate from.
- */
+/** Represents the different sources a command execution might originate from. */
 public enum SourceType {
 
-    // Generic source types
-    ANY,
-    NON_PLAYER,
-    //
-    // Non generic source types
-    PLAYER,
-    CONSOLE,
-    BLOCK,
-    RCON;
+  // Generic source types
+  ANY,
+  NON_PLAYER,
+  //
+  // Non generic source types
+  PLAYER,
+  CONSOLE,
+  BLOCK,
+  RCON;
 
-    public static SourceType fromSender(CommandSender sender) {
-        if (sender instanceof Player) {
-            return PLAYER;
-        }
-
-        if (sender instanceof RemoteConsoleCommandSender) {
-            return RCON;
-        }
-
-        if (sender instanceof BlockCommandSender) {
-            return BLOCK;
-        }
-
-        if (sender instanceof ConsoleCommandSender) {
-            return CONSOLE;
-        }
-
-        return null;
+  public static SourceType fromSender(CommandSender sender) {
+    if (sender instanceof Player) {
+      return PLAYER;
     }
 
-    public boolean isPlayer() {
-        return this == PLAYER;
+    if (sender instanceof RemoteConsoleCommandSender) {
+      return RCON;
     }
 
-    public boolean isPrivileged() {
-        return this != PLAYER;
+    if (sender instanceof BlockCommandSender) {
+      return BLOCK;
     }
 
-    public boolean isGeneric() {
-        return this == NON_PLAYER || this == ANY;
+    if (sender instanceof ConsoleCommandSender) {
+      return CONSOLE;
     }
 
-    public boolean matches(CommandSender sender) {
-        Validate.notNull(sender, "Sender may not be null");
+    return null;
+  }
 
-        if (this == ANY) {
-            return true;
-        }
+  public boolean isPlayer() {
+    return this == PLAYER;
+  }
 
-        // Filter out players first
-        if (sender instanceof Player) {
-            return this == PLAYER;
-        }
+  public boolean isPrivileged() {
+    return this != PLAYER;
+  }
 
-        // All non-player below here
-        if (this == NON_PLAYER) {
-            return true;
-        }
+  public boolean isGeneric() {
+    return this == NON_PLAYER || this == ANY;
+  }
 
-        if (sender instanceof RemoteConsoleCommandSender) {
-            return this == RCON;
-        }
+  public boolean matches(CommandSender sender) {
+    Validate.notNull(sender, "Sender may not be null");
 
-        if (sender instanceof BlockCommandSender) {
-            return this == BLOCK;
-        }
-
-        if (sender instanceof ConsoleCommandSender) {
-            return this == CONSOLE;
-        }
-
-        // Unknown sender type
-        return true;
+    if (this == ANY) {
+      return true;
     }
+
+    // Filter out players first
+    if (sender instanceof Player) {
+      return this == PLAYER;
+    }
+
+    // All non-player below here
+    if (this == NON_PLAYER) {
+      return true;
+    }
+
+    if (sender instanceof RemoteConsoleCommandSender) {
+      return this == RCON;
+    }
+
+    if (sender instanceof BlockCommandSender) {
+      return this == BLOCK;
+    }
+
+    if (sender instanceof ConsoleCommandSender) {
+      return this == CONSOLE;
+    }
+
+    // Unknown sender type
+    return true;
+  }
 }

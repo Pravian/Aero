@@ -22,6 +22,4 @@ import java.lang.annotation.RetentionPolicy;
 // TODO docs
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Optional {
-
-}
+public @interface Optional {}
