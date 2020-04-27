@@ -411,8 +411,8 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see #getSerializable(java.lang.String, java.lang.Class)
      */
     @Override
-    public <T extends SerializableObject<?>> T getSerializable(PathContainer path, Class<T> type) {
-        return getSerializable(path.getPath(), type);
+    public <T extends SerializableObject<?>> T getAeroSerializable(PathContainer path, Class<T> type) {
+        return getAeroSerializable(path.getPath(), type);
     }
 
     /**
@@ -423,7 +423,7 @@ public class YamlConfig extends YamlConfiguration implements ConfigurationContai
      * @see SerializableObject
      */
     @Override
-    public <T extends SerializableObject<?>> T getSerializable(String path, Class<T> type) {
+    public <T extends SerializableObject<?>> T getAeroSerializable(String path, Class<T> type) {
         final String serialized = super.getString(path);
 
         if (serialized == null) {

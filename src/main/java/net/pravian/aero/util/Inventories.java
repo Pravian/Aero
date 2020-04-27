@@ -63,8 +63,8 @@ public class Inventories {
             }
             // Compare type Id
             if (itemTypeId == -1) {
-                itemTypeId = item.getTypeId();
-            } else if (itemTypeId != item.getTypeId()) {
+                itemTypeId = item.getType().getId();
+            } else if (itemTypeId != item.getType().getId()) {
                 continue;
             }
             // Compare data

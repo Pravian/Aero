@@ -33,7 +33,7 @@ public class AeroBukkit extends JavaPlugin implements AeroContainer {
     @SuppressWarnings("deprecation")
     public void onEnable() {
         aero.init();
-        new InternalMetricsSubmitter(plugin).submit();
+        new MetricsSubmitter(plugin).submit();
     }
 
     @Override

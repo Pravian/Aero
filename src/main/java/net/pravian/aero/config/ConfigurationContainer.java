@@ -61,9 +61,9 @@ public interface ConfigurationContainer<T extends ConfigurationSection> extends 
 
     public void setSerializable(String path, SerializableObject<?> object);
 
-    public <T extends SerializableObject<?>> T getSerializable(PathContainer path, Class<T> type);
+    public <T extends SerializableObject<?>> T getAeroSerializable(PathContainer path, Class<T> type);
 
-    public <T extends SerializableObject<?>> T getSerializable(String path, Class<T> type);
+    public <T extends SerializableObject<?>> T getAeroSerializable(String path, Class<T> type);
 
     public <K, V> void setMap(PathContainer path, Map<K, V> map);
 

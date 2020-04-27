@@ -1,10 +1,12 @@
 package net.pravian.aero.serializable;
 
+import java.util.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 /**
  * Represents a serializable Block
@@ -18,8 +20,8 @@ public class SerializableBlock extends SerializableObject<Block> {
     private final int x;
     private final int y;
     private final int z;
-    private final int id;
-    private final byte data;
+    private final Material type;
+    private final BlockData data;
 
     /**
      * Creates a new SerializableBlock instance.
@@ -31,8 +33,8 @@ public class SerializableBlock extends SerializableObject<Block> {
         this.x = block.getLocation().getBlockX();
         this.y = block.getLocation().getBlockY();
         this.z = block.getLocation().getBlockZ();
-        this.id = block.getTypeId();
-        this.data = block.getData();
+        this.type = block.getType();
+        this.data = block.getBlockData();
     }
 
     /**
@@ -41,23 +43,49 @@ public class SerializableBlock extends SerializableObject<Block> {
      * @param block The String to serialize from.
      */
     public SerializableBlock(String block) {
-        if (block == null || block.isEmpty() || block.split(":").length != 4) {
+        if (block == null || block.isEmpty() || block.split(":").length < 5) {
             this.worldName = null;
             this.x = 0;
             this.y = 0;
             this.z = 0;
-            this.id = 0;
-            this.data = 0;
+            this.type = null;
+            this.data = null;
             return;
         }
 
         final String[] blockParts = block.split(":");
+        
         this.worldName = blockParts[0];
         this.x = Integer.valueOf(blockParts[1]);
         this.y = Integer.valueOf(blockParts[2]);
         this.z = Integer.valueOf(blockParts[3]);
-        this.id = Integer.valueOf(blockParts[4]);
-        this.data = Byte.valueOf(blockParts[5]);
+        
+        // Type
+        Material t = Material.matchMaterial(blockParts[4]);
+        if (t == null) {
+            t = Material.matchMaterial(blockParts[4], true);
+        }
+        this.type = t;
+        
+        // Data
+        BlockData d = null;
+        if (t != null && blockParts.length >= 6 && !blockParts[5].isEmpty()) {
+            try {
+                d = type.createBlockData(blockParts[5]);
+            } catch (Exception ex) {
+                // Suppressed
+            }
+        }
+        this.data = d;
+    }
+    
+    /**
+     * Returns whether this block has valid material.
+     * 
+     * @return True if the block is valid.
+     */
+    public boolean isValid() {
+        return getType() != null;
     }
 
     /**
@@ -66,7 +94,7 @@ public class SerializableBlock extends SerializableObject<Block> {
      * @return The material-ID;
      */
     public int getId() {
-        return id;
+        return type == null ? -1 : type.getId();
     }
 
     /**
@@ -75,7 +103,7 @@ public class SerializableBlock extends SerializableObject<Block> {
      * @return The material.
      */
     public Material getType() {
-        return Material.getMaterial(id);
+        return type;
     }
 
     /**
@@ -83,7 +111,7 @@ public class SerializableBlock extends SerializableObject<Block> {
      *
      * @return The data.
      */
-    public byte getData() {
+    public BlockData getData() {
         return data;
     }
 
@@ -91,7 +119,12 @@ public class SerializableBlock extends SerializableObject<Block> {
      * Sets the block at the location to the stored id and data value
      */
     public void put() {
-        getLocation().getBlock().setTypeIdAndData(id, data, false);
+        if (type != null) {
+            getLocation().getBlock().setType(type);
+            if (data != null) {
+                getLocation().getBlock().setBlockData(data);
+            }
+        }
     }
 
     /**
@@ -110,7 +143,12 @@ public class SerializableBlock extends SerializableObject<Block> {
 
     @Override
     public String serialize() {
-        return worldName + ":" + x + ":" + y + ":" + z + ":" + id + ":" + data;
+        if (data != null) {
+            String d = Base64.getEncoder().encodeToString(data.getAsString().getBytes());
+            return worldName + ":" + x + ":" + y + ":" + z + ":" + type.toString() + ":" + d;
+        } else {
+            return worldName + ":" + x + ":" + y + ":" + z + ":" + type.toString();
+        }
     }
 
     @Override
